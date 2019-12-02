@@ -1,0 +1,18 @@
+// Variables
+@import "vars";
+
+// Base
+@import "base/layout";
+@import "base/mixin";
+
+// Framework
+@import "framework/global";
+
+// Component
+@import "components/form";
+@import "components/list";
+@import "components/buttons";
+
+// FONTAWESOME
+//$fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
+//@import '../../node_modules/@fortawesome/fontawesome-pro/scss/fontawesome';

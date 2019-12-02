@@ -1,0 +1,163 @@
+@charset "UTF-8";
+
+*, *::after, *::before {
+	@include box-sizing(border-box);
+}
+
+html {
+	overflow-y: scroll;
+  margin: 0 auto;
+	height: 100%;
+	line-height: 1.15;
+	-webkit-text-size-adjust: 100%;
+	-webkit-tap-highlight-color: transparent;
+}
+body {
+  *font-size: small;
+  text-rendering: optimizeLegibility;
+	-webkit-overflow-scrolling: touch;
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	min-height: 100%;
+	line-height: 2;
+  padding: 0;
+	margin: 0 auto;
+	background-color: $grey;
+}
+html, body {
+	margin: 0 auto;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+.fa, .fas, .far, .fal, .fab {
+	font: normal normal normal 14px/1 $fontAwesome;
+}
+
+small {
+	font-size: 75%;
+	font-weight: 300;
+}
+
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+/* ============================================= */
+/*                Universal Styles               */
+/* ============================================= */
+main {
+	box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  height: 100%;
+	width: 100%;
+  position: fixed;
+}
+
+#horizontal-scroll {
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: visible;
+  display: table-cell;
+  position: relative;
+}
+
+@include mobile {
+	body {
+		main {
+      display: block;
+      height: auto;
+    }
+  }
+	.scroll { height: auto; }
+}
+
+/* ============================================= */
+/*                 	 Map Styles            	     */
+/* ============================================= */
+#map {
+  width: 100%;
+  height: 100vh;
+  min-height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin: 0 auto;
+  padding: 0px;
+  @include mobile { width: 100%; }
+  @include tablet { width: 53.333333%;}
+  @include small_screen { width: 100%; }
+  @include desktop { width: 100%; }
+  @include monitor { width: 100%; }
+}
+.marker {
+  display: block;
+  margin-left: 15px;
+  margin-right: 15px;
+  h1 {
+    font-size: 1.6rem;
+    color: #222;
+    letter-spacing: 0.05px;
+  }
+}
+
+/* ============================================= */
+/*               Sidebar, Aside Styles           */
+/* ============================================= */
+.sidebar-nav {
+	position: absolute;
+	left: 0px;
+	background:none rgb(255, 255, 255);
+	overflow: hidden;
+	border: 0px;
+	user-select: none;
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+	top: 0px;
+	height: 100%;
+	z-index: 10000;
+	li {
+		line-height: 40px;
+		a {
+    	display: block;
+    	text-decoration: none;
+    	&:hover,
+    	&:active,
+    	&:focus {
+      	text-decoration: none;
+    	}
+  	}
+	}
+}
+.sidebar-brand {
+	height: 65px;
+  font-size: 18px;
+  line-height: 60px;
+	a {
+		color: #999;
+		&:hover {
+    	color: #fff;
+  		background: none;
+		}
+	}
+}

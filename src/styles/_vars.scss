@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap");
+
+$montserrat: "Montserrat";
+$open_sans: "Open Sans";
+$fontAwesome: "Font Awesome 5 Pro", sans-serif;
+$fontAwesomeBrands: "Font Awesome 5 Brands", sans-serif;
+
+// Colors
+$red: #c60c30;
+$blue: #00a1de;
+$brown: #62361b;
+$green: #009b3a;
+$orange: #f9461c;
+$purple: #522398;
+$pink: #e27ea6;
+$yellow: #f9e300;
+$grey: #565a5c;
+$black: #000;
+$white: #fff;
+
+// Fontawesome
+span[class^="fa-"], span[class*=" fa-"] {
+  font-family: $fontAwesome;
+}
+i.fab {
+  font-family: $fontAwesomeBrands;
+}
+
+// Social
+$twitter: #00aced;
+$facebook: #3b5998;
+$googleplus: #dd4b39;
+$pinterest: #cb2027;
+$linkedin: #007bb6;
+$youtube: #bb0000;
+$vimeo: #aad450;
+$tumblr: #32506d;
+$instagram: #517fa4;
+$behance: #42a9fb;
+$flickr: #ff0084;
+$dribbble: #ea4c89;
+$quora: #a82400;
+$foursquare: #0072b1;
+$forrst: #5B9A68;
+$vk: #45668e;
+$wordpress: #21759b;
+$stumbleupon: #EB4823;
+$yahoo: #7B0099;
+$blogger: #fb8f3d;
+$soundcloud: #ff3a00;
+$github: #333333;
+$rss: #f26522;

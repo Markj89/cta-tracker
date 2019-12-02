@@ -1,0 +1,30 @@
+@mixin input-placeholder {
+  &.placeholder { @content; }
+  &:-moz-placeholder { @content; }
+  &::-moz-placeholder { @content; }
+  &:-ms-input-placeholder { @content; }
+  &::-webkit-input-placeholder { @content; }
+}
+
+@mixin box-sizing($box-model) {
+  -webkit-box-sizing: $box-model;
+	-moz-box-sizing: $box-model;
+  box-sizing: $box-model;
+}
+@mixin transition($property, $speed, $effect) {
+	-webkit-transition: $property, $speed, $effect;
+	-moz-osx-transition: $property, $speed, $effect;
+	-ms-transition: $property, $speed, $effect;
+	-o-transition: $property, $speed, $effect;
+	transition: $property, $speed, $effect;
+}
+
+@mixin font-smoothing($value: antialiased) {
+	@if $value == antialiased {
+		-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+	} @else {
+		-webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+	}
+}
