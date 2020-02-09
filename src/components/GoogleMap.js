@@ -1,102 +1,65 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import React, { Component, Fragment } from 'react';
+import { Map, GoogleApiWrapper } from 'google-maps-react';
+
+// Components
+import Trains from './Trains.js';
+
+// JSON
+import mapStyle from '../assets/mapStyle.json';
 
 const mapStyles = {
   width: '100%',
-  height: '100%'
-};
-
-export class CurrentLocation extends Component {
-  constructor(props) {
-    super(props);
-
-    const { lat, lng } = this.props.initialCenter;
-    this.state = {
-      currentLocation: {
-        lat: lat,
-        lng: lng
-      }
-    };
-  }
-
-  componentDidMount() {
-    if (this.props.centerAroundCurrentLocation) {
-      if (navigator && navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos => {
-          const coordinates = pos.coords;
-
-          this.setState({
-            currentLocation: {
-              lat: coords.latitude,
-              lng: coords.longitude
-            }
-          });
-        });
-      }
-    }
-    this.loadMap();
-  }
-
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.google !== this.props.google) {
-      this.loadMap();
-    }
-    if (prevState.currentLocation !== this.this.currentLocation) {
-      this.recenterMap();
-    }
-  }
-
-  loadMap() {
-    if (this.props && this.props.google) {
-      const {google} = this.props;
-      const maps = google.maps;
-
-      const ref = this.refs.map;
-
-      const node = ReactDOM.findDOMNode(ref);
-
-      let { zoom } = this.props;
-
-      const { lat, lng } = this.state.currentLocation;
-      const center = new maps.LatLng(lat, lng);
-      const mapConfig = Object.assign({}, {center: center, zoom: zoom});
-    }
-  }
-
-  recenterMap() {
-    const map = this.map;
-    const current = this.state.currentLocation;
-
-    const google = this.props.google;
-    const maps = google.maps;
-
-    if (map) {
-      let center = new maps.LatLng(current.lat, current.lng);
-      map.panTo(center);
-    }
-  }
-}
-
-
-
-
-const state = {
-  showingInfoWindow: false,
-  activeMarker: {},
-  selectedPlace: {}
+  height: '100%',
+  styles: mapStyle
 };
 
 class MapContainer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentLocation: {
+        lat: 0,
+        lng: 0
+      }
+    };
+    this.getCurrentLocation = this.getCurrentLocation.bind(this);
+  }
+
+  getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const { latitude, longitude } = position.coords;
+
+          this.setState((state, props) => ({
+            currentLocation: {
+              lat: state.lat,
+              lng: state.lng
+            }
+          }));
+        }
+      );
+    }
+  }
+
+  componentDidMount() {
+    this.getCurrentLocation();
+    console.log(this.state);
+  }
+
   render() {
     return (
-      <Map
-        google={this.props.google}
-        zoom={8}
-        style={mapStyles}
-        initialCenter={{ lat: 47.444, lng: -122.176 }}
-        />
+      <Fragment>
+        <Map
+          google={this.props.google}
+          style={mapStyles}
+          zoom={16}
+          streetViewControl={true}
+          mapTypeControl={false}
+          mapCenter={this.state.currentLocation} />
+        <Trains />
+      </Fragment>
     );
   }
 }

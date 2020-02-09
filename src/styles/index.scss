@@ -14,5 +14,5 @@
 @import "components/buttons";
 
 // FONTAWESOME
-//$fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
-//@import '../../node_modules/@fortawesome/fontawesome-pro/scss/fontawesome';
+$fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
+@import '../../node_modules/@fortawesome/fontawesome-pro/scss/fontawesome';

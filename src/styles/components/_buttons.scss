@@ -4,21 +4,77 @@
   display: block;
   width: auto;
   cursor: pointer;
+  position: relative;
+  //margin: 20px  auto;
   &.train {
+    display: flex;
+    //overflow: hidden;
+    border-radius: 3px;
+    background-color: $white;
     font-family: $montserrat, $open_sans, sans-serif;
-    padding: 10px 35px;
+    padding: 0px 35px 0px 0px;
+    height: 57px;
     list-style: none;
+    text-decoration: none;
     font-weight: 500;
+    margin: 10px auto;
+    cursor: pointer;
     line-height: 1.2;
-    &.red {
+    border: none;
+    box-shadow: 0 2px 8px -1px rgba(10, 22, 50, .24);
+    text-decoration: none;
+    @include mobile {
+      width: 100%;
+    }
+    .red {
       background-color: $red;
       text-decoration: none;
       color: $white;
+      position: relative;
+      width: 60px;
+      &::before {
+        content: "\f238";
+        border-radius: 1px;
+        width: 2px;
+        top: 50%;
+        left: 10%;
+        height: 50px;
+        margin: -9px 0 0 -1px;
+      }
     }
-    &.blue {
+    .blue {
       background-color: $blue;
       text-decoration: none;
       color: $white;
+      position: relative;
+      width: 60px;
+      &::before {
+        content: "\f238";
+        border-radius: 1px;
+        width: 2px;
+        top: 50%;
+        left: 10%;
+        height: 50px;
+        margin: -9px 0 0 -1px;
+      }
+    }
+    ul {
+      margin: 0 auto;
+      list-style: none;
+      padding: 16px 40px;
+      text-align: center;
+      position: relative;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 28px;
+      color: $black_almost;
+      a {
+        text-decoration: none;
+        color: $black_almost;
+        display: inline-block;
+      }
     }
   }
 }
