@@ -4,8 +4,8 @@ const { resolve } = require('path');
 const cors = require('cors');
 const request = require("request");
 
-const BASE_URL = 'http://lapi.transitchicago.com/api/1.0/ttpositions.aspx';
-const API_KEY = '7ed44624f87344d1b96a77543dbae4bd';
+const BASE_URL = 'http://lapi.transitchicago.com/api/1.0/ttpositions.aspx'; // API Endpoint
+const API_KEY = ''; // API KEY
 let route;
 
 router.post('/', function(req, res) {
