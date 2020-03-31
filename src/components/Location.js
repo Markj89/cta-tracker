@@ -4,11 +4,14 @@ import React, { Component } from 'react';
 export default class Location extends Component {
 
   render() {
+    const {
+      routeNumber
+    } = this.props;
+
     return (
       <div className="location">
         <div className="row">
           <div className="col-md-6">
-            <p>Hello World</p>
           </div>
         </div>
       </div>

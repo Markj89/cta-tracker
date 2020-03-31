@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
+import customStyles from '../assets/mapStyle.json';
 
 // Components
 import Trains from './Trains.js';
@@ -26,26 +27,29 @@ class MapContainer extends Component {
     this.getCurrentLocation = this.getCurrentLocation.bind(this);
   }
 
+  static defaultProps = {
+    lat: 0,
+    lng: 0
+  };
+
+  componentDidMount() {
+    this.getCurrentLocation();
+  }
+
   getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         position => {
-          const { latitude, longitude } = position.coords;
-
-          this.setState((state, props) => ({
+          this.setState(prevState => ({
             currentLocation: {
-              lat: state.lat,
-              lng: state.lng
+              ...prevState.currentLocation,
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
             }
-          }));
+          }))
         }
-      );
+      )
     }
-  }
-
-  componentDidMount() {
-    this.getCurrentLocation();
-    console.log(this.state);
   }
 
   render() {
@@ -57,7 +61,8 @@ class MapContainer extends Component {
           zoom={16}
           streetViewControl={true}
           mapTypeControl={false}
-          mapCenter={this.state.currentLocation} />
+          options={{styles: [ ...customStyles] }}
+          center={this.state.currentLocation} />
         <Trains />
       </Fragment>
     );
@@ -65,5 +70,5 @@ class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyCVFrZNmZfDRCLwGoNJL30iJE6WG-W37zo'
+  apiKey: ''
 })(MapContainer);

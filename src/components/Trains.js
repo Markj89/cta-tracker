@@ -29,10 +29,11 @@ const trains = [
 export default class Trains extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       trainList: [],
-      showComponent: false
     };
+
     this.callAPI = this.callAPI.bind(this);
   }
 
@@ -46,17 +47,32 @@ export default class Trains extends Component {
       }
     }).then(res => {
       let routes = res.data.ctatt.route;
+      let newState = [];
+
       for (let route in routes) {
-        console.log(route, routes[route]['train']);
+        for (var i = 0; i < routes[route]['train'].length; i++) {
+          newState.push(routes[route]['train'][i]);
+        }
+        this.setState({
+          trainList: newState,
+        });
       }
-      this.setState({trainList: "", showComponent: true});
     }).catch(err => {
       console.log(err);
-      //throw new Error('Error!');
     });
   };
 
   render() {
+
+    const {
+      routeNumber,
+      destination,
+      nextStation
+    } = this.props;
+
+    const { trainList } = this.state;
+
+    {console.log(this);}
     return (
       <section>
         <div id="overlay"></div>
@@ -80,10 +96,17 @@ export default class Trains extends Component {
               }
             )
           }
-          </div>
-          {this.state.showComponent ? <Location /> : null }
-
-        </div>
+          {
+            trainList.map((tList, i) => {
+              return (
+                <Fragment>
+                  <Location routeNumber={tList.rn} destination={tList.destNm} nextStation={tList.nextStaNm} />
+                </Fragment>
+              )
+            })
+          }
+          </div> {/* .container */}
+        </div> {/* .trainlist */}
       </section>
     );
   }
