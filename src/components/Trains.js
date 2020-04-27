@@ -71,8 +71,6 @@ export default class Trains extends Component {
     } = this.props;
 
     const { trainList } = this.state;
-
-    {console.log(this);}
     return (
       <section>
         <div id="overlay"></div>
@@ -82,10 +80,10 @@ export default class Trains extends Component {
               trains.map((train, index) => {
                 return (
                   <Fragment>
-                    <button className="btn train" key={train.key} onClick={ e => this.callAPI(e, train.id) }>
+                    <button className="btn train" key={index} onClick={ e => this.callAPI(e, train.id) }>
                       <ul>
                         <a href={`/${train.id}`}>
-                          <div className={`${train.id}`}></div>
+                          <div className={`${train.id}`} key={index}></div>
 
                           <li key={train.key} value={train.id}>{ train.name }</li>
                         </a>

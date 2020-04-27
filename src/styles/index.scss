@@ -1,3 +1,8 @@
+// FONTAWESOME
+$fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
+@import '../../node_modules/@fortawesome/fontawesome-pro/scss/fontawesome';
+//@import "../../node_modules/@fortawesome/fontawesome-pro/scss/solid.scss";
+
 // Variables
 @import "vars";
 
@@ -12,7 +17,3 @@
 @import "components/form";
 @import "components/list";
 @import "components/buttons";
-
-// FONTAWESOME
-$fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
-@import '../../node_modules/@fortawesome/fontawesome-pro/scss/fontawesome';
