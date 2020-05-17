@@ -1,12 +1,11 @@
-'use strict';
-
 const express = require('express');
 const router = express.Router();
 const { resolve } = require('path');
 const cors = require('cors');
 const request = require("request");
+const fs = require('fs');
 
-const BASE_URL = 'http://lapi.transitchicago.com/api/1.0/ttpositions.aspx'; // API Endpoint
+const BASE_URL = 'https://lapi.transitchicago.com/api/1.0/ttpositions.aspx'; // API Endpoint
 const API_KEY = ''; // API KEY
 let route;
 
@@ -34,6 +33,7 @@ router.post('/', function(req, res) {
 
   request(options, function (error, response, body) {
     if (error) throw new Error(error);
+    console.log(body);
     res.send(body);
   });
 });

@@ -28,3 +28,20 @@
     -moz-osx-font-smoothing: auto;
 	}
 }
+
+
+@mixin trainColor($color) {
+  @if $color == '.Org' {
+    background-color: $orange;
+  } @else if $color == '.y' {
+    background-color: $yellow;
+  } @else if $color == '.blue' {
+    background-color: $blue;
+  } @else if $color == '.red' {
+    background-color: $red;
+  } @else if $color == '.p' {
+    background-color: $purple;
+  } @else if $color == '.pink' {
+    background-color: $pink;
+  }
+}
