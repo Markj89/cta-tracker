@@ -1,7 +1,11 @@
 // FONTAWESOME
 $fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
 @import '../../node_modules/@fortawesome/fontawesome-pro/scss/fontawesome';
-//@import "../../node_modules/@fortawesome/fontawesome-pro/scss/solid.scss";
+@import "../../node_modules/@fortawesome/fontawesome-pro/scss/solid";
+
+// Bootstrap
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
 
 // Variables
 @import "vars";
@@ -14,6 +18,6 @@ $fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
 @import "framework/global";
 
 // Component
-@import "components/form";
+@import "components/section";
 @import "components/list";
 @import "components/buttons";
