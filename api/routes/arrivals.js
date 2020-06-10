@@ -12,7 +12,7 @@ let name;
 let station;
 
 const BASE_URL = 'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx'; // API Endpoint
-const API_KEY = ''; // API KEY
+const API_KEY = '7ed44624f87344d1b96a77543dbae4bd'; // API KEY
 
 var readJson = function(cb) {
   fs.readFile(__dirname + '/stops.json', 'utf8', (error, data) => {
@@ -25,13 +25,12 @@ router.use(function(request, repsonse, next) {
   let stationSent = request.body.station;
   readJson(function(cb) {
     if (!cb.error) {
-      for (var stations in cb.stations) {
-        for (var i = 0; i <  cb.stations[stations].length; i++) {
-          station = cb.stations[stations][i];
-          if (station.hasOwnProperty("name") && station["name"] === stationSent) {
-            Object.assign(request.body, station);
-            next();
-          }
+      for (var i = 0; i <  cb.stations.length; i++) {
+        station = cb.stations[i];
+        if (station.hasOwnProperty("name") && station["name"] === stationSent) {
+          console.log(station);
+          Object.assign(request.body, station);
+          next();
         }
       }
     }

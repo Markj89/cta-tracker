@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+faAngleUp,
+faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const ENDPOINT = 'http://localhost:9000/locations';
-
+library.add(
+  faAngleUp,
+  faAngleDown
+);
+const ENDPOINT = 'http://localhost:9000/stations';
 const trainsList = [
   {
     name: 'Red',
@@ -28,18 +36,40 @@ const trainsList = [
   {
     name: 'Green',
     id: 'g',
+  },
+  {
+    name: 'Purple',
+    id: 'p'
+  },
+  {
+    name: 'Yellow',
+    id: 'y'
   }
 ];
 
 class Trains extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       trains: [],
+      open: false
     };
 
     this.callAPI = this.callAPI.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.toggleRoutes = this.toggleRoutes.bind(this);
+  }
+
+  handleClickOutside = () => {
+    this.setState({
+      open: false
+    });
+  }
+
+  toggleRoutes = () => {
+    this.setState(prevState => ({
+      open: !prevState.open
+    }));
   }
 
   callAPI = (e, val) => {
@@ -51,7 +81,6 @@ class Trains extends Component {
         rt: val.id
       }
     }).then(res => {
-      console.log(res);
       let routes = res.data.ctatt.route;
       let newState = [];
 
@@ -69,26 +98,37 @@ class Trains extends Component {
   };
 
   render() {
+    const {
+      open
+    } = this.state;
     return (
-      <div>
-        <div className="trainlist">
-          <div className="container">
-            {
-              trainsList.map((train, index) => {
-                return (
-                  <button className="btn train" key={index} onClick={(e) => this.callAPI(e, train)}>
-                    <ul>
+      <div className="dropdown_container">
+        <div className="dropdown">
+          <ul>
+            <li className="dropdown_trigger">
+              <div className="train_wrapper" onClick={() => this.toggleRoutes()}>
+                <div className="train routes"></div>
+                <div className="view_route">
+                  <span>View Routes</span>
+                    { open ? <FontAwesomeIcon icon={faAngleUp} size="2x" /> : <FontAwesomeIcon icon={faAngleDown} size="2x" /> }
+                </div>
+              </div>
+              { open && <ul className="trainlist">
+                {
+                trainsList.map((train, index) => {
+                  return (
+                    <li className="route" key={index} onClick={(e) => this.callAPI(e, train)}>
+                      <div className={`${train.id}`  + ' train'}></div>
+
                       <a href={`/${train.id}`}>
-                        <div className={`${train.id}`} key={index}></div>
-                        <li key={train[index]} value={train.id}>{ train.name } Line</li>
+                        { train.name } Line
                       </a>
-                    </ul>
-                  </button>
-                )
-              }
-            )
-          }
-          </div>
+                    </li>
+                  )
+                }
+              )}</ul> }
+            </li>
+          </ul>
         </div>
       </div>
     );

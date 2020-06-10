@@ -7,7 +7,7 @@ const Station = props => {
     oncoming,
    } = props;
   return(
-    <div>
+    <div className="sidebar_wrapper">
       <div className="station">
         <div className="header">
           <h1>{selectedStation}</h1>
@@ -18,7 +18,7 @@ const Station = props => {
               {
                 oncoming.map((train, i) => {
                   return (
-                    <div className={train.rt + " " + "train" } key={i}>
+                    <div className={train.rt + " " + "service" } key={i}>
                       <div className="col-sm-6 d-inline-flex text-left">
                         <h2>#{train.rn}</h2>
                         <p className="destination">{train.stpDe}</p>

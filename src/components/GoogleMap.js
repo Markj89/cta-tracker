@@ -170,7 +170,7 @@ class MapContainer extends Component {
               return (
                 <Marker
                 name={place.name}
-                position={{ lat: place.geometry.viewport.Ya.g, lng: place.geometry.viewport.Ta.g}}
+                position={{ lat: place.geometry.location.lat(), lng: place.geometry.location.lng() }}
                 icon={{ url: icon }}
                 key={index}
                 onClick={(index) => this.onMarkerClick(index)} />
@@ -213,7 +213,7 @@ MapContainer.propTypes = {
 const LoadingContainer = props => null;
 
 export default GoogleApiWrapper({
-  apiKey: '',
+  apiKey: 'AIzaSyCVFrZNmZfDRCLwGoNJL30iJE6WG-W37zo',
   libraries: ['places'],
   language: 'en',
   LoadingContainer: LoadingContainer

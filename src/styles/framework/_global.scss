@@ -30,10 +30,11 @@ body {
 	-webkit-overflow-scrolling: touch;
 	-webkit-font-smoothing: antialiased;
 	-moz-font-smoothing: antialiased;
-	font-family: $montserrat, $open_sans, sans-serif;
+	font-family: 'HelveticaNeue-Medium', sans-serif;
 	font-weight: 500;
 	min-height: 100%;
-	line-height: 2;
+	line-height: 43px;
+	letter-spacing: normal;
   padding: 0;
 	margin: 0 auto;
 }
@@ -53,12 +54,11 @@ small {
 }
 
 .App {
-  text-align: center;
 	min-height: 100vh;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	font-size: calc(10px + 2vmin);
+	//font-size: calc(10px + 2vmin);
 }
 
 .App-logo {
@@ -112,11 +112,7 @@ main {
   right: 0px;
   margin: 0 auto;
   padding: 0px;
-  @include mobile { width: 100%; }
-  @include tablet { width: 53.333333%;}
-  @include small_screen { width: 100%; }
-  @include desktop { width: 100%; }
-  @include monitor { width: 100%; }
+	@extend .col-md-12;
 }
 .marker {
   display: block;
@@ -130,69 +126,49 @@ main {
 }
 
 /* ============================================= */
-/*               	Section Styles                 */
-/* ============================================= */
-aside {
-	z-index: 15;
-	position: absolute;
-	/*#overlay {
-		//background-color: #D5D5D5;
-		position: absolute;
-		left: 0;
-		right: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(213, 213, 213, 0.75);
-		display: block;
-		//z-index: -1;
-		content: '';
-	}*/
-	.trainlist {
-		position: relative;
-		z-index: 1;
-		padding-left: 15px;
-		padding-right: 15px;
-		display: block;
-		top: 50px;
-	}
-}
-
-/* ============================================= */
 /*               Sidebar, Aside Styles           */
 /* ============================================= */
-.sidebar-nav {
+.sidebar_wrapper {
+	z-index: 15;
 	position: absolute;
-	left: 0px;
-	background:none rgb(255, 255, 255);
-	overflow: hidden;
-	border: 0px;
-	user-select: none;
-	box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
-	top: 0px;
-	height: 100%;
-	z-index: 10000;
-	li {
-		line-height: 40px;
-		a {
-    	display: block;
-    	text-decoration: none;
-    	&:hover,
-    	&:active,
-    	&:focus {
-      	text-decoration: none;
-    	}
-  	}
-	}
+	@extend .container-fluid;
 }
-.sidebar-brand {
-	height: 65px;
-  font-size: 18px;
-  line-height: 60px;
-	a {
-		color: #999;
-		&:hover {
-    	color: #fff;
-  		background: none;
+.dropdown_container {
+	position: relative;
+	z-index: 1;
+	top: 50px;
+	padding: 0;
+	@extend .col-sm-12;
+	@extend .col-md-6;
+	@extend .col-lg-4;
+	@extend .col-xl-3;
+	.trainlist {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    background-color: white;
+    border-radius: 0px 0px 3px 3px;
+		.route {
+			list-style-type: none;
+			display: inline-flex;
+			flex: 1;
+			justify-content: space-between;
+			width: 100%;
+			vertical-align: bottom;
+			align-items: center;
+			.red, .blue, .org, .pink, .brn, .g {
+				width: 60px;
+				text-decoration: none;
+		    color: $white;
+		    position: relative;
+				border-radius: 0px;
+			}
+			a {
+				text-decoration: none;
+				color: $black_almost;
+				margin: 0 auto;
+				font-size: 1rem;
+			}
 		}
 	}
 }

@@ -18,6 +18,8 @@ $fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
 @import "framework/global";
 
 // Component
+@import "components/colors";
 @import "components/section";
+@import "components/dropdown";
 @import "components/list";
 @import "components/buttons";

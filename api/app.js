@@ -1,3 +1,5 @@
+'use strict';
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -5,10 +7,14 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require("cors");
 const bodyParser = require('body-parser');
+const fs = require('fs');
+
+// Routers
 const indexRouter = require('./routes/index');
 const ctaRouter = require("./routes/cta");
 const locationRouter = require("./routes/locations");
 const arrivalsRouter = require("./routes/arrivals");
+const stationsRouter = require("./routes/stations");
 
 const app = express();
 
@@ -33,6 +39,7 @@ app.use('/', indexRouter);
 app.use("/cta", ctaRouter);
 app.use("/locations", locationRouter);
 app.use("/arrivals", arrivalsRouter);
+app.use("/stations", stationsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -6,11 +6,9 @@ class Sidebar extends Component {
 
   render() {
     return(
-      <div>
-        <aside>
-          <Logo />
-          <Lines />
-        </aside>
+      <div className="sidebar_wrapper">
+        <Logo />
+        <Lines />
       </div>
     )
   }
