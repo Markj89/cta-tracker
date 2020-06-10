@@ -213,7 +213,7 @@ MapContainer.propTypes = {
 const LoadingContainer = props => null;
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyCVFrZNmZfDRCLwGoNJL30iJE6WG-W37zo',
+  apiKey: '',
   libraries: ['places'],
   language: 'en',
   LoadingContainer: LoadingContainer

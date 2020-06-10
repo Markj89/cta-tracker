@@ -12,7 +12,7 @@ let name;
 let station;
 
 const BASE_URL = 'https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx'; // API Endpoint
-const API_KEY = '7ed44624f87344d1b96a77543dbae4bd'; // API KEY
+const API_KEY = ''; // API KEY
 
 var readJson = function(cb) {
   fs.readFile(__dirname + '/stops.json', 'utf8', (error, data) => {
