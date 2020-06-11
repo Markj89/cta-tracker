@@ -5,23 +5,28 @@
   background-color: $white;
   padding: 15px 35px;
   box-shadow: 0 2px 8px -1px rgba(10, 22, 50, .24);
-  margin: 10px auto;
+  border-radius: 3px;
   display: block;
-  position: absolute;
-  top: 7%;
-  left: 40px;
-  z-index: 100;
-  width: 500px;
-  height: 500px;
-  h1 {
-    text-align: center;
+  position: relative;
+  top: 200px;
+  left: 0;
+  @include mobile {
+    padding: 10px 15px;
   }
+  z-index: 100;
+  @extend .col-md-6;
+  @extend .col-lg-6;
+  @extend .col-xl-4;
   .body {
     width: 100%;
     @extend .text-left;
-    .train {
+    .service {
       width: 100%;
       display: inline-flex;
+      border-radius: 3px;
+      margin: 7px auto;
+      color: $white;
+      height: 57px;
       .destination {
         font-size: 12px;
         line-height: 1.2;
@@ -29,6 +34,8 @@
       }
       .arrivalTime {
         font-size: 16px;
+        float: right;
+        line-height: initial;
       }
     }
   }

@@ -11,7 +11,6 @@
     display: flex;
     border-radius: 3px;
     background-color: $white;
-    font-family: $montserrat, $open_sans, sans-serif;
     padding: 0px 35px 0px 0px;
     height: 57px;
     list-style: none;
@@ -45,24 +44,6 @@
         left: auto;
         right: auto;
       }
-    }
-    .red {
-      background-color: $red;
-    }
-    .blue {
-      background-color: $blue;
-    }
-    .pink {
-      background-color: $pink;
-    }
-    .org {
-      background-color: $orange;
-    }
-    .brn {
-      background-color: $brown;
-    }
-    .g {
-      background-color: $green;
     }
     ul {
       margin: 0 auto;

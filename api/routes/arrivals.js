@@ -25,13 +25,12 @@ router.use(function(request, repsonse, next) {
   let stationSent = request.body.station;
   readJson(function(cb) {
     if (!cb.error) {
-      for (var stations in cb.stations) {
-        for (var i = 0; i <  cb.stations[stations].length; i++) {
-          station = cb.stations[stations][i];
-          if (station.hasOwnProperty("name") && station["name"] === stationSent) {
-            Object.assign(request.body, station);
-            next();
-          }
+      for (var i = 0; i <  cb.stations.length; i++) {
+        station = cb.stations[i];
+        if (station.hasOwnProperty("name") && station["name"] === stationSent) {
+          console.log(station);
+          Object.assign(request.body, station);
+          next();
         }
       }
     }

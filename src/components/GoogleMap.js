@@ -170,7 +170,7 @@ class MapContainer extends Component {
               return (
                 <Marker
                 name={place.name}
-                position={{ lat: place.geometry.viewport.Ya.g, lng: place.geometry.viewport.Ta.g}}
+                position={{ lat: place.geometry.location.lat(), lng: place.geometry.location.lng() }}
                 icon={{ url: icon }}
                 key={index}
                 onClick={(index) => this.onMarkerClick(index)} />
