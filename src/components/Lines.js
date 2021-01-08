@@ -81,7 +81,7 @@ class Trains extends Component {
         rt: val.id
       }
     }).then(res => {
-      let routes = res.data.ctatt.route;
+      /*let routes = res.data.ctatt.route;
       let newState = [];
 
       for (let route in routes) {
@@ -91,7 +91,9 @@ class Trains extends Component {
         this.setState({
           trains: newState,
         });
-      }
+      }*/
+      this.handleClickOutside();
+      console.log(res);
     }).catch(err => {
       console.log(err);
     });
