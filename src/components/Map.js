@@ -65,7 +65,7 @@ function Map({ zoom, places }: props) {
         <div style={{ height: '100vh', width: '1000px' }}>
           <GoogleMapReact
             bootstrapURLKeys={{ 
-              key: "AIzaSyCVFrZNmZfDRCLwGoNJL30iJE6WG-W37zo",
+              key: "",
               language: 'en',
               libraries: 'places',
             }}
