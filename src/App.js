@@ -1,12 +1,12 @@
 import React from 'react';
-import GoogleMap from './components/GoogleMap.js';
+import Map from './components/Map.js';
 import './styles/index.scss';
 
 function App() {
   return (
     <main>
       <article className="App">
-        <GoogleMap />
+        <Map />
       </article>
     </main>
   );

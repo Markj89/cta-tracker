@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="54px" height="58px" viewBox="0 0 54 58" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon Shape</title>
+    <defs>
+        <filter x="-15.3%" y="-78.1%" width="130.7%" height="256.1%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="10" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.100497159 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Prototype" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Red-Line-Chosen-Copy" transform="translate(-27.000000, -64.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="Group-4" filter="url(#filter-1)" transform="translate(15.000000, 66.000000)">
+                <g id="Icon" transform="translate(9.000000, 8.000000)">
+                    <path d="M20,3.33333333 C13.3333333,3.33333333 6.66666667,4.16666667 6.66666667,10 L6.66666667,25.8333333 C6.66666667,29.0549944 9.27833896,31.6666667 12.5,31.6666667 L10,34.1666667 L10,35 L13.7166667,35 L17.05,31.6666667 L23.3333333,31.6666667 L26.6666667,35 L30,35 L30,34.1666667 L27.5,31.6666667 C30.721661,31.6666667 33.3333333,29.0549944 33.3333333,25.8333333 L33.3333333,10 C33.3333333,4.16666667 27.3666667,3.33333333 20,3.33333333 M12.5,28.3333333 C11.1192881,28.3333333 10,27.2140452 10,25.8333333 C10,24.4526215 11.1192881,23.3333333 12.5,23.3333333 C13.8807119,23.3333333 15,24.4526215 15,25.8333333 C15,27.2140452 13.8807119,28.3333333 12.5,28.3333333 M18.3333333,16.6666667 L10,16.6666667 L10,10 L18.3333333,10 L18.3333333,16.6666667 M21.6666667,16.6666667 L21.6666667,10 L30,10 L30,16.6666667 L21.6666667,16.6666667 M27.5,28.3333333 C26.1192881,28.3333333 25,27.2140452 25,25.8333333 C25,24.4526215 26.1192881,23.3333333 27.5,23.3333333 C28.8807119,23.3333333 30,24.4526215 30,25.8333333 C30,27.2140452 28.8807119,28.3333333 27.5,28.3333333 Z" id="Icon-Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

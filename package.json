@@ -1,13 +1,14 @@
 {
   "name": "cta-tracker",
-  "version": "0.1.0",
+  "version": "2.0.0",
+  "author": "Marcus Jackson",
   "private": true,
+  "description": "A React based Transit tracker for Chicago Transit Authority (CTA)",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "google-maps-react": "^2.0.2",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
@@ -15,7 +16,7 @@
     "react-scripts": "^3.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "(set PORT=8080 || export PORT=8080) && HTTPS=true && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -39,10 +40,12 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "cors": "^2.8.5",
+    "google-map-react": "^2.1.9",
     "http-proxy-middleware": "^0.20.0",
     "moment": "^2.25.3",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-moment": "^0.9.7",
+    "react-redux": "^7.2.2",
     "react-router-dom": "^5.1.2",
     "react-transition-group": "^4.4.1",
     "styled-components": "^5.1.0"
