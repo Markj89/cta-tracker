@@ -7,7 +7,9 @@
 /.pnp
 .pnp.js
 package-lock.json
+/package-lock.json
 yarn.lock
+/yarn.lock
 keytmp.pem
 
 # testing
@@ -15,7 +17,7 @@ keytmp.pem
 /inspiration
 
 # production
-/build
+/public
 
 # misc
 .DS_Store

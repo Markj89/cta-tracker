@@ -10,7 +10,7 @@ const Context = createContext({
   },
 });
 
-function Map({ zoom, places }: props) {
+function Map({ zoom, places }) {
   const {status, currentLocation} = GetCurrentPosition(Context.initialCenter);
   const [stations, setStations] = useState([]);
   const [visible, setVisible] = useState(false);
