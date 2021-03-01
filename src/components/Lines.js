@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import {
 faAngleUp,
 faAngleDown } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,8 @@ library.add(
   faAngleUp,
   faAngleDown
 );
+dom.i2svg();
+
 const ENDPOINT = 'http://localhost:9000/stations';
 const trainsList = [
   {
