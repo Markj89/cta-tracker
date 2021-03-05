@@ -18,6 +18,7 @@ keytmp.pem
 
 # production
 /public
+public
 
 # misc
 .DS_Store
