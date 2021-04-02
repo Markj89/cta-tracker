@@ -1,93 +1,66 @@
-import React, { useState, Fragment, createContext } from 'react';
+/**
+ * Map
+ * @type {Component}
+ */
+import React, { useState, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import GoogleMapReact from 'google-map-react';
 import GetCurrentPosition from '../hooks/GetCurrentPosition';
-import PropTypes from 'prop-types';
+import GetStationsLocally from '../hooks/GetStationsLocally';
+import styled from 'styled-components';
+import Marker from './Marker';
 
-const Context = createContext({
-  initialCenter: {
-    lat: 0, 
-    lng: 0
-  },
-});
+const MapWrapper = styled.div`
+  position: relative;
+  height: 100vh;
+  width: 1000px;
+`;
 
-function Map({ zoom, places }) {
-  const {status, currentLocation} = GetCurrentPosition(Context.initialCenter);
-  const [stations, setStations] = useState([]);
-  const [visible, setVisible] = useState(false);
+function Map({ zoom }) {
+  const {status, currentLocation } = GetCurrentPosition({initialCenter: {lat: 0, lng: 0}});
+  const { places } = GetStationsLocally(process.env.DEV_URL);
   const options = {
-    panControl: false,
+    panControl: true,
     mayTypeControl: false,
     scrollwheel: false,
     fullscreenControl: false,
-    disableDefaultUI: true,
+    disableDefaultUI: false,
   };
 
   const handleApiLoaded = (map, maps) => {
     var service = new maps.places.PlacesService(map);
-
-    const request = {
-      location: currentLocation,
-      radius : '5000',
-      types: ['subway_station', 'transit_station', 'point_of_interest', 'establishment']
-    };
-
-    service.nearbySearch(request, (results, placeStatus) => {
-      if (placeStatus === maps.places.PlacesServiceStatus.OK) {
-        for (let i = 0; i < results.length; i++) {
-          console.log(results[i]);
-          let infowindow = new maps.InfoWindow({
-            content: `<h1>${results[i].name}</h1>`,
-            position: {
-              lat: parseFloat(results[i].geometry.location.lat()),
-              lng: parseFloat(results[i].geometry.location.lng()) 
-            },
-          });
-
-          let marker = new maps.Marker({
-            position: {lat: parseFloat(results[i].geometry.location.lat()), lng: parseFloat(results[i].geometry.location.lng())},
-            map: map,
-            title: results[i].name
-          });
-      
-          marker.addListener('click', () => {
-            infowindow.open(map, marker);
-          });
-        }
-      }
-      setStations(results);
-    });
   };
-
 
   return (
     <Fragment>
       { status === "Found" ? (
-        <div style={{ height: '100vh', width: '1000px' }}>
+        <MapWrapper>
           <GoogleMapReact
             bootstrapURLKeys={{ 
-              key: "",
+              key: `${process.env.GOOGLE_KEY}`,
               language: 'en',
-              libraries: 'places',
+              libraries: 'places'
             }}
             options={options}
             defaultCenter={currentLocation}
             defaultZoom={zoom}
-            onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-          />
-      </div>
+          >
+            {places.map((place, i) => place.stops.map(stop => (
+    <Marker key={i} position={{ lat: stop.lat, lng: stop.lng }} alt={stop.station_descriptive_name} />
+  )))}
+          </GoogleMapReact>
+      </MapWrapper>
       ) : null}
     </Fragment>
   );
 }
 
 Map.defaultProps = {
-  zoom: 16,
+  zoom: 15,
 };
 
 Map.propTypes = {
   zoom: PropTypes.number,
-  places: []
 }
-
 
 export default Map;

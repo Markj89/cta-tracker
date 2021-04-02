@@ -18,7 +18,7 @@ function GetCurrentPosition(initialCenter) {
               isLocationEnabled(false);
               console.log(error);
               setStatus('No Geolocation found');
-            }, {enableHighAccuracy: false, timeout: 10000, maximumAge: 0}
+            }, {enableHighAccuracy: false, maximumAge:Infinity, timeout:10000}
             );
           } else {
             isLocationEnabled(false);

@@ -12,6 +12,10 @@ yarn.lock
 /yarn.lock
 keytmp.pem
 
+#Development
+/api/.env
+.env.local
+
 # testing
 /coverage
 /inspiration
