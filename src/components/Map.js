@@ -31,6 +31,10 @@ function Map({ zoom }) {
     var service = new maps.places.PlacesService(map);
   };
 
+  const markers = places.map((place, i) => place.stops.map((stop, j) => (
+    <Marker key={i[j]} lat={stop.lat} lng={stop.lng} alt={stop.station_descriptive_name} />
+  )));
+
   return (
     <Fragment>
       { status === "Found" ? (
@@ -45,9 +49,7 @@ function Map({ zoom }) {
             defaultCenter={currentLocation}
             defaultZoom={zoom}
           >
-            {places.map((place, i) => place.stops.map(stop => (
-    <Marker key={i} position={{ lat: stop.lat, lng: stop.lng }} alt={stop.station_descriptive_name} />
-  )))}
+            {markers}
           </GoogleMapReact>
       </MapWrapper>
       ) : null}

@@ -16,17 +16,21 @@ cursor : pointer;
 z-index: 1000000;
 `;
 
-const Marker = ({ alt, position }) => {
-    console.log(marker);
+const Marker = ({ alt, lat, lng }) => {
     return (
-        <MarkerWrapper position={position}>
+        <MarkerWrapper lat={lat} lng={lng}>
             <img src={`${marker}`} alt={alt} width='50' height='50' style={{position: 'absolute' }} />
+            <div style={{ width: '200px', position: 'relative', display: 'block' }}>
+            `   {alt}
+            </div>
         </MarkerWrapper>
     );
 };
 
 Marker.propTypes = {
-    position: PropTypes.object,
+    lat: PropTypes.number,
+    lng: PropTypes.number,
+    //position: PropTypes.object,
     alt: PropTypes.string
 };
 
