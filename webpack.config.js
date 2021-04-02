@@ -2,10 +2,12 @@ const resolve = require('path').resolve;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const port = process.env.PORT || 8080;
-
 const TerserWebpackPlugin = require('terser-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+var Dotenv = require('dotenv-webpack');
+var base = __dirname;
+const port = process.env.PORT || 8080;
 
 module.exports = function(_env, argv) {
     const isProduction = argv.mode === 'production';
@@ -13,16 +15,18 @@ module.exports = function(_env, argv) {
 
     return {
         mode: isProduction ? 'production' : 'development',
-        target: 'web',
-        devtool: isDevelopment && 'inline-source-map',
+        devtool: isDevelopment && 'source-map',
         entry: './src/index.js',
+        stats: {
+            colors: true
+        },
         output: {
-            filename: 'bundle.[hash].js',
-            path: resolve(__dirname, 'src'),
+            filename: 'bundle.js',
+            path: resolve(base, 'public'),
             publicPath: '/'
         },
         resolve: {
-            extensions: ['.js', 'jsx', '.css']    
+            extensions: ['*', '.js', '.jsx', '.css'],
         },
         module: {
             rules: [
@@ -32,20 +36,14 @@ module.exports = function(_env, argv) {
                     loader: 'babel-loader',
                     options: {
                         presets: ['@babel/preset-env'],
-                        cacheDirectory: true,
-                        cacheCompression: false,
+                        //cacheDirectory: true,
+                        //cacheCompression: true,
                         envName: isProduction ? 'production' : 'development'
                     }
                 },
                 {
-                    test: /\.(png|jpg|gif|svg|webp)$/i,
+                    test: /\.(jpe?g|png|gif|svg|webp)$/i,
                     use: [{
-                        loader: "url-loader",
-                        options: {
-                            limit: 8192,
-                            name: "assets/img/[name].[hash:8].[ext]"
-                        },
-                    }, {
                         loader: 'file-loader'
                     }]
                 },
@@ -66,7 +64,7 @@ module.exports = function(_env, argv) {
                     use: ['style-loader', 'css-loader', 'sass-loader']
                 },
                 {
-                    test: /\.(eot|gif|otf|png|svg|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                    test: /\.(eot|otf|svg|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                     use: [{
                         loader: 'file-loader',
                         options: {
@@ -77,12 +75,17 @@ module.exports = function(_env, argv) {
             ]
         },
         plugins: [
+            new Dotenv({
+                path: resolve(base, './.env.local')
+            }),
+            new CleanWebpackPlugin(),
             new MiniCssExtractPlugin(),
+            new webpack.HotModuleReplacementPlugin(),
             new HtmlWebpackPlugin({
-                template: resolve(__dirname, 'public/index.html'),
-                inject: true,
+                template: './src/index.html',
+                inject: "body",
+                filename: './index.html',
                 title: "CTA Tracker",
-                favicon: 'public/favicon.ico',
                 minify: {
                     collapseWhitespace: true
                 }
@@ -116,7 +119,9 @@ module.exports = function(_env, argv) {
             historyApiFallback: true,
             port: port,
             open: true,
-            host: 'localhost',
+            writeToDisk: false,
+            https: true,
+            contentBase: './public',
             compress: true,
         }
     };
