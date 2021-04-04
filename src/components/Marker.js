@@ -3,34 +3,35 @@
  * @type {Component}
  */
 
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import marker from './../assets/img/marker.png';
 
 const MarkerWrapper = styled.div`
 position: absolute;
+top: -30px;
+left: -10px;
 user-select: none;
-transform: translate(-50%, 0);
 cursor : pointer;
-z-index: 1000000;
+z-index: 1;
 `;
 
-const Marker = ({ alt, lat, lng }) => {
+const Marker = ({ alt, lat, lng, onClick }) => {
     return (
-        <MarkerWrapper lat={lat} lng={lng}>
+        <MarkerWrapper lat={lat} lng={lng} onMouseDown={onClick}>
             <img src={`${marker}`} alt={alt} width='50' height='50' style={{position: 'absolute' }} />
-            <div style={{ width: '200px', position: 'relative', display: 'block' }}>
-            `   {alt}
+            <div style={{ width: '200px',textAlign: 'center', position: 'absolute', top: '60px', left: '-50px', display: 'block' }}>
+                {alt}
             </div>
         </MarkerWrapper>
     );
 };
 
 Marker.propTypes = {
+    onClick: PropTypes.func,
     lat: PropTypes.number,
     lng: PropTypes.number,
-    //position: PropTypes.object,
     alt: PropTypes.string
 };
 
