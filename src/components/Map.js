@@ -26,10 +26,17 @@ function Map({ zoom }) {
   const { places } = GetStationsLocally(process.env.DEV_URL);
   const [active, setActive] = useState(false);
   const [station, setStation] = useState([]);
-  const [res, apiMethod] = Arrivals({url: `${process.env.DEV_URL}/arrivals`, headers: {ContentType: 'text/plain'}, payload: {station}});
+  const [ res, callForArrivals ] = Arrivals({
+    url: `${process.env.DEV_URL}/arrivals`,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json'
+    },
+    payload: station
+  });
 
   const mapRef = useRef();
-
+  
   const options = {
     panControl: true,
     mayTypeControl: false,
@@ -42,6 +49,11 @@ function Map({ zoom }) {
     setActive(!active);
   }
 
+  function handleCursor(arg) {
+    setStation(arg);
+    callForArrivals();
+  }
+
   const markers = places.map((place, i) => place.stops.map((stop, j) => (
     <Marker 
     key={i[j]} 
@@ -50,8 +62,7 @@ function Map({ zoom }) {
     alt={stop.station_descriptive_name} 
     onClick={(event) => {
       event.preventDefault();
-      setStation(stop);
-      apiMethod();
+      document.addEventListener("mousedown", handleCursor(stop));
     }} />
   )));
 
@@ -76,8 +87,8 @@ function Map({ zoom }) {
     	      }}
           >
             {
-              active ? (
-                <InfoWindow open={active} stationData={station} />
+              active && res['isLoading'] === true ? (
+                <InfoWindow open={active} stationData={res['data']} />
               ): null}
             {markers}
           </GoogleMapReact>

@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "author": "Marcus Jackson",
   "private": true,
+  "proxy": "http://127.0.0.1:3000/",
   "description": "A React based Transit tracker for Chicago Transit Authority (CTA)",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
