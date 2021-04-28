@@ -7,9 +7,10 @@ import PropTypes from 'prop-types';
 import GoogleMapReact from 'google-map-react';
 import GetCurrentPosition from '../hooks/GetCurrentPosition';
 import GetStationsLocally from '../hooks/GetStationsLocally';
-import Arrivals from '../hooks/Arrivals';
 import styled from 'styled-components';
 import Marker from './Marker';
+import http from '../utils/http-common';
+
 import InfoWindow from './InfoWindow';
 
 const MapWrapper = styled.div`
@@ -26,17 +27,10 @@ function Map({ zoom }) {
   const { places } = GetStationsLocally(process.env.DEV_URL);
   const [active, setActive] = useState(false);
   const [station, setStation] = useState([]);
-  const [ res, callForArrivals ] = Arrivals({
-    url: `${process.env.DEV_URL}/arrivals`,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json'
-    },
-    payload: station
-  });
+  const [response, setResponse] = useState({data: null, isLoading: true, error: null});
+  const [stationName, setName] = useState('');
 
   const mapRef = useRef();
-  
   const options = {
     panControl: true,
     mayTypeControl: false,
@@ -49,9 +43,20 @@ function Map({ zoom }) {
     setActive(!active);
   }
 
-  function handleCursor(arg) {
-    setStation(arg);
-    callForArrivals();
+  const arrivals = async (stop) => {
+    await http.post('/arrivals', stop).then(res => {
+      if (res.status === 200) {
+          if (res.data.ctatt.errNm != null) {
+              setResponse({ data: null, isLoading: false, error: res.data.ctatt.errNm });
+          } else {
+              setResponse({ data: res.data.ctatt.eta, isLoading: false, error: null });
+          }
+      }
+    }).catch((error) => {
+        console.log(`Error: ${error}`);
+        setResponse({data: null, isLoading: false, error});
+    });
+    setActive(!active);
   }
 
   const markers = places.map((place, i) => place.stops.map((stop, j) => (
@@ -59,11 +64,8 @@ function Map({ zoom }) {
     key={i[j]} 
     lat={stop.lat} 
     lng={stop.lng} 
-    alt={stop.station_descriptive_name} 
-    onClick={(event) => {
-      event.preventDefault();
-      document.addEventListener("mousedown", handleCursor(stop));
-    }} />
+    alt={place.station_name} 
+    markerClick={() => arrivals(stop)} />
   )));
 
   return (
@@ -80,15 +82,15 @@ function Map({ zoom }) {
             defaultCenter={currentLocation}
             defaultZoom={zoom}
             yesIWantToUseGoogleMapApiInternals
-            onChildClick={openStation}
+            //onChildClick={openStation}
             onGoogleApiLoaded={({map, maps}) => {
     	        mapRef.current = map;
               var service = new maps.places.PlacesService(map);
     	      }}
           >
             {
-              active && res['isLoading'] === true ? (
-                <InfoWindow open={active} stationData={res['data']} />
+              active ? (
+                <InfoWindow open={active} stationData={response['data']} />
               ): null}
             {markers}
           </GoogleMapReact>

@@ -3,7 +3,7 @@
  * @type {Component}
  */
 
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import marker from './../assets/img/marker.png';
@@ -12,14 +12,19 @@ const MarkerWrapper = styled.div`
 position: absolute;
 top: -30px;
 left: -10px;
-user-select: none;
 cursor : pointer;
-z-index: 1;
+z-index: 100;
 `;
 
-const Marker = ({ alt, lat, lng, onClick }) => {
+const Marker = ({ alt, lat, lng, markerClick }) => {
+    function clickHandler(event) {
+        event.preventDefault();
+        markerClick();
+        return  false;
+    }
+    const markerRef = useRef(null);
     return (
-        <MarkerWrapper lat={lat} lng={lng} onMouseDown={onClick}>
+        <MarkerWrapper lat={lat} lng={lng} onMouseDown={clickHandler} ref={markerRef}>
             <img src={`${marker}`} alt={alt} width='50' height='50' style={{position: 'absolute' }} />
             <div style={{ width: '200px',textAlign: 'center', position: 'absolute', top: '60px', left: '-50px', display: 'block' }}>
                 {alt}
@@ -29,7 +34,7 @@ const Marker = ({ alt, lat, lng, onClick }) => {
 };
 
 Marker.propTypes = {
-    onClick: PropTypes.func,
+    markerClick: PropTypes.func,
     lat: PropTypes.number,
     lng: PropTypes.number,
     alt: PropTypes.string

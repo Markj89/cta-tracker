@@ -2,31 +2,55 @@
  * Arrival
  * @type {Hooks}
  */
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import http from '../utils/http-common';
+import PropTypes from "prop-types";
 
-const Arrivals = ({url, headers, payload}) => {
-    if (!url || !payload) return;
-    const [ station, setStation ] = useState({ data: null, error: null, isLoading: false});
-    const [ error, setError] = useState("");
-    const callForArrivals = async() => {
+
+const Arrivals = initialState => {
+    const isFetching = useRef(true);
+    const [response, setResponse] = useState(initialState);
+
+    const callForArrivals = async () => {
         try {
-            setStation(prevState => ({...prevState, isLoading: true}));
-            const stationCall = axios.create({
-                withCredentials: true,
-                crossdomain: true,
-            });
-            await axios.post(url, payload, headers).then(res => {
-                setStation({ data: res.data, isLoading: true, error: null });
+            await http.post('/arrivals', response.payload).then(res => {
+                if (res.status === 200) {
+                    if (res.data.ctatt.errNm != null) {
+                        setResponse({ data: null, isLoading: false, error: res.data.ctatt.errNm });
+                    } else {
+                        setResponse({ data: res.data.ctatt.eta, isLoading: false, error: null });
+                    }
+                }
             }).catch((error) => {
                 console.log(`Error: ${error}`);
-                setStation({data: null, isLoading: false, error});
+                setResponse({data: null, isLoading: false, error});
             });
         } catch (error) {
             console.log(error);
         }
     };
-    return [ station, callForArrivals ];
+
+    const refreshData = useCallback(payload => {
+        setResponse(prevState => ({...prevState, payload}) );
+        isFetching.current = true;
+    });
+
+    useEffect(() => {
+        if (isFetching.current) {
+            isFetching.current = false;
+            callForArrivals();
+        }
+    }, [isFetching.current]);
+    return [response, refreshData];
 }
 
+Arrivals.propTypes = {
+    initialState: PropTypes.shape({
+        data: PropTypes.any,
+        error: PropTypes.string,
+        isLoading: PropTypes.bool.isRequired,
+        payload: PropTypes.any
+    }).isRequired
+};
+  
 export default Arrivals;
