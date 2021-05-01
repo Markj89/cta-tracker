@@ -16,8 +16,15 @@ function GetCurrentPosition(initialCenter) {
               isLocationEnabled(true);
             }, (error) => {
               isLocationEnabled(false);
-              console.log(error);
-              setStatus('No Geolocation found');
+              if (error.message === 'User denied geolocation prompt') {
+                setCurrentLocation({
+                  lat: 41.8715602,
+                  lng: -87.6688045
+                })
+                setStatus("Default Location");
+              } else {
+                setStatus('No Geolocation found');
+              }
             }, {enableHighAccuracy: false, maximumAge:Infinity, timeout:10000}
             );
           } else {
