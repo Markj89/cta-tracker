@@ -80,7 +80,7 @@ function Map({ zoom }) {
             }}
             options={options}
             defaultCenter={currentLocation}
-            defaultZoom={zoom}
+            defaultZoom={status === 'Default Location' ? 13 : zoom}
             yesIWantToUseGoogleMapApiInternals
             //onChildClick={openStation}
             onGoogleApiLoaded={({map, maps}) => {
