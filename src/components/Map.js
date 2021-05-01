@@ -70,7 +70,7 @@ function Map({ zoom }) {
 
   return (
     <Fragment>
-      { status === "Found" ? (
+      { status === "Found" || status === "Default Location" ? (
         <MapWrapper>
           <GoogleMapReact
             bootstrapURLKeys={{ 
