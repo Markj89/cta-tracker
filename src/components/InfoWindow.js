@@ -78,16 +78,16 @@ const InfoWindow = ({open, stationData}) => {
                     <div style={{height: '100%', overflow: 'scroll' }}>
                     {stationData.map((incoming, i) => (
                         <div key={i}>
-                            <div style={{ backgroundColor: findColor(incoming.rt), borderRadius: '2px', alignContent: 'center', flexWrap: 'wrap', flexFlow: 'row', alignItems: 'center',  display: 'flex', marginBottom: '10px' }}>
+                            <div style={{ marginBottom: '10px', padding: '10px', backgroundColor: findColor(incoming.rt), borderRadius: '2px', alignContent: 'center', flexWrap: 'wrap', flexFlow: 'row', alignItems: 'center',  display: 'flex', justifyContent: 'space-between' }}>
                                 <div style={{ width: '50px'}}>
-                                    <p style={{ color: '#fff', fontSize: '1.6rem'}}>{incoming.rn}</p>
+                                    <p style={{ color: '#fff', fontSize: '1.6rem', marginBottom: '0'}}>{incoming.rn}</p>
                                 </div>
-                                <div style={{ width: '200px'}}>
-                                    <p style={{ color: '#fff', fontSize: '.8rem'}}>{incoming.stpDe}</p>
+                                <div style={{ width: '110px'}}>
+                                    <p style={{ color: '#fff', fontSize: '.8rem', marginBottom: '0' }}>{incoming.stpDe}</p>
                                 </div>
                                 <div style={{ width: '100px'}}>
-                                    <p style={{ color: '#fff', fontSize: '1.2rem'}}>
-                                        <Moment date={incoming.arrT} format="hh:mm:ss" durationFromNow />
+                                    <p style={{ color: '#fff', fontSize: '1rem', marginBottom: '0'}}>
+                                        <Moment fromNow>{incoming.arrT}</Moment>
                                     </p>
                                 </div>
                             </div>
