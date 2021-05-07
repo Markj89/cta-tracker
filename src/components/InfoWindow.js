@@ -37,22 +37,22 @@ function findColor(stationColor) {
         case 'Blue':
             color = '#00a1de';
             break;
-        case 'Green':
+        case 'G':
             color = '#009b3a';
             break;
-        case 'Brown':
+        case 'Brn':
             color = '#62361b';
             break;
-        case 'Purple':
+        case 'P':
             color = '#522398';
             break;
-        case 'Yellow':
+        case 'Y':
             color = '#f9e300';
             break;
         case 'Red':
             color = '#c60c30';
             break;
-        case 'Orange':
+        case 'Org':
             color = '#f9461c';
             break;
         default:

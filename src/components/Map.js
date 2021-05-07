@@ -7,28 +7,18 @@ import PropTypes from 'prop-types';
 import GoogleMapReact from 'google-map-react';
 import GetCurrentPosition from '../hooks/GetCurrentPosition';
 import GetStationsLocally from '../hooks/GetStationsLocally';
-import styled from 'styled-components';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 import Marker from './Marker';
 import http from '../utils/http-common';
-
 import InfoWindow from './InfoWindow';
 
-const MapWrapper = styled.div`
-  position: relative;
-  height: 100vh;
-  width: 1000px;
-  iframe {
-    pointer-events: none;
-  }
-`;
 
 function Map({ zoom }) {
   const {status, currentLocation } = GetCurrentPosition({initialCenter: {lat: 0, lng: 0}});
   const { places } = GetStationsLocally(process.env.DEV_URL);
   const [active, setActive] = useState(false);
-  const [station, setStation] = useState([]);
   const [response, setResponse] = useState({data: null, isLoading: true, error: null});
-  const [stationName, setName] = useState('');
+  const { height, width } = useWindowDimensions();
 
   const mapRef = useRef();
   const options = {
@@ -71,7 +61,7 @@ function Map({ zoom }) {
   return (
     <Fragment>
       { status === "Found" || status === "Default Location" ? (
-        <MapWrapper>
+        <div style={{ position: 'relative', 'iframe': { pointerEvents: 'none'}, height: `${height}px`, width: `${width}px` }}>
           <GoogleMapReact
             bootstrapURLKeys={{ 
               key: `${process.env.GOOGLE_KEY}`,
@@ -94,7 +84,7 @@ function Map({ zoom }) {
               ): null}
             {markers}
           </GoogleMapReact>
-      </MapWrapper>
+      </div>
       ) : null}
     </Fragment>
   );
