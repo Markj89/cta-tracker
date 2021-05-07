@@ -25,10 +25,7 @@ const Marker = ({ alt, lat, lng, markerClick }) => {
     const markerRef = useRef(null);
     return (
         <MarkerWrapper lat={lat} lng={lng} onMouseDown={clickHandler} ref={markerRef}>
-            <img src={`${marker}`} alt={alt} width='50' height='50' style={{position: 'absolute' }} />
-            <div style={{ width: '200px',textAlign: 'center', position: 'absolute', top: '60px', left: '-50px', display: 'block' }}>
-                {alt}
-            </div>
+            <img src={`${marker}`} alt={alt} width='50' height='50' style={{position: 'absolute' }} loading="lazy" />
         </MarkerWrapper>
     );
 };
