@@ -27,11 +27,8 @@ function Map({ zoom }) {
     scrollwheel: false,
     fullscreenControl: false,
     disableDefaultUI: false,
+    styles: require('../utils/map_style.json')
   };
-
-  function openStation() {
-    setActive(!active);
-  }
 
   const arrivals = async (stop) => {
     await http.post('/arrivals', stop).then(res => {
@@ -53,7 +50,8 @@ function Map({ zoom }) {
     <Marker 
     key={i[j]} 
     lat={stop.lat} 
-    lng={stop.lng} 
+    color={Object.keys(stop).find(key => stop[key] === true && key !== 'ada')}
+    lng={stop.lng}
     alt={place.station_name} 
     markerClick={() => arrivals(stop)} />
   )));
@@ -72,7 +70,6 @@ function Map({ zoom }) {
             defaultCenter={currentLocation}
             defaultZoom={status === 'Default Location' ? 13 : zoom}
             yesIWantToUseGoogleMapApiInternals
-            //onChildClick={openStation}
             onGoogleApiLoaded={({map, maps}) => {
     	        mapRef.current = map;
               var service = new maps.places.PlacesService(map);

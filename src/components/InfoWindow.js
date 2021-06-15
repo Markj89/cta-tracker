@@ -18,7 +18,7 @@ const StationBox = styled.div`
     border-radius: 2px;
     z-index: 1000000;
     padding: 15px;
-    width: 320px;
+    width: 380px;
     height: 240px;
     z-index: 1000;
     overflow: auto;
@@ -62,7 +62,6 @@ function findColor(stationColor) {
     return color;
 }
 
-
 const InfoWindow = ({open, stationData}) => {
     const getName = stationData.map((station, i) => {
         return station.staNm.split("(").shift();
@@ -75,7 +74,7 @@ const InfoWindow = ({open, stationData}) => {
                     <div>
                         <h2 style={{ fontSize: '2rem'}}>{getName[0]}</h2>
                     </div>
-                    <div style={{height: '100%', overflow: 'scroll' }}>
+                    <div style={{height: '100%' }}>
                     {stationData.map((incoming, i) => (
                         <div key={i}>
                             <div style={{ marginBottom: '10px', padding: '10px', backgroundColor: findColor(incoming.rt), borderRadius: '2px', alignContent: 'center', flexWrap: 'wrap', flexFlow: 'row', alignItems: 'center',  display: 'flex', justifyContent: 'space-between' }}>
