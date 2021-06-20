@@ -11,6 +11,7 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import Marker from './Marker';
 import http from '../utils/http-common';
 import InfoWindow from './InfoWindow';
+import Sidebar from './Sidebar';
 
 
 function Map({ zoom }) {
@@ -60,6 +61,7 @@ function Map({ zoom }) {
     <Fragment>
       { status === "Found" || status === "Default Location" ? (
         <div style={{ position: 'relative', 'iframe': { pointerEvents: 'none'}, height: `${height}px`, width: `${width}px` }}>
+          <Sidebar />
           <GoogleMapReact
             bootstrapURLKeys={{ 
               key: `${process.env.GOOGLE_KEY}`,

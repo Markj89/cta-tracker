@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
+import React, { Fragment } from 'react';
 import Lines from './Lines';
 import Logo from './Logo';
 
-class Sidebar extends Component {
-
-  render() {
-    return(
+const Sidebar = () => {
+  return (
+    <Fragment>
       <div className="sidebar_wrapper">
         <Logo />
         <Lines />
       </div>
-    )
-  }
+    </Fragment>
+  );
 }
 
 export default Sidebar;
