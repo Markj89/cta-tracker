@@ -26,7 +26,7 @@ module.exports = function(_env, argv) {
             publicPath: '/'
         },
         resolve: {
-            extensions: ['*', '.js', '.jsx', '.css'],
+            extensions: ['*', '.js', '.jsx', '.css', '.scss'],
         },
         module: {
             rules: [
@@ -42,21 +42,30 @@ module.exports = function(_env, argv) {
                     }
                 },
                 {
-                    test: /\.(jpe?g|png|gif|svg|webp)$/i,
+                    test: /\.(jp(e*)g|png|gif|svg|webp)$/i,
                     use: [{
-                        loader: 'file-loader'
+                        loader: 'file-loader',
+                        options: {
+                            limit: 10000,
+                            name: "assets/img/[hash]-[name].[ext]",
+                            esModule: false
+                        },
                     }]
                 },
                 {
-                    test: /\.svg$/,
-                    use: ["@svgr/webpack", "svg-url-loader"]
+                    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                    use: ["babel-loader", "@svgr/webpack", "url-loader"]
+                },
+                {
+                    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                    use: ["svg-url-loader", "url-loader", "file-loader"],
                 },
                 {
                     test: /\.css$/,
                     use: [
                         "style-loader",
                         "css-loader",
-                        "sass-loader"
+                        "sass-loader",
                     ]
                 },
                 {
@@ -64,13 +73,8 @@ module.exports = function(_env, argv) {
                     use: ['style-loader', 'css-loader', 'sass-loader']
                 },
                 {
-                    test: /\.(eot|otf|svg|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                    use: [{
-                        loader: 'file-loader',
-                        options: {
-                            name: 'assets/img/[name].[ext]',
-                        },
-                    }]
+                    test: /\.(eot|otf|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                    loader: 'file-loader',
                 }
             ]
         },
