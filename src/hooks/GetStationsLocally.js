@@ -5,7 +5,7 @@ const GetStationsLocally = (url) => {
     const [places, getPlaces] = useState([]);
     
     const getData = useCallback(() => {
-        axios.get(`${process.env.DEV_URL}`).then((response) => {
+        axios.get(url).then((response) => {
             getPlaces(response.data);
         }).catch((error) => {
             console.warn(error);
