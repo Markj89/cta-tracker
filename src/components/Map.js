@@ -16,7 +16,7 @@ import Sidebar from './Sidebar';
 
 function Map({ zoom }) {
   const {status, currentLocation } = GetCurrentPosition({initialCenter: {lat: 0, lng: 0}});
-  const { places } = GetStationsLocally(process.env.DEV_URL);
+  const { places } = GetStationsLocally(`${process.env.DEV_URL}/Stations`);
   const [active, setActive] = useState(false);
   const [response, setResponse] = useState({data: null, isLoading: true, error: null});
   const { height, width } = useWindowDimensions();
