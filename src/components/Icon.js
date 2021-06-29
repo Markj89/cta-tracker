@@ -12,8 +12,8 @@ const Icon = (color) => {
                 <defs/>
                 <defs>
                     <linearGradient id="a" x1="50%" x2="69.7463681%" y1="0%" y2="50%">
-                    <stop offset="0%" stopColor="#459FD9"/>
-                    <stop offset="100%" stopColor="#2166B1"/>
+                    <stop offset="0%" stopColor="#459FD9" />
+                    <stop offset="100%" stopColor="#2166B1" />
                     </linearGradient>
                 </defs>
                 <g fill="none" fillRule="nonzero">
