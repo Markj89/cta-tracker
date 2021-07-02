@@ -19,8 +19,8 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development webpack serve --hot --progress --inline --https",
-    "start": "webpack serve --https",
-    "build": "webpack --mode production"
+    "start": "webpack serve --hot --progress --inline --https",
+    "build": "NODE_ENV=production webpack --mode production"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -44,6 +44,7 @@
     "@babel/plugin-transform-runtime": "^7.13.8",
     "@babel/preset-env": "^7.13.8",
     "@babel/preset-react": "^7.12.13",
+    "@hot-loader/react-dom": "^17.0.1",
     "@svgr/webpack": "^5.5.0",
     "axios": "^0.21.1",
     "babel-loader": "^8.2.2",

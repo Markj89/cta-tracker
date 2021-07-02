@@ -17,8 +17,13 @@ module.exports = function(_env, argv) {
         mode: isProduction ? 'production' : 'development',
         devtool: isDevelopment && 'source-map',
         entry: './src/index.js',
+        target: 'web',
         stats: {
             colors: true
+        },
+        watch: true,
+        watchOptions: {
+            ignored: '/node_modules/',
         },
         output: {
             filename: 'bundle.js',
@@ -26,7 +31,7 @@ module.exports = function(_env, argv) {
             publicPath: '/'
         },
         resolve: {
-            extensions: ['*', '.js', '.jsx', '.css', '.scss'],
+            extensions: ['*', '.js', '.jsx', '.css', '.scss']
         },
         module: {
             rules: [
@@ -36,8 +41,9 @@ module.exports = function(_env, argv) {
                     loader: 'babel-loader',
                     options: {
                         presets: ['@babel/preset-env'],
-                        //cacheDirectory: true,
+                        cacheDirectory: true,
                         //cacheCompression: true,
+                        plugins: ['react-hot-loader/babel'],
                         envName: isProduction ? 'production' : 'development'
                     }
                 },
@@ -122,7 +128,9 @@ module.exports = function(_env, argv) {
         devServer: {
             historyApiFallback: true,
             port: port,
+            hot: true,
             open: true,
+            inline: true,
             writeToDisk: false,
             https: true,
             contentBase: './public',
