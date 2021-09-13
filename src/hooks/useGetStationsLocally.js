@@ -1,7 +1,11 @@
+/**
+ * Find stations locally
+ * @type {Hooks}
+ */
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
-const GetStationsLocally = (url) => {
+export default function useGetStationsLocally(url) {
     const [places, getPlaces] = useState([]);
     
     const getData = useCallback(() => {
@@ -17,5 +21,3 @@ const GetStationsLocally = (url) => {
     }, []);
     return { places };
 }
-
-export default GetStationsLocally;
