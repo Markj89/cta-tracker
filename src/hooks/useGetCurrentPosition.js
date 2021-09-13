@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function GetCurrentPosition(initialCenter) {
+export default function useGetCurrentPosition(initialCenter) {
   const [currentLocation, setCurrentLocation] = useState({lat: 0, lng: 0});
     const [status, setStatus] = useState("idle");
     const [locationEnabled, isLocationEnabled] = useState(false);
@@ -40,5 +40,3 @@ function GetCurrentPosition(initialCenter) {
     }, []);
     return { status, currentLocation };
 };
-
-export default GetCurrentPosition;

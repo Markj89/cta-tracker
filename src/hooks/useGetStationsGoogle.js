@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function GetStationsGoogle(currentLocation) {
+export default function useGetStationsGoogle(currentLocation) {
     const [stations, setStations] = useState([]);
 
     const handleApiLoaded = (map, maps) => {
@@ -15,7 +15,6 @@ function GetStationsGoogle(currentLocation) {
         service.nearbySearch(request, (results, placeStatus) => {
           if (placeStatus === maps.places.PlacesServiceStatus.OK) {
             for (let i = 0; i < results.length; i++) {
-              console.log(results[i]);
               let infowindow = new maps.InfoWindow({
                 content: `<h1>${results[i].name}</h1>`,
                 position: {

@@ -1,0 +1,36 @@
+const trainsList = [
+    {
+      name: 'Red',
+      id: 'red',
+    },
+    {
+      name: 'Blue',
+      id: 'blue',
+    },
+    {
+      name: 'Orange',
+      id: 'org',
+    },
+    {
+      name: 'Pink',
+      id: 'pink',
+    },
+    {
+      name: 'Brown',
+      id: 'brn',
+    },
+    {
+      name: 'Green',
+      id: 'g',
+    },
+    {
+      name: 'Purple',
+      id: 'p'
+    },
+    {
+      name: 'Yellow',
+      id: 'y'
+    }
+];
+
+export default trainsList

@@ -7,7 +7,7 @@ import http from '../utils/http-common';
 import PropTypes from "prop-types";
 
 
-const Arrivals = initialState => {
+const useArrivals = initialState => {
     const isFetching = useRef(true);
     const [response, setResponse] = useState(initialState);
 
@@ -53,4 +53,4 @@ Arrivals.propTypes = {
     }).isRequired
 };
   
-export default Arrivals;
+export default useArrivals;
