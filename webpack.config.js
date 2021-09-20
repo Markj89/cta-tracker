@@ -17,7 +17,7 @@ module.exports = function(_env, argv) {
         mode: isProduction ? 'production' : 'development',
         devtool: isDevelopment && 'source-map',
         entry: './src/index.js',
-        target: 'web',
+        target: 'node',
         stats: {
             colors: true
         },
