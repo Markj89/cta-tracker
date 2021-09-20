@@ -1,4 +1,6 @@
 import React, { StrictMode } from 'react';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import ReactDOM from 'react-dom';
 import './styles/index.scss';
 import App from './App';
