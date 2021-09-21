@@ -6,11 +6,11 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 export default function useGetStationsLocally(url) {
-    const [places, getPlaces] = useState([]);
+    const [stations, getStations] = useState([]);
     
     const getData = useCallback(() => {
         axios.get(url).then((response) => {
-            getPlaces(response.data);
+            getStations(response.data);
         }).catch((error) => {
             console.warn(error);
         });
@@ -18,6 +18,6 @@ export default function useGetStationsLocally(url) {
 
     useEffect(() => {
         getData();
-    }, []);
-    return { places };
+    }, [url]);
+    return { stations };
 }

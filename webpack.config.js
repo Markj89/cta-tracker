@@ -17,7 +17,7 @@ module.exports = function(_env, argv) {
         mode: isProduction ? 'production' : 'development',
         devtool: isDevelopment && 'source-map',
         entry: './src/index.js',
-        target: 'node',
+        target: 'web',
         stats: {
             colors: true
         },
@@ -41,7 +41,7 @@ module.exports = function(_env, argv) {
                     loader: 'babel-loader',
                     options: {
                         presets: ['@babel/preset-env'],
-                        cacheDirectory: true,
+                        //cacheDirectory: true,
                         //cacheCompression: true,
                         plugins: ['react-hot-loader/babel'],
                         envName: isProduction ? 'production' : 'development'
