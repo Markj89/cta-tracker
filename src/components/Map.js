@@ -12,6 +12,7 @@ import Marker from './Marker';
 import http from '../utils/http-common';
 import InfoWindow from './InfoWindow';
 import Sidebar from './Sidebar';
+import useModal from '../hooks/useModal';
 
 function Map({ zoom }) {
   const [open, setOpen] = useState(false);
@@ -21,6 +22,7 @@ function Map({ zoom }) {
   const [active, setActive] = useState(false);
   const [response, setResponse] = useState({data: null, isLoading: true, error: null});
   const { height, width } = useWindowDimensions();
+  const {isVisible, toggleModal} = useModal();
 
   const mapRef = useRef();
   const options = {
@@ -96,7 +98,8 @@ function Map({ zoom }) {
         console.log(`Error: ${error}`);
         setResponse({data: null, isLoading: false, error});
     });
-    setActive(!active);
+    toggleModal();
+
   }
 
   const markers = places.map((place, i) => place.stops.map((stop, j) => (
@@ -106,7 +109,9 @@ function Map({ zoom }) {
     color={Object.keys(stop).find(key => stop[key] === true && key !== 'ada')}
     lng={stop.lng}
     alt={place.station_name} 
-    markerClick={() => arrivals(stop)} />
+    markerClick={() => {
+      arrivals(stop);
+    }} />
   )));
 
   return (
@@ -150,8 +155,8 @@ function Map({ zoom }) {
     	      }}
           >
             {
-              active ? (
-                <InfoWindow open={active} stationData={response['data']} />
+              isVisible ? (
+                <InfoWindow isVisible={isVisible} hideModal={toggleModal} stationData={response['data']} />
               ): null}
             {markers}
           </GoogleMapReact>
