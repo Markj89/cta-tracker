@@ -12,6 +12,7 @@ import Marker from './Marker';
 import http from '../utils/http-common';
 import InfoWindow from './InfoWindow';
 import Sidebar from './Sidebar';
+import useModal from '../hooks/useModal';
 
 function Map({ zoom }) {
   const [open, setOpen] = useState(false);
@@ -22,7 +23,8 @@ function Map({ zoom }) {
   const [active, setActive] = useState(false);
   const [response, setResponse] = useState({data: null, isLoading: true, error: null});
   const { height, width } = useWindowDimensions();
-  console.log(url);
+  const {isVisible, toggleModal} = useModal();
+
   const mapRef = useRef();
   const options = {
     panControl: true,
@@ -81,7 +83,8 @@ function Map({ zoom }) {
         console.log(`Error: ${error}`);
         setResponse({data: null, isLoading: false, error});
     });
-    setActive(!active);
+    toggleModal();
+
   }
 
   const markers = stations.map((station, i) => station.stops.map((stop, j) => (
@@ -137,8 +140,8 @@ function Map({ zoom }) {
     	      }}
           >
             {
-              active ? (
-                <InfoWindow open={active} stationData={response['data']} />
+              isVisible ? (
+                <InfoWindow isVisible={isVisible} hideModal={toggleModal} stationData={response['data']} />
               ): null}
             {markers}
           </GoogleMapReact>
