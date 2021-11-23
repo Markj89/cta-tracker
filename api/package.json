@@ -7,7 +7,7 @@
   "description": "Node and Express server for get local stations and arrivals",
   "scripts": {
     "debug": "DEBUG=express:* node ./bin/www",
-    "start": "nodemon ./bin/www",
+    "start": "PORT=3000 nodemon ./bin/www",
     "lint": "eslint app.js"
   },
   "dependencies": {
@@ -32,6 +32,8 @@
     }
   },
   "devDependencies": {
+    "env-cmd": "^8.15.0",
     "nodemon": "^2.0.7"
-  }
+  },
+  "main": "index.js"
 }
