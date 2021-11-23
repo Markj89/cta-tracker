@@ -2,7 +2,7 @@
  * Map
  * @type {Component}
  */
-import React, { useState, Fragment, useRef } from 'react';
+import React, { useState, Fragment, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import GoogleMapReact from 'google-map-react';
 import useGetCurrentPosition from '../hooks/useGetCurrentPosition';
@@ -16,9 +16,10 @@ import useModal from '../hooks/useModal';
 
 function Map({ zoom }) {
   const [open, setOpen] = useState(false);
-  const [stations, getStations] = useState([]);
+  const [url, setUrl] = useState(`${process.env.DEV_URL}/Stations`);
+  const [places, getPlaces] = useState([]);
   const {status, currentLocation } = useGetCurrentPosition({initialCenter: {lat: 0, lng: 0}});
-  const { places } = useGetStationsLocally(`${process.env.DEV_URL}/Stations`);
+  const { stations } = useGetStationsLocally(url);
   const [active, setActive] = useState(false);
   const [response, setResponse] = useState({data: null, isLoading: true, error: null});
   const { height, width } = useWindowDimensions();
@@ -69,22 +70,6 @@ function Map({ zoom }) {
     }
   ];
 
-  function toggleRoutes() {
-    setOpen(!open);
-  }
-
-  function useStationsByColor(initialValue) {
-    http.get(`/Stations/find/${initialValue}`).then(res => {
-      if (res.status !== 200) {
-          getStations('No Stations detected');
-      } else {
-          getStations(res.data);
-      }
-    }).catch((error) => {
-        console.warn(error);
-    });
-  }
-
   const arrivals = async (stop) => {
     await http.post('/arrivals', stop).then(res => {
       if (res.status === 200) {
@@ -102,29 +87,29 @@ function Map({ zoom }) {
 
   }
 
-  const markers = places.map((place, i) => place.stops.map((stop, j) => (
+  const markers = stations.map((station, i) => station.stops.map((stop, j) => (
     <Marker 
     key={i[j]} 
     lat={stop.lat} 
     color={Object.keys(stop).find(key => stop[key] === true && key !== 'ada')}
     lng={stop.lng}
-    alt={place.station_name} 
-    markerClick={() => {
-      arrivals(stop);
-    }} />
+    alt={station.station_name} 
+    markerClick={() => arrivals(stop)} />
   )));
 
   return (
     <Fragment>
       { status === "Found" || status === "Default Location" ? (
         <div style={{ position: 'relative', 'iframe': { pointerEvents: 'none'}, height: `${height}px`, width: `${width}px` }}>
-          <Sidebar click={() => toggleRoutes()} open={open}>
+          <Sidebar click={() => {
+            setOpen(!open);
+          }} open={open}>
             {trainsList.map((train, index) => (
               <li className="route" role="option" key={index}>
                 <div className={`${train.id} train`}></div>
                 <button onClick={(e) => {
                   e.preventDefault();
-                  useStationsByColor(train.id);
+                  setUrl(`${process.env.DEV_URL}/Stations/find/${train.id}`);
                   return false;
                 }} 
                 style={{
