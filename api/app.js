@@ -7,11 +7,10 @@ const mongoose = require('mongoose');
 const cors = require("cors");
 const dotenv = require('dotenv');
 
-var indexRouter = require('./routes/index');
 var arrivalsRouter = require('./routes/arrivals');
 var stationsRouter = require('./routes/stations');
 
-dotenv.config();
+dotenv.config({path: __dirname + '/../.env.local'});
 var app = express();
 
 // view engine setup
@@ -39,7 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/', stationsRouter);
 app.use('/arrivals', arrivalsRouter);
 app.use('/Stations', stationsRouter);
 

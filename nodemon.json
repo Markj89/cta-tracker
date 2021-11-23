@@ -1,0 +1,8 @@
+{
+    "verbose": true,
+    "delay": "2",
+    "ignore": [
+        "regexps.js",
+        "npm-log"
+    ]
+}
