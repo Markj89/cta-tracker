@@ -139,7 +139,7 @@ const InfoWindow = ({isVisible, hideModal, stationData}) => {
                                         <Headline>{getName[0]}</Headline>
                                     </div>
                                     <CloseButton onClick={hideModal} type="reset" role="button">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 10 45 40" enableBackground="new 0 0 45 40" width="25">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 40" enableBackground="new 0 0 45 40" width="25">
                                             <line x1="15" y1="15" x2="25" y2="25" stroke="#000" stroke-width="2.5" strokeLinecap="round" strokeMiterlimit="10"></line>
                                             <line x1="25" y1="15" x2="15" y2="25" stroke="#000" stroke-width="2.5" strokeLinecap="round" strokeMiterlimit="10"></line>    
                                             <circle class="circle" cx="20" cy="20" r="19" opacity="0" stroke="#565a5c" strokeWidth="2.5" stroke-linecap="round" stroke-miterlimit="10" fill="none"></circle>

@@ -28,15 +28,4 @@ router.route(`/find/:color`).get((req, res) => {
     });
 });
 
-router.connect('http://localhost:3000', function(err, db) {
-    if (err) throw err;
-    var dbo = db.db("cta_stations");
-    var query = { g: true };
-    /*dbo.collection("stations").find(query).toArray(function(err, result) {
-        if (err) throw err;
-        console.log(result);
-        db.close();
-    });*/
-});
-
 module.exports = router;

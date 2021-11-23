@@ -1,4 +1,4 @@
-import React, { Children, Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Logo from './Logo';
 import { library } from '@fortawesome/fontawesome-svg-core';
