@@ -21,7 +21,6 @@ module.exports = function(_env, argv) {
         stats: {
             colors: true
         },
-        watch: true,
         watchOptions: {
             ignored: '/node_modules/',
         },

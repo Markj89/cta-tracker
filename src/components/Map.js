@@ -2,12 +2,13 @@
  * Map
  * @type {Component}
  */
-import React, { useState, Fragment, useRef, useEffect } from 'react';
+import React, { useState, Fragment, useRef } from 'react';
 import PropTypes from 'prop-types';
 import GoogleMapReact from 'google-map-react';
 import useGetCurrentPosition from '../hooks/useGetCurrentPosition';
 import useGetStationsLocally from '../hooks/useGetStationsLocally';
 import useWindowDimensions from '../hooks/useWindowDimensions';
+import { trainsList } from '../utils/train_color';
 import Marker from './Marker';
 import http from '../utils/http-common';
 import InfoWindow from './InfoWindow';
@@ -16,11 +17,9 @@ import useModal from '../hooks/useModal';
 
 function Map({ zoom }) {
   const [open, setOpen] = useState(false);
-  const [url, setUrl] = useState(`${process.env.DEV_URL}/Stations`);
-  const [places, getPlaces] = useState([]);
+  const [url, setUrl] = useState(`${process.env.DEV_URL}/`);
   const {status, currentLocation } = useGetCurrentPosition({initialCenter: {lat: 0, lng: 0}});
   const { stations } = useGetStationsLocally(url);
-  const [active, setActive] = useState(false);
   const [response, setResponse] = useState({data: null, isLoading: true, error: null});
   const { height, width } = useWindowDimensions();
   const {isVisible, toggleModal} = useModal();
@@ -34,41 +33,6 @@ function Map({ zoom }) {
     disableDefaultUI: false,
     styles: require('../utils/map_style.json')
   };
-
-  const trainsList = [
-    {
-      name: 'Red',
-      id: 'red',
-    },
-    {
-      name: 'Blue',
-      id: 'blue',
-    },
-    {
-      name: 'Orange',
-      id: 'org',
-    },
-    {
-      name: 'Pink',
-      id: 'pink',
-    },
-    {
-      name: 'Brown',
-      id: 'brn',
-    },
-    {
-      name: 'Green',
-      id: 'g',
-    },
-    {
-      name: 'Purple',
-      id: 'p'
-    },
-    {
-      name: 'Yellow',
-      id: 'y'
-    }
-  ];
 
   const arrivals = async (stop) => {
     await http.post('/arrivals', stop).then(res => {
