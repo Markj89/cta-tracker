@@ -1,53 +1,51 @@
-'use strict';
-
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const mongoose = require('mongoose');
 const cors = require("cors");
-const bodyParser = require('body-parser');
-const fs = require('fs');
+const dotenv = require('dotenv');
 
-// Routers
-const indexRouter = require('./routes/index');
-const ctaRouter = require("./routes/cta");
-const locationRouter = require("./routes/locations");
-const arrivalsRouter = require("./routes/arrivals");
-const stationsRouter = require("./routes/stations");
+var arrivalsRouter = require('./routes/arrivals');
+var stationsRouter = require('./routes/stations');
 
-const app = express();
+dotenv.config({path: __dirname + '/../.env.local'});
+var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: '*',
   credentials: true,
 }));
 
-app.use(bodyParser.json());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
+const uri = process.env.ATLAS_URI;
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+
+const connection = mongoose.connection;
+connection.once('open', () => {
+  console.log('MondoDB database connection established successfully');
+});
+
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use("/cta", ctaRouter);
-app.use("/locations", locationRouter);
-app.use("/arrivals", arrivalsRouter);
-app.use("/stations", stationsRouter);
+app.use('/', stationsRouter);
+app.use('/arrivals', arrivalsRouter);
+app.use('/Stations', stationsRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
+  res.status(404).send('Unable to find request');
   next(createError(404));
-});
-
-app.use('/', function(request, response) {
-
 });
 
 // error handler
@@ -55,26 +53,23 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+  
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', ['*']);
+  //res.setHeader('Access-Control-Allow-Origin', ['*']);
 
   // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  //res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
   // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  //res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  //res.setHeader('Access-Control-Allow-Credentials', true);
 
   // Pass to next layer of middleware
   next();
 
   // render the error page
   res.status(err.status || 500);
-  if (err.status || 500) {
-    res.render('error');
-  } else {
-    res.render(res);
-  }
+  res.render('error');
 });
 
 module.exports = app;

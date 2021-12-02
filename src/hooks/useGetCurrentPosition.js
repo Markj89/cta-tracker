@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function GetCurrentPosition(initialCenter) {
+export default function useGetCurrentPosition(initialCenter) {
   const [currentLocation, setCurrentLocation] = useState({lat: 0, lng: 0});
     const [status, setStatus] = useState("idle");
     const [locationEnabled, isLocationEnabled] = useState(false);
@@ -16,9 +16,16 @@ function GetCurrentPosition(initialCenter) {
               isLocationEnabled(true);
             }, (error) => {
               isLocationEnabled(false);
-              console.log(error);
-              setStatus('No Geolocation found');
-            }, {enableHighAccuracy: false, timeout: 10000, maximumAge: 0}
+              if (error.message === 'User denied geolocation prompt') {
+                setCurrentLocation({
+                  lat: 41.8715602,
+                  lng: -87.6688045
+                })
+                setStatus("Default Location");
+              } else {
+                setStatus('No Geolocation found');
+              }
+            }, {enableHighAccuracy: false, maximumAge:Infinity, timeout:10000}
             );
           } else {
             isLocationEnabled(false);
@@ -33,5 +40,3 @@ function GetCurrentPosition(initialCenter) {
     }, []);
     return { status, currentLocation };
 };
-
-export default GetCurrentPosition;

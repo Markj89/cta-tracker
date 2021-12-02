@@ -53,19 +53,18 @@
   display: flex;
   border-radius: 3px 0px 0px 3px;
   &::before {
-    background-image: url("../assets/img/train-solid.svg");
+    background-image: url("../assets/img/train.png");
     background-repeat: no-repeat;
     background-position: top center;
-    content: "";
+    background-size: contain;
+    overflow: auto;
+    content: " ";
     width: 100%;
-    top: 50%;
-    left: 10%;
-    height: 78px;
+    left: -15%;
+    height: 40px;
     margin: 14px -4px 9px 16px;
     position: relative;
-    top: -15px;
+    top: -5%;
     bottom: 0;
-    left: auto;
-    right: auto;
   }
 }
