@@ -8,7 +8,7 @@ import GoogleMapReact from 'google-map-react';
 import useGetCurrentPosition from '../hooks/useGetCurrentPosition';
 import useGetStationsLocally from '../hooks/useGetStationsLocally';
 import useWindowDimensions from '../hooks/useWindowDimensions';
-import { trainsList } from '../utils/train_color';
+import trainsList from '../utils/train_color.json';
 import Marker from './Marker';
 import http from '../utils/http-common';
 import InfoWindow from './InfoWindow';
