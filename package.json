@@ -12,7 +12,7 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "concurrently": "^6.3.0",
     "eslint": "^7.23.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.3",
     "nodemon": "^2.0.14",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
