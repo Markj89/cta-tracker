@@ -3,11 +3,13 @@
 # dependencies
 /node_modules
 /api/node_modules
+/api/package-lock.json
 /.pnp
 .pnp.js
 package-lock.json
 /package-lock.json
-
+yarn.lock
+/yarn.lock
 keytmp.pem
 
 #Development
