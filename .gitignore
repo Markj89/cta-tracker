@@ -2,8 +2,9 @@
 
 # dependencies
 /node_modules
-/api/node_modules
-/api/package-lock.json
+/server/node_modules
+/server/package-lock.json
+/server/stations.txt
 /.pnp
 .pnp.js
 package-lock.json
@@ -13,7 +14,7 @@ yarn.lock
 keytmp.pem
 
 #Development
-/api/.env
+/server/.env
 .env.local
 
 # testing
