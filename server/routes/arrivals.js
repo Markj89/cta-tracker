@@ -30,8 +30,6 @@ router.use('/', (req, res) => {
         if (error) throw new Error(error);
         res.send(body);
     });
-
 });
-
 
 module.exports = router;

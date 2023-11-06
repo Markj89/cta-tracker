@@ -12,7 +12,8 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "concurrently": "^6.3.0",
     "eslint": "^7.23.0",
-    "node-sass": "^5.0.0",
+    "mongodb": "^5.7.0",
+    "node-sass": "^7.0.3",
     "nodemon": "^2.0.14",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
@@ -21,9 +22,8 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development webpack serve --hot --progress --inline --https",
-    "server-dev": "PORT=3000 nodemon --delay 500ms --verbose ./api/bin/www",
-    "server": "PORT=3000 '.env.local' node ./api/bin/www",
-    "start": "concurrently \"yarn server-dev\" \"yarn dev\"",
+    "server": "PORT=3000 nodemon --experimental-modules ./server/index.mjs",
+    "start": "concurrently \"yarn server\" \"yarn dev\"",
     "build": "NODE_ENV=production webpack --mode production"
   },
   "eslintConfig": {

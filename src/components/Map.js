@@ -17,7 +17,7 @@ import useModal from '../hooks/useModal';
 
 function Map({ zoom }) {
   const [open, setOpen] = useState(false);
-  const [url, setUrl] = useState(`${process.env.DEV_URL}/`);
+  const [url, setUrl] = useState(`${process.env.DEV_URL}/stations`);
   const {status, currentLocation } = useGetCurrentPosition({initialCenter: {lat: 0, lng: 0}});
   const { stations } = useGetStationsLocally(url);
   const [response, setResponse] = useState({data: null, isLoading: true, error: null});
@@ -34,11 +34,19 @@ function Map({ zoom }) {
     styles: require('../utils/map_style.json')
   };
 
-  const arrivals = async (stop) => {
-    await http.post('/arrivals', stop).then(res => {
+  /**
+   * arrivals
+   * @Function
+   * @param {*} stop 
+   */
+  const arrivals = async (id, station) => {
+    await fetch(`${url}/${id}`, {
+      method: 'GET',
+      body: station
+    }).then(res => {
       if (res.status === 200) {
-          if (res.data.ctatt.errNm != null) {
-              setResponse({ data: null, isLoading: false, error: res.data.ctatt.errNm });
+          if (res === null) {
+              setResponse({ data: null, isLoading: false, error: 'No data returned' });
           } else {
               setResponse({ data: res.data.ctatt.eta, isLoading: false, error: null });
           }
@@ -58,7 +66,7 @@ function Map({ zoom }) {
     color={Object.keys(stop).find(key => stop[key] === true && key !== 'ada')}
     lng={stop.lng}
     alt={station.station_name} 
-    markerClick={() => arrivals(stop)} />
+    markerClick={() => arrivals(station['_id'], stop)} />
   )));
 
   return (
@@ -73,7 +81,7 @@ function Map({ zoom }) {
                 <div className={`${train.id} train`}></div>
                 <button onClick={(e) => {
                   e.preventDefault();
-                  setUrl(`${process.env.DEV_URL}/Stations/find/${train.id}`);
+                  setUrl(`${process.env.DEV_URL}/stations/${train['_id']}`);
                   return false;
                 }} 
                 style={{
