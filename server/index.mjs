@@ -8,11 +8,6 @@ import stations from './routes/stations.mjs'
 const PORT = 3000;
 const app = express();
 
-// view engine setup
-//app.set('views', path.dirname, 'views');
-//app.set('view engine', 'jade');
-//app.use(logger('dev'));
-
 app.use(cors({
   origin: '*',
   credentials: true,
@@ -21,11 +16,8 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-//app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', stations);
-//app.use('/arrivals', arrivalsRouter);
-//app.use('/Stations', stationsRouter);
+app.use('/stations', stations);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -36,14 +28,13 @@ app.use((req, res, next) => {
 // error handler
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  //res.locals.message = err.message;
+  //res.locals.error = req.app.get('env') === 'development' ? err : {};
   // Pass to next layer of middleware
-  next();
+  //next();
 
   // render the error page
-  res.status(err.status || 500);
-  res.render(err.status );
+  res.status(err.status || 500).render(err.status);
 });
 
 // start the Express server

@@ -22,9 +22,8 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development webpack serve --hot --progress --inline --https",
-    "server-dev": "PORT=3000 nodemon --delay 500ms --verbose ./server/bin/www",
-    "server": "PORT=3000 '.env.local' node ./server/bin/www",
-    "start": "concurrently \"yarn server-dev\" \"yarn dev\"",
+    "server": "PORT=3000 nodemon --experimental-modules ./server/index.mjs",
+    "start": "concurrently \"yarn server\" \"yarn dev\"",
     "build": "NODE_ENV=production webpack --mode production"
   },
   "eslintConfig": {

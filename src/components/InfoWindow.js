@@ -126,8 +126,7 @@ const InfoWindow = ({isVisible, hideModal, stationData}) => {
         <Fragment>
             <ModalOverlay>
                 <ModalWrapper
-                    aria-modal={true}       
-                    aria-modal={true}
+                    ariaModal={true}       
                     aria-hidden={true}
                     tabIndex={-1}
                     role="dialog">
