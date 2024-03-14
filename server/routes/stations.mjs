@@ -10,11 +10,10 @@ const router = express.Router();
  * @param {Object}
  */
 router.get('/', async (req, res) => {
-    //console.log(`Route Main Page: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
+    console.log(`Route Main Page: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
 
     let collection = await conn.collection("Stations");
     const results = await collection.find({}).toArray();
-    console.log(results);
     /*if (results?.error) {
         res.send({
             message: error.message || 'Some error occurred while retrieving tutorials.'
@@ -33,10 +32,8 @@ router.get('/', async (req, res) => {
 router.get("/:_id", async (requests, response) => {
     console.log(`Route Single Stop: ${requests.protocol}://${requests.get('host')}${requests.originalUrl}`);
     let collection = await conn.collection("Stations");
-    //db.theColl.find( { "_id": ObjectId("4ecbe7f9e8c1c9092c000027") } )
 
-    const results = await collection.find({ _id: ObjectId("64ebbdc11222861efa37c5f8") }).toArray();
-    console.log(results);
+    const results = await collection.find({ _id: ObjectId(requests.params._id) }).toArray();
     const stationColor = (object, value) => {
         return Object.keys(object).find(key => object[key] === value && key !== 'ada');
     };
@@ -61,7 +58,6 @@ router.get("/:_id", async (requests, response) => {
     };
 
     request(options, ((error, res, body) => {
-        //console.log(res)
         if (error) throw new Error(error);
         response.send(body);
     }));
