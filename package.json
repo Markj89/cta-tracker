@@ -101,7 +101,7 @@
     "svg-url-loader": "^7.1.1",
     "terser-webpack-plugin": "^5.3.9",
     "url-loader": "^4.1.1",
-    "webpack": "^5.76.0",
+    "webpack": "^5.90.3",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"
   },
@@ -111,5 +111,6 @@
   "bugs": {
     "url": "https://github.com/Markj89/cta-tracker/issues"
   },
-  "homepage": "https://github.com/Markj89/cta-tracker#readme"
+  "homepage": "https://github.com/Markj89/cta-tracker#readme",
+  "packageManager": "yarn@4.1.0"
 }

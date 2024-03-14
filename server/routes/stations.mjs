@@ -10,11 +10,10 @@ const router = express.Router();
  * @param {Object}
  */
 router.get('/', async (req, res) => {
-    //console.log(`Route Main Page: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
+    console.log(`Route Main Page: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
 
     let collection = await conn.collection("Stations");
     const results = await collection.find({}).toArray();
-    console.log(results);
     /*if (results?.error) {
         res.send({
             message: error.message || 'Some error occurred while retrieving tutorials.'
@@ -30,21 +29,22 @@ router.get('/', async (req, res) => {
  * @param {*} res
  * @param {Object}
  */
-router.get("/:id", async (requests, response) => {
+router.get("/:_id", async (requests, response) => {
     console.log(`Route Single Stop: ${requests.protocol}://${requests.get('host')}${requests.originalUrl}`);
+    let collection = await conn.collection("Stations");
 
-    console.log(requests);
+    const results = await collection.find({ _id: ObjectId(requests.params._id) }).toArray();
     const stationColor = (object, value) => {
         return Object.keys(object).find(key => object[key] === value && key !== 'ada');
     };
 
     let options = {
         method: 'GET',
-        url: process.env.ARRIVALS, // API Endpoint
+        url: process.env.TRAIN_ARRIVALS, // API Endpoint
         qs: {
-            key: process.env.CTA_KEY, // API KEY
-            mapid: requests.body.map_id,
-            rt: stationColor(requests.body, true),
+            key: process.env.CTA_TRAIN_API_KEY, // API KEY
+            mapid: requests?.params?._id, // Stop ID
+            rt: stationColor(requests.params, true),
             outputType: 'json'
         },
         headers: {
@@ -57,11 +57,10 @@ router.get("/:id", async (requests, response) => {
         }
     };
 
-    request(options, function(error, res, body) {
-        //console.log(res)
+    request(options, ((error, res, body) => {
         if (error) throw new Error(error);
         response.send(body);
-    });
+    }));
 });
 
 /**

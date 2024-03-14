@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 var base = __dirname;
-const port = process.env.PORT || 8080;
+const port = process.env.UI_PORT || 8080;
 
 module.exports = (_env, argv) => {
   const isProduction = argv.mode === "production";

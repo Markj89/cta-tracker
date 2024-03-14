@@ -9,9 +9,9 @@ router.use('/', (req, res) => {
 
     var options = {
         method: 'GET',
-        url: process.env.ARRIVALS, // API Endpoint
+        url: process.env.TRAIN_ARRIVALS, // API Endpoint
         qs: {
-            key: process.env.CTA_KEY, // API KEY
+            key: process.env.CTA_TRAIN_API_KEY, // API KEY
             mapid: req.body.map_id,
             rt: stationColor(req.body, true),
             outputType: 'json'
