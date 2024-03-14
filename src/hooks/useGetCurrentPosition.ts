@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 
-export default function useGetCurrentPosition(initialCenter) {
+export default function useGetCurrentPosition(initialCenter: any) {
   const [currentLocation, setCurrentLocation] = useState({lat: 0, lng: 0});
-    const [status, setStatus] = useState("idle");
+    const [isLoading, setLoading] = useState(false);
+    const [status, setStatus] = useState('idle');
     const [locationEnabled, isLocationEnabled] = useState(false);
     
     useEffect(() => {
       async function fetchCoords() {
         try {
-          setStatus("Searching");
           if (navigator.geolocation) {
             await navigator.geolocation.getCurrentPosition((position) => {
               setCurrentLocation({lat: position.coords.latitude, lng: position.coords.longitude});
-              setStatus("Found");
+              setLoading(true);
               isLocationEnabled(true);
             }, (error) => {
               isLocationEnabled(false);
@@ -29,14 +29,14 @@ export default function useGetCurrentPosition(initialCenter) {
             );
           } else {
             isLocationEnabled(false);
-            setStatus('Geolocation turned off');
+            setLoading(false);
           }
         } catch (error) {
           console.warn(error);
-          setStatus("Error found");      
+          setLoading(false);
         }
       }
       fetchCoords();
     }, []);
-    return { status, currentLocation };
+    return { isLoading, currentLocation };
 };

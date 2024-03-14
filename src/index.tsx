@@ -1,15 +1,16 @@
-import React, { StrictMode } from 'react';
+import * as React from 'react';
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './styles/index.scss';
 import App from './App';
 
-ReactDOM.render(
-    <StrictMode>
+const container = document.getElementById('app');
+const root = createRoot(container!);
+root.render(
+    <div>
         <App />
-    </StrictMode>, 
-    document.getElementById('root')
+    </div>, 
 );
 
 // If you want your app to work offline and load faster, you can change
