@@ -17,7 +17,7 @@ import useModal from '../hooks/useModal';
 
 function Map({ zoom }) {
   const [open, setOpen] = useState(false);
-  const [url, setUrl] = useState(`${process.env.DEV_URL}/stations`);
+  const [url, setUrl] = useState(`${process.env.SERVER_URL}/stations`);
   const {status, currentLocation } = useGetCurrentPosition({initialCenter: {lat: 0, lng: 0}});
   const { stations } = useGetStationsLocally(url);
   const [response, setResponse] = useState({data: null, isLoading: true, error: null});
@@ -81,7 +81,7 @@ function Map({ zoom }) {
                 <div className={`${train.id} train`}></div>
                 <button onClick={(e) => {
                   e.preventDefault();
-                  setUrl(`${process.env.DEV_URL}/stations/${train['_id']}`);
+                  setUrl(`${process.env.SERVER_URL}/stations/${train['_id']}`);
                   return false;
                 }} 
                 style={{

@@ -7,7 +7,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 var Dotenv = require('dotenv-webpack');
 var base = __dirname;
-const port = process.env.PORT || 8080;
+const port = process.env.UI_PORT || 8080;
 
 module.exports = function(_env, argv) {
     const isProduction = argv.mode === 'production';
@@ -100,7 +100,7 @@ module.exports = function(_env, argv) {
                 }
             }),
             new webpack.DefinePlugin({
-                "process.env.NODE_ENV": JSON.stringify(isProduction ? "production" : "development")
+                "process.env.UI_PORT": JSON.stringify(isProduction ? "production" : "development")
             })  
         ].filter(Boolean),
         optimization: {

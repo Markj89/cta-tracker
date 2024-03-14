@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 
 
 export default function List() {
-    const [url, setUrl] = useState(`${process.env.DEV_URL}/`);
+    const [url, setUrl] = useState(`${process.env.SERVER_URL}/`);
     const {status, currentLocation } = useGetCurrentPosition({initialCenter: {lat: 0, lng: 0}});
     const { stations } = useGetStationsLocally(url);
 

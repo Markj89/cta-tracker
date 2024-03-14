@@ -29,21 +29,24 @@ router.get('/', async (req, res) => {
  * @param {*} res
  * @param {Object}
  */
-router.get("/:id", async (requests, response) => {
+router.get("/:_id", async (requests, response) => {
     console.log(`Route Single Stop: ${requests.protocol}://${requests.get('host')}${requests.originalUrl}`);
+    let collection = await conn.collection("Stations");
+    //db.theColl.find( { "_id": ObjectId("4ecbe7f9e8c1c9092c000027") } )
 
-    console.log(requests);
+    const results = await collection.find({ _id: ObjectId("64ebbdc11222861efa37c5f8") }).toArray();
+    console.log(results);
     const stationColor = (object, value) => {
         return Object.keys(object).find(key => object[key] === value && key !== 'ada');
     };
 
     let options = {
         method: 'GET',
-        url: process.env.ARRIVALS, // API Endpoint
+        url: process.env.TRAIN_ARRIVALS, // API Endpoint
         qs: {
-            key: process.env.CTA_KEY, // API KEY
-            mapid: requests.body.map_id,
-            rt: stationColor(requests.body, true),
+            key: process.env.CTA_TRAIN_API_KEY, // API KEY
+            mapid: requests?.params?._id, // Stop ID
+            rt: stationColor(requests.params, true),
             outputType: 'json'
         },
         headers: {
@@ -56,11 +59,11 @@ router.get("/:id", async (requests, response) => {
         }
     };
 
-    request(options, function(error, res, body) {
+    request(options, ((error, res, body) => {
         //console.log(res)
         if (error) throw new Error(error);
         response.send(body);
-    });
+    }));
 });
 
 /**
