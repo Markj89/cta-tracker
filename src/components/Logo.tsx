@@ -1,17 +1,16 @@
 import React from 'react';
-//import white_logo from './../assets/img/logo (white).png';
 import black_logo from './../assets/img/logo(black).png';
-
 
 const headerStyles = {
   width: '200px',
   height: '100%'
 };
 
-function Logo() {
+const Logo = () => {
   return (
     <figure>
-      <img src={black_logo} alt="Logo" style={{ width: headerStyles.width}}  />
+      <img src={black_logo} alt="Logo" style={{ width: headerStyles.width}} />
+      <figcaption style={{ display: 'none' }}>Logo</figcaption>
     </figure>
   )
 }
