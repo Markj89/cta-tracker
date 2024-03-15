@@ -1,0 +1,27 @@
+{
+    "plugins": ["import"],
+    "parserOptions": {
+        "ecmaVersion": 2017
+    },
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "rules": {
+        "no-template-curly-in-string": "off",
+        "import/no-unresolved": 2,
+        "import/no-commonjs": 2,
+        "import/extensions": [2, "ignorePackages"],
+        "no-unused-vars": [
+            "error",
+            {
+                // Ignore arguments starting with _
+                "argsIgnorePattern": "^_"
+            }
+        ]
+    },
+    "extends": [
+        "standard",
+        "eslint:recommended"
+    ]
+}

@@ -1,0 +1,30 @@
+/**
+ * Find stations locally
+ * @type {Hooks}
+ */
+import { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
+
+export default function useGetStationsLocally(url) {
+    const [stations, getStations] = useState([]);
+    
+    /*const getData = useCallback(() => {
+        axios.get(url).then((response) => {
+            getStations(response.data);
+        }).catch((error) => {
+            console.warn(error);
+        });
+    });*/
+
+    const getData = useCallback(() => {
+        fetch(url, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+    });
+
+    useEffect(() => {
+        getData();
+    }, [url]);
+    return { stations };
+}
