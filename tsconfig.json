@@ -3,8 +3,8 @@
         "skipLibCheck": true,
         "outDir": "public",
         "noFallthroughCasesInSwitch": true,
-        "module": "es6",
-        "target": "es5",
+        "module": "commonjs",
+        "target": "esnext",
         "lib": ["es6", "es7", "ESNext", "dom", "DOM.Iterable"],
         "allowJs": true,
         "jsx": "react-jsx",
@@ -27,6 +27,6 @@
         "noEmit": true,
         "types": ["react", "node"]
     },
-    "include": ["src/**/*", "webpack.config.js"],
+    "include": ["src/**/*", "webpack.config.ts"],
     "exclude": ["node_modules", "src/**/*.test", "public"],
 }
