@@ -1,50 +1,38 @@
 # CTA Tracker
-
-A React Based Transit Tracker for the Chicago Transit Authority (CTA)
+A React Based Transit Tracker for the Chicago Transit Authority (CTA) 
 
 ### Project setup
-
 ```
 npm install
 ```
-
 ### Compiles for development
-
 ```
 npm run start
 ```
-
 ### Compiles and minifies for production
-
 ```
 npm run build
 ```
-
 ### Run your tests
-
 ```
 npm run test
 ```
-
 ### Eject
-
 ```
 npm run eject
 ```
 
 ### Built With
-
 - [React](https://github.com/facebook/create-react-app)
 
-#### Dependencies
 
+#### Dependencies
 - [Eslint](https://eslint.org/)
 - [axios](https://github.com/axios/axios)
 - [Express](https://expressjs.com/)
 
 #### Authors
-
-Marcus Jackson - marcusj98@gmail.com
+Marcus Jackson - marcus@maropost.com
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
