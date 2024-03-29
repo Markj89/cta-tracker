@@ -3,10 +3,10 @@
  *
  * @type {Component} Map
  */
-import React, { useState, Fragment, useRef } from "react";
+import React, { useState, Fragment, useRef, useContext } from "react";
 import GoogleMapReact from "google-map-react";
 import useGetStationsLocally from "./../hooks/useGetStationsLocally";
-import { initiCenerType } from "./../MapContext";
+import { InitiCenerType, MapContext } from "../context/MapContext";
 import Marker from "./Marker/Marker";
 
 export interface MapProps {
@@ -14,8 +14,7 @@ export interface MapProps {
   [key: string]: any;
   width: number;
   height: number;
-  currentLocation: initiCenerType;
-  loading: string;
+  currentLocation: InitiCenerType;
 }
 
 const Map = ({
@@ -23,11 +22,10 @@ const Map = ({
   width,
   height,
   currentLocation,
-  loading,
 }: MapProps) => {
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState(`${process.env.DEV_URL}/stations`);
-  const { stations } = useGetStationsLocally(url);
+  const { stations } = useGetStationsLocally(`${process.env.DEV_URL}/stations`);
 
   const mapRef = useRef();
   const options = {
@@ -54,7 +52,6 @@ const Map = ({
 
   return (
     <Fragment>
-      {loading === "Found" || loading === "Default Location" ? (
         <div
           style={{
             position: "relative",
@@ -71,18 +68,13 @@ const Map = ({
             }}
             defaultCenter={currentLocation}
             options={options}
-            defaultZoom={loading === "Default Location" ? 13 : zoom}
+            defaultZoom={13}
             onGoogleApiLoaded={({ map, maps }) => {
               mapRef.current = map;
               const service = new maps.places.PlacesService(map);
             }}
-          >
-            {markers}
-          </GoogleMapReact>
+          />
         </div>
-      ) : (
-        <div>Loading</div>
-      )}
     </Fragment>
   );
 };

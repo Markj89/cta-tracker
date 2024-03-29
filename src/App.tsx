@@ -1,26 +1,31 @@
 import React, { useContext, useEffect } from 'react';
 import Map from './components/Map';
-import { MapContext, MapProvider, initiCenerType } from './MapContext';
+import { MapContext } from './context/MapContext';
 import './styles/index.scss';
 import useGetCurrentPosition from './hooks/useGetCurrentPosition';
 import useWindowDimensions from './hooks/useWindowDimensions';
 
 function App() {  
-  const { location, setLocation } = useContext(MapContext);
-  const {isLoading, currentLocation } = useGetCurrentPosition({initialCenter: {lat: 0, lng: 0}});
+  const {location, setLocation } = useContext(MapContext);
   const { height, width } = useWindowDimensions();
+  const { isLoading, currentLocation } = useGetCurrentPosition({initialCenter: {lat: 0, lng: 0}});
+
   useEffect(() => {
-    if (isLoading) {
-      setLocation(currentLocation as initiCenerType);
+    if (currentLocation) {
+      setLocation(currentLocation);
     }
-  }, [isLoading, location]);
+  }, [currentLocation, location]);
 
   return (
-    <MapProvider value={{ location, setLocation, width, height }}>
+    <main>
       <article className="App">
-        <Map height={height} width={width} currentLocation={currentLocation} loading={status} />
+        { isLoading && location?.lat !== 0 ? (
+          <Map height={height} width={width} currentLocation={location} />
+        ) : (
+          <div>Loading</div>
+        )}
       </article>
-    </MapProvider>
+    </main>
   );
 }
 
