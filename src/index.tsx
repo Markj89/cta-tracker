@@ -4,13 +4,17 @@ import "regenerator-runtime/runtime";
 import { createRoot } from 'react-dom/client';
 import './styles/index.scss';
 import App from './App';
+import { MapContextProvider } from './context';
+
 
 const container = document.getElementById('app');
 const root = createRoot(container!);
 root.render(
-    <div>
-        <App />
-    </div>, 
+    <React.StrictMode>
+        <MapContextProvider>
+            <App />
+        </MapContextProvider>
+    </React.StrictMode>, 
 );
 
 // If you want your app to work offline and load faster, you can change
