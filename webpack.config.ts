@@ -93,19 +93,11 @@ const common: Configuration = {
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        use: ["babel-loader", "@svgr/webpack", "url-loader"],
+        use: ["svg-url-loader", "babel-loader", "@svgr/webpack", "url-loader", "file-loader"],
       },
       {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        use: ["svg-url-loader", "url-loader", "file-loader"],
-      },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
-      },
-      {
-        test: /\.(sa|sc|c)ss$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader", "postcss-loader"],
       },
       {
         test: /\.(eot|otf|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -125,14 +117,6 @@ const common: Configuration = {
     new Dotenv({
       path: path.resolve(__dirname, "./.env.local"),
     }),
-    new DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify(
-        process.env.NODE_ENV === "production" ? "production" : "development"
-      ),
-    }),
-    /*new ForkTsCheckerWebpackPlugin({
-      async: false,
-    }),*/
     new HtmlWebpackPlugin({
       title: "CTA Tracker",
       template: "./src/index.html",
