@@ -1,0 +1,154 @@
+@layer loading {
+    #loading-page-container {
+        background-color: #41B6E6;
+        height: 100vh;
+        margin: 0 auto;
+        position: absolute;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .train-loading {
+        position: absolute;
+        animation: fazer1 .2s linear infinite;
+    }
+    .longfazers {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+    span {
+        position: absolute;
+        height: 2px;
+        width: 20%;
+        background: #fff;
+    }
+    span:nth-child(1) {
+        top: 0%;
+        animation: lf .6s linear infinite;
+        animation-delay: -5s;
+    }
+    
+    span:nth-child(2) {
+        top: 40%;
+        animation: lf2 .8s linear infinite;
+        animation-delay: -1s;
+    }
+
+    span:nth-child(3) {
+        top: 20%;
+        animation: lf3 .6s linear infinite;
+    }
+    
+    span:nth-child(4) {
+        top: 10%;
+        animation: lf4 .5s linear infinite;
+        animation-delay: -3s;
+    }
+
+    .bridge {
+        border-bottom: 0.3rem solid white;
+        border-top: 0.3rem solid white;
+        background: black;
+        background: -webkit-linear-gradient(55deg, transparent 46%, white 46%, white 54%, transparent 54%) left/0.6rem 2.2rem, -webkit-linear-gradient(-55deg, transparent 46%, white 46%, white 54%, transparent 54%) left/0.6rem 2.2rem;
+        background: -moz-linear-gradient(55deg, transparent 46%, white 46%, white 54%, transparent 54%) left/0.6rem 2.2rem, -moz-linear-gradient(-55deg, transparent 46%, white 46%, white 54%, transparent 54%) left/0.6rem 2.2rem;
+        background: -o-linear-gradient(55deg, transparent 46%, white 46%, white 54%, transparent 54%) left/0.6rem 2.2rem, -o-linear-gradient(-55deg, transparent 46%, white 46%, white 54%, transparent 54%) left/0.6rem 2.2rem;
+        background: -ms-linear-gradient(55deg, transparent 46%, white 46%, white 54%, transparent 54%) left/0.6rem 2.2rem, -ms-linear-gradient(-55deg, transparent 46%, white 46%, white 54%, transparent 54%) left/0.6rem 2.2rem;
+        background: linear-gradient(55deg, transparent 46%, white 46%, white 54%, transparent 54%) left/0.6rem 2.2rem, linear-gradient(-55deg, transparent 46%, white 46%, white 54%, transparent 54%) left/0.6rem 2.2rem;
+        left: 0;
+        height: 2.6rem;
+        position: absolute;
+        width: 100%;
+        z-index: -1;
+        bottom: 72px;
+    }
+
+    @keyframes fazer1 {
+        0% {
+            left: 0;
+        }
+        100% {
+            left: -80px;
+            opacity: 0;
+        }
+    }
+    
+    @keyframes fazer2 {
+        0% {
+            left: 0;
+        }
+        100% {
+            left: -100px;
+            opacity: 0;
+        }
+    }
+    
+    @keyframes fazer3 {
+        0% {
+            left: 0;
+        }
+        100% {
+            left: -50px;
+            opacity: 0;
+        }
+    }
+    
+    @keyframes fazer4 {
+        0% {
+            left: 0;
+        }
+        100% {
+            left: -150px;
+            opacity: 0;
+        }
+    }
+
+    @keyframes lf {
+        0% {
+            left: 200%;
+        }
+        100% {
+            left: -200%;
+            opacity: 0;
+        }
+    }
+
+    @keyframes lf2 {
+        0% {
+            left: 200%;
+        }
+        100% {
+            left: -200%;
+            opacity: 0;
+        }
+    }
+
+    @keyframes lf3 {
+        0% {
+            left: 200%;
+        }
+        100% {
+            left: -100%;
+            opacity: 0;
+        }
+    }
+    
+    @keyframes lf4 {
+        0% {
+            left: 200%;
+        }
+        100% {
+            left: -100%;
+            opacity: 0;
+        }
+    }
+    @keyframes fazer1 {
+        0% {
+            left: 0;
+        }
+        100% {
+            left: -80px;
+            opacity: 0;
+        }
+    }  
+}

@@ -1,0 +1,87 @@
+/*@tailwind base;
+@tailwind components;
+@import './components/loading.css';
+@tailwind utilities;*/
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import './components/loading.css';
+
+@layer base {
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    html {
+        overflow-y: scroll;
+        height: 100%;
+    }
+    small {
+        font-size: 75%;
+        font-weight: 300;
+    }
+    body {
+        font-size: small;
+        text-rendering: optimizeLegibility;
+        -webkit-overflow-scrolling: touch;
+        -webkit-font-smoothing: antialiased;
+        -moz-font-smoothing: antialiased;
+        font-family: 'HelveticaNeue-Medium', sans-serif;
+        font-weight: 500;
+        min-height: 100%;
+        letter-spacing: normal;
+        padding: 0;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+    body, html {
+        overflow-x: hidden;
+    }
+    html, body {
+        margin: 0 auto;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+    }
+    img,
+    picture,
+    video,
+    canvas,
+    svg {
+        display: block;
+        max-width: 100%;
+    }
+    img {
+        display: block;
+    }
+    ul,
+    ol,
+    li {
+        padding: 0;
+        margin: 0;
+    }
+    input,
+    button,
+    textarea,
+    select {
+        font: inherit;
+    }
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        overflow-wrap: break-word;
+    }
+    .text-white {
+        color: rgb(255 255 255);
+    }
+}

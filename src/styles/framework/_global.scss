@@ -38,20 +38,11 @@ body {
   padding: 0;
 	margin: 0 auto;
 }
-html, body {
-	margin: 0 auto;
-	padding: 0;
-	width: 100%;
-	height: 100%;
-}
+
 .fa, .fas, .far, .fal, .fab {
 	font: normal normal normal 14px/1 $fontAwesome;
 }
 
-small {
-	font-size: 75%;
-	font-weight: 300;
-}
 
 .App {
 	min-height: 100vh;

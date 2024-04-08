@@ -2,7 +2,7 @@ import * as React from 'react';
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { createRoot } from 'react-dom/client';
-import './styles/index.scss';
+import './styles/index.css';
 import App from './App';
 import { MapContextProvider } from './context';
 

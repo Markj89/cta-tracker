@@ -2,8 +2,6 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap");
 
 $open_sans: "Open Sans";
-$fontAwesome: "Font Awesome 5 Pro", sans-serif;
-$fontAwesomeBrands: "Font Awesome 5 Brands", sans-serif;
 
 // Colors
 $red: #c60c30;
@@ -18,11 +16,3 @@ $grey: #565a5c;
 $black: #000;
 $white: #fff;
 $black_almost: #0D0D0D;
-
-// Fontawesome
-span[class^="fa-"], span[class*=" fa-"] {
-  font-family: $fontAwesome;
-}
-i.fab {
-  font-family: $fontAwesomeBrands;
-}
