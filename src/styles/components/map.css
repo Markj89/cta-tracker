@@ -1,0 +1,9 @@
+@layer map {
+    .MapWrapper {
+        position: "relative";
+    }
+    iframe {
+        pointer-events: "none";
+    }
+}
+

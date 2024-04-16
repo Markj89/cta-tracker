@@ -1,12 +1,10 @@
-/*@tailwind base;
-@tailwind components;
-@import './components/loading.css';
-@tailwind utilities;*/
-
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import './components/loading.css';
+@import './components/map.css';
+@import './components/marker.css';
+@import './components/modal.css';
 
 @layer base {
     *,

@@ -14,13 +14,13 @@ router.get('/', async (req, res) => {
 
     let collection = await conn.collection("Stations");
     const results = await collection.find({}).toArray();
-    /*if (results?.error) {
+    if (results?.error) {
         res.send({
             message: error.message || 'Some error occurred while retrieving tutorials.'
         }).status(500);
     } else {
         res.status(200).send(results);
-    }*/
+    }
 });
 
 /**

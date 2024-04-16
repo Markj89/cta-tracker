@@ -1,8 +1,8 @@
+import { Station } from "components/Map";
 import React, { Ref } from "react";
 
 export interface CardProps {
-    children: JSX.Element;
-    className: string;
-    [key: string]: any;
+    children: Station;
+    onClick: () => void;
     ref?: Ref<unknown>;
 }

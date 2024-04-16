@@ -3,9 +3,10 @@
  * @type {Hooks}
  */
 import { useState, useEffect } from 'react';
+import { Stations } from 'components/Map';
 
 export default function useGetStationsLocally(url) {
-    const [stations, getStations] = useState([]);
+    const [stations, getStations] = useState<Stations[]>([]);
 
     const getData = (url: string) => {
         fetch(url, {
