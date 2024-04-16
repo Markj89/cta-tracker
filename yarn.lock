@@ -2291,12 +2291,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@googlemaps/js-api-loader@npm:^1.13.8":
+"@googlemaps/js-api-loader@npm:^1.13.2, @googlemaps/js-api-loader@npm:^1.13.8":
   version: 1.16.6
   resolution: "@googlemaps/js-api-loader@npm:1.16.6"
   dependencies:
     fast-deep-equal: "npm:^3.1.3"
   checksum: 10c0/084f92f0cef9920e8ef7e54cd7931dddef102a4baf20fe4ba30d45dee3327748c626f1b40ccc158c76544e8d88ccebb41edf6c65d115fdd25d5bdebd7d909bb6
+  languageName: node
+  linkType: hard
+
+"@googlemaps/markerclusterer@npm:^2.5.3":
+  version: 2.5.3
+  resolution: "@googlemaps/markerclusterer@npm:2.5.3"
+  dependencies:
+    fast-deep-equal: "npm:^3.1.3"
+    supercluster: "npm:^8.0.1"
+  checksum: 10c0/29954c8ad97f7cf0383dc5d4e1d04de4844cc527865cb3a75b73672f29e3087eb0a8a2a594fa75d968f6c40bc90f44ffbf0b1a478e7353eb81361aeff61c2602
+  languageName: node
+  linkType: hard
+
+"@googlemaps/react-wrapper@npm:^1.1.35":
+  version: 1.1.35
+  resolution: "@googlemaps/react-wrapper@npm:1.1.35"
+  dependencies:
+    "@googlemaps/js-api-loader": "npm:^1.13.2"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 10c0/111a21ae7c1675d4249eb0656c351b52b0745271b2a4a4afb969b428fe0859e00ab3487e56b6a69432ed0072b0495ef63a5de3915b3b1e8d676b6d58e0c602bf
   languageName: node
   linkType: hard
 
@@ -3257,6 +3278,13 @@ __metadata:
   dependencies:
     "@types/react": "npm:*"
   checksum: 10c0/33567981abd8d92412bf1fcc5980b5793550714169d3c95cbaf1b02ce44aea8bd13397103cf72d7d7a56f4df5be0fa810980628a6638c5f34a272132fd5a8683
+  languageName: node
+  linkType: hard
+
+"@types/google.maps@npm:^3.55.7":
+  version: 3.55.7
+  resolution: "@types/google.maps@npm:3.55.7"
+  checksum: 10c0/15c21386df6d988b5227b247a83c77be1737ee7b7291ac5dd1fcf858a6830e66eed79361738ff21ff311622470eadfff0c098fdad5514cfe530ac721206c72cb
   languageName: node
   linkType: hard
 
@@ -7461,9 +7489,12 @@ __metadata:
     "@fortawesome/fontawesome-svg-core": "npm:^1.2.32"
     "@fortawesome/free-solid-svg-icons": "npm:^5.15.1"
     "@fortawesome/react-fontawesome": "npm:^0.1.14"
+    "@googlemaps/markerclusterer": "npm:^2.5.3"
+    "@googlemaps/react-wrapper": "npm:^1.1.35"
     "@hot-loader/react-dom": "npm:^17.0.1"
     "@svgr/webpack": "npm:^5.5.0"
     "@types/google-map-react": "npm:^2.1.10"
+    "@types/google.maps": "npm:^3.55.7"
     "@types/node": "npm:^20.10.4"
     "@types/react": "npm:^18.2.42"
     "@types/react-dom": "npm:^18.2.17"
@@ -12692,6 +12723,13 @@ __metadata:
     object.assign: "npm:^4.1.4"
     object.values: "npm:^1.1.6"
   checksum: 10c0/a32679e9cb55469cb6d8bbc863f7d631b2c98b7fc7bf172629261751a6e7bc8da6ae374ddb74d5fbd8b06cf0eb4572287b259813d92b36e384024ed35e4c13e1
+  languageName: node
+  linkType: hard
+
+"kdbush@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "kdbush@npm:4.0.2"
+  checksum: 10c0/d50183b299c57e2573114e902ab47aed7494be3ca41b66d456779ecc3b2f153f491de341f9609965414784f728894f9a9001152eb9f3a40cd3755521c06a45a3
   languageName: node
   linkType: hard
 
@@ -19447,6 +19485,15 @@ __metadata:
     sucrase: bin/sucrase
     sucrase-node: bin/sucrase-node
   checksum: 10c0/ac85f3359d2c2ecbf5febca6a24ae9bf96c931f05fde533c22a94f59c6a74895e5d5f0e871878dfd59c2697a75ebb04e4b2224ef0bfc24ca1210735c2ec191ef
+  languageName: node
+  linkType: hard
+
+"supercluster@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "supercluster@npm:8.0.1"
+  dependencies:
+    kdbush: "npm:^4.0.2"
+  checksum: 10c0/79121e6dbff67b3036ea6651f3baddb942478830ba3ecbc27455715ab5bd269de8381dc04618c0c15963346ea2ed0f81cd5f767c2978a63e2841807c73445d57
   languageName: node
   linkType: hard
 

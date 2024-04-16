@@ -1,0 +1,23 @@
+@layer modal {
+    .modal-wrapper {
+        display: flex;
+        justify-content: center;
+        outline: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        position: absolute;
+        top: 25%;
+        width: 100%;
+        z-index: 100;
+        right: 37%;
+    }
+
+    .modal-overlay {
+        height: 100vh;
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 100vw;
+        z-index: 500;
+    }
+}
