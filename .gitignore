@@ -2,15 +2,13 @@
 
 # dependencies
 /node_modules
-/server/node_modules
+/server/node_modules/
 /server/package-lock.json
 /server/stations.txt
 /.pnp
 .pnp.js
 package-lock.json
 /package-lock.json
-yarn.lock
-/yarn.lock
 keytmp.pem
 
 #Development
