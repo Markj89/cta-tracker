@@ -2,7 +2,10 @@ import { Station } from "components/Map";
 import React, { Ref } from "react";
 
 export interface CardProps {
-    children: Station;
-    onClick: () => void;
-    ref?: Ref<unknown>;
+    children?: React.ReactNode;
+    className?: string;
+    orientation?: string;
+    station?: Station
+    style?: React.CSSProperties;
+    onClick?: () => void;
 }

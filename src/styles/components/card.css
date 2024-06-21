@@ -1,0 +1,19 @@
+@layer card {
+    .card {
+        position: relative;
+        border-radius: 20px;
+        width: auto;
+        margin: 0 auto;
+    }
+    .card-vertical {
+        display: block;
+    }
+    .card-horizontal {
+        display: flex;
+        padding: 20px 15px;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 3%;
+    }
+}

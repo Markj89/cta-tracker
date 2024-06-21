@@ -14,7 +14,7 @@ type MarkerProps = google.maps.MarkerOptions & {
 }
 
 const Marker: React.FC<MarkerProps> = ({ station, onClick }: MarkerProps) => (
-  <div onClick={onClick} style={{
+  <div onClick={onClick} className="Marker-component" style={{
     background: `${station?.color}`,
     cursor: 'pointer',
     color: 'white',
