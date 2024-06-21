@@ -1,0 +1,90 @@
+version: "3.8"
+
+services:
+  _build:
+    image: cta-tracker-image
+    command: ["echo", "build completed"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  shell:
+    image: cta-tracker-image
+    container_name: shell
+    depends_on:
+      - _build
+    environment:
+      - REGION=us-east-1
+      - ATLAS_USER=$ATLAS_USER
+      - ATLAS_PWD=$ATLAS_PWD
+      - CTA_TRAIN_API_KEY=$CTA_TRAIN_API_KEY
+      - TRAIN_ARRIVALS=$TRAIN_ARRIVALS
+      - GOOGLE_KEY=$GOOGLE_KEY
+      - FRONTEND_URL=$FRONTEND_URL
+      - UI_PORT=$UI_PORT
+      - SERVER_PORT=$SERVER_PORT
+      - SERVER_URL=$SERVER_URL
+    volumes:
+      - .:home/app
+      - /home/app/node_modules
+
+  mongodb:
+    image: monog:4.27.2
+    restart: unless-stopped
+    env_file: ./env.local
+    environment:
+      - ATLAS_USER=$ATLAS_USER
+      - ATLAS_PWD=$ATLAS_PWD
+    ports:
+      - $ATLAS_PWD:$27017
+    volumes:
+      - db:/data/db
+      - .:home/app
+      - /home/app/node_modules
+
+  backend:
+    image: cta-tracker-image
+    container_name: backend
+    build:
+      context: ./server
+    ports:
+      - "3000:3000"
+    entrypoint: ["yarn", "workspace", "@cta-tracker/server", "dev"]
+    depends_on:
+      - _build
+    environment:
+      - ATLAS_USER=$ATLAS_USER
+      - ATLAS_PWD=$ATLAS_PWD
+      - CTA_TRAIN_API_KEY=$CTA_TRAIN_API_KEY
+      - TRAIN_ARRIVALS=$TRAIN_ARRIVALS
+      - GOOGLE_KEY=$GOOGLE_KEY
+      - FRONTEND_URL=$FRONTEND_URL
+      - UI_PORT=$UI_PORT
+      - SERVER_PORT=$SERVER_PORT
+      - SERVER_URL=$SERVER_URL
+    volumes:
+      - .:/home/app
+      - /home/app/server/node_modules
+      - /home/app/node_modules
+
+  frontend:
+    image: cta-tracker-image
+    container_name: frontend
+    build:
+      context: ./src
+    ports:
+      - "8080:8080"
+    entrypoint: ["yarn", "workspace", "@cta-tracker/frontend", "dev"]
+    env_file:
+      - ./env.local
+    environment:
+      - GOOGLE_KEY=$GOOGLE_KEY
+      - CTA_TRAIN_API_KEY=$CTA_TRAIN_API_KEY
+      - TRAIN_ARRIVALS=$TRAIN_ARRIVALS
+      - FRONTEND_URL=$FRONTEND_URL
+      - UI_PORT=$UI_PORT
+      - SERVER_PORT=$SERVER_PORT
+      - SERVER_URL=$SERVER_URL
+    volumes:
+      - .:/home/app
+      - /home/app/node_modules
