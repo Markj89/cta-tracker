@@ -5,10 +5,9 @@
  * @param MapProps
  * @returns JSX.Element
  */
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import useGetStationsLocally from "../../hooks/useGetStationsLocally";
 import { InitiCenerType } from "../../context";
-import type { Marker } from '@googlemaps/markerclusterer';
 import OverlayContainer from "./../Overlay/Overlay";
 import Markers from "./../Marker/Markers";
 import { mapMarkers } from "./../../utils/color";
