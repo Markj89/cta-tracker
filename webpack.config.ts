@@ -69,12 +69,18 @@ const common: Configuration = {
         use: {
           loader: "babel-loader",
           options: {
+            exclude: /(node_modules|bower_components)/,
             presets: [
+              "@babel/env",
               "@babel/preset-env",
-              "@babel/preset-react",
+              ["@babel/preset-react", { "targets": "current node" }],
               "@babel/preset-typescript",
             ],
             envName: process.env.NODE_ENV === "production" ? "production" : "development",
+            plugins: [
+              "@babel/plugin-syntax-jsx",
+              ["@babel/plugin-transform-runtime", { "useESModules": true, "regenerator": false }]
+            ]
           },
         },
       },
