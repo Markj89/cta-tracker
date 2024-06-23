@@ -18,7 +18,7 @@ interface ButtonProps {
 }
 type OrNull<T> = T | null
 
-export const Button = forwardRef(
+const Button = forwardRef(
     (
         { 
             className, 
@@ -43,8 +43,10 @@ export const Button = forwardRef(
     }
 
     return (
-        <button {...props} ref={ref as React.RefObject<HTMLButtonElement>} onMouseDown={(e) => clickHandler(e)}>
+        <button {...props} ref={ref as React.RefObject<HTMLButtonElement>} onMouseDown={(e) => clickHandler(e)} data-testid="button-component">
             {children}
         </button>
     );
 });
+
+export default Button;
