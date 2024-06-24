@@ -71,7 +71,6 @@ const common: Configuration = {
           options: {
             exclude: /(node_modules|bower_components)/,
             presets: [
-              "@babel/env",
               "@babel/preset-env",
               ["@babel/preset-react", { "targets": "current node" }],
               "@babel/preset-typescript",
