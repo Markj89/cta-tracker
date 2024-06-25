@@ -28,7 +28,7 @@ export default function StationModal({ station, position, style }: StationCardPr
     return (
         <Card orientation="vertical" style={{ top: `${position?.top}px`, left: `${position?.left}px` }} className={"modal"}>
             <div className='text-base text-slate-900 font-semibold dark:text-slate-300'>
-                <h1>{station?.stop_name}</h1>
+                <h1 className="font-interTight">{station?.stop_name}</h1>
             </div>
             <CardContainer className="text-base" orientation={"vertical"}>
                 <p className="mt-6 text-slate-700 dark:text-slate-300">This is a test</p>

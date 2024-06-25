@@ -39,7 +39,9 @@
         -webkit-overflow-scrolling: touch;
         -webkit-font-smoothing: antialiased;
         -moz-font-smoothing: antialiased;
-        font-family: 'HelveticaNeue-Medium', sans-serif;
+        font-family: "Inter Tight", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
         font-weight: 500;
         min-height: 100%;
         letter-spacing: normal;

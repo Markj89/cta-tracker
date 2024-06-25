@@ -15,7 +15,7 @@ export const LoadingPage = () => (
                         <div className="bridge"></div>
                     </div>
                     <div className='relative pt-12'>
-                        <h1 className="text-white text-slate-900 font-extrabold text-4xl sm:text-5xl lg:text-4xl tracking-tight text-center">Loading...</h1>
+                        <h1 className="text-white text-slate-900 font-extrabold text-4xl sm:text-5xl lg:text-4xl tracking-tight text-center font-interTight">Loading...</h1>
                     </div>
                 </div>
                 <div className='longfazers'>
