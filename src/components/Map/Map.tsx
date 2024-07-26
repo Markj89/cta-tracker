@@ -10,7 +10,7 @@ import useGetStationsLocally from "../../hooks/useGetStationsLocally";
 import { InitiCenerType } from "../../context";
 import OverlayContainer from "./../Overlay/Overlay";
 import Markers from "./../Marker/Markers";
-import { mapMarkers } from "./../../utils/color";
+import { mapMarkers, mapStations } from "./../../utils/map";
 
 export interface MapProps {
   [key: string]: any;
@@ -30,6 +30,7 @@ const Map = ({
   const [map, setMap] = useState<google.maps.Map>(null);
   const { stations } = useGetStationsLocally(`${process.env.SERVER_URL}/stations`);
   const markers = mapMarkers(stations);
+  const mappedStations = mapStations(markers);
 
   useEffect(() => {
     if (mapRef.current && !map) {
@@ -52,9 +53,9 @@ const Map = ({
           }}
           ref={mapRef as any}
         >
-          {markers?.map((marker, index) => (
+          {mappedStations?.map((marker, index) => (
             <OverlayContainer map={map} position={{ lat: marker?.lat, lng: marker?.lng }} key={index}>
-              <Markers station={marker} />
+              <Markers station={marker} stops={markers} />
             </OverlayContainer>
           ))}
         </div>

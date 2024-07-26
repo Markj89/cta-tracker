@@ -1,4 +1,4 @@
-export * from './useArrivals';
+export { default } from './useArrivals';
 export * from './useGetCurrentPosition';
 export * from './useGetStationsGoogle';
 export * from './useGetStationsLocally';

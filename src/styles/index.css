@@ -93,4 +93,29 @@
     .text-white {
         color: rgb(255 255 255);
     }
+
+    .blue-background {
+        background-color: #00a1de;
+    }
+    .pink-background {
+        background-color: #e27ea6;
+    }
+    .g-background {
+        background-color: #009b3a;
+    }
+    .brn-background {
+        background-color: #62361b;
+    }
+    .p-background {
+        background-color: #522398;
+    }
+    .y-background {
+        background-color: #f9e300;
+    }
+    .red-background {
+        background-color: #c60c30;
+    }
+    .org-background {
+        background-color: #f9461c;
+    }
 }
