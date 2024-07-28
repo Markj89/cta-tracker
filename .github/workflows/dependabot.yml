@@ -5,9 +5,22 @@
 
 name: Dependabot
 
+on:
+  push:
+    branches: [ "master", "development" ]
+  pull_request:
+    branches: [ "master", "feature/**" ]
+
 version: 2
 updates:
-  - package-ecosystem: "" # See documentation for possible values
+
+  - package-ecosystem: "github-actions" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+
+  - package-ecosystem: "yarn"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
