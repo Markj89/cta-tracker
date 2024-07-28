@@ -40,6 +40,11 @@
         z-index: 100;
     }
 
+    .station-list-item {
+        border-radius: 16px;
+        height: 53px;
+    }
+
     .modal-overlay {
         height: 100vh;
         left: 0;
