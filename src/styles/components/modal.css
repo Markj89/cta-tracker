@@ -1,7 +1,7 @@
 @layer modal {
     .modal {
-        max-width: 230px;
-        max-height: 230px;
+        max-width: 352px;
+        max-height: 303px;
         position: absolute;
         display: flex;
         justify-content: center;
@@ -12,6 +12,7 @@
         background-color: rgba(254, 254, 254, 1);
         z-index: 1001;
         pointer-events: auto;
+        overflow: auto;
     }
     .modal-header {
         display: grid;
@@ -39,6 +40,11 @@
         z-index: 100;
     }
 
+    .station-list-item {
+        border-radius: 16px;
+        height: 53px;
+    }
+
     .modal-overlay {
         height: 100vh;
         left: 0;
@@ -46,5 +52,21 @@
         top: 0;
         width: 100vw;
         z-index: 500;
+    }
+    .arrival-list-item {
+        align-items: center;
+        width: 373px;
+    }
+    .arrival-time {
+        color: white;
+        position: relative;
+        top: 8px;
+    }
+    .estimated-time {
+        font-size: 8px !important;
+        color: white;
+    }
+    .arrival-list-item-times {
+
     }
 }

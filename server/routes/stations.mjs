@@ -20,47 +20,8 @@ router.get('/', async (req, res) => {
         }).status(500);
     } else {
         res.status(200).send(results);
+        res.end();
     }
-});
-
-/**
- * Get a single stations
- * @param {*} req
- * @param {*} res
- * @param {Object}
- */
-router.get("/:_id", async (requests, response) => {
-    console.log(`Route Single Stop: ${requests.protocol}://${requests.get('host')}${requests.originalUrl}`);
-    let collection = await conn.collection("Stations");
-
-    const results = await collection.find({ _id: ObjectId(requests.params._id) }).toArray();
-    const stationColor = (object, value) => {
-        return Object.keys(object).find(key => object[key] === value && key !== 'ada');
-    };
-
-    let options = {
-        method: 'GET',
-        url: process.env.TRAIN_ARRIVALS, // API Endpoint
-        qs: {
-            key: process.env.CTA_TRAIN_API_KEY, // API KEY
-            mapid: requests?.params?._id, // Stop ID
-            rt: stationColor(requests.params, true),
-            outputType: 'json'
-        },
-        headers: {
-            'cache-control': 'no-cache',
-            Connection: 'keep-alive',
-            'Accept-Encoding': 'gzip, deflate',
-            Host: 'lapi.transitchicago.com',
-            'Cache-Control': 'no-cache',
-            Accept: '*/*'
-        }
-    };
-
-    request(options, ((error, res, body) => {
-        if (error) throw new Error(error);
-        response.send(body);
-    }));
 });
 
 /**
