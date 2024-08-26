@@ -9,7 +9,6 @@ import { createPortal } from "react-dom";
 import Marker from "./Marker";
 import { Station } from "components/Map";
 import StationModal from "./../Modal/StationModal";
-import useArrivals from "../../hooks/useArrivals";
 
 type MarkersProps = {
     station: Station;

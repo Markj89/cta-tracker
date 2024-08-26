@@ -112,6 +112,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-multiple-result-processors": "^0.0.4",
+    "jest-svg-transformer": "^1.0.0",
     "mini-css-extract-plugin": "^2.7.6",
     "moment": "^2.25.3",
     "node-sass": "^9.0.0",

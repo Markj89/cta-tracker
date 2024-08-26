@@ -96,7 +96,9 @@ const config: Config = {
   moduleFileExtensions: ["js", "mjs", "cjs", "jsx", "ts", "tsx", "json", "node"],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
+  moduleNameMapper: {
+    "\\.svg": "<rootDir>/src/__mocks__/declarations.d.ts"
+  },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -175,9 +177,7 @@ const config: Config = {
   // testRunner: "jest-circus/runner",
 
   // A map from regular expressions to paths to transformers
-  transform: {
-    "^.+\\.(ts|tsx|js|jsx)$": "ts-jest"
-  },
+  transform: {"^.+\\.(ts|tsx|js|jsx)$": "ts-jest"},
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   transformIgnorePatterns: ["/node_modules/", "\\.pnp\\.[^\\/]+$"],
