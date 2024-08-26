@@ -19,10 +19,10 @@ export const LoadingPage = () => (
                     </div>
                 </div>
                 <div className='longfazers'>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span id='longfazer'></span>
+                    <span id='longfazer'></span>
+                    <span id='longfazer'></span>
+                    <span id='longfazer'></span>
                 </div>
             </div>
         </div>

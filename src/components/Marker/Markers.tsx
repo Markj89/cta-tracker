@@ -32,9 +32,9 @@ const Markers = ({ station, stops }: MarkersProps) => {
             }
         }
     
-        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("mouseover", handleClickOutside);
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mouseout", handleClickOutside);
         };
     }, [containerRef]);
 
@@ -46,7 +46,7 @@ const Markers = ({ station, stops }: MarkersProps) => {
     return (
         <div ref={containerRef}>
              {opened && createPortal( <StationModal station={station} style={modalPlacement} stops={stops} position={position} />, sidebarContentEl )}
-             <Marker station={station} onClick={handleOnOpen} />
+             <Marker station={station} onHover={handleOnOpen} />
         </div>
     )
 };

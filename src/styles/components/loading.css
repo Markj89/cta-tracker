@@ -17,30 +17,27 @@
         width: 100%;
         height: 100%;
     }
-    span {
+    span#longfazer {
         position: absolute;
         height: 2px;
         width: 20%;
         background: #fff;
     }
-    span:nth-child(1) {
+    span#longfazer:nth-child(1) {
         top: 0%;
         animation: lf .6s linear infinite;
         animation-delay: -5s;
     }
-    
-    span:nth-child(2) {
+    span#longfazer:nth-child(2) {
         top: 40%;
         animation: lf2 .8s linear infinite;
         animation-delay: -1s;
     }
-
-    span:nth-child(3) {
+    span#longfazer:nth-child(3) {
         top: 20%;
         animation: lf3 .6s linear infinite;
     }
-    
-    span:nth-child(4) {
+    span#longfazer:nth-child(4) {
         top: 10%;
         animation: lf4 .5s linear infinite;
         animation-delay: -3s;
