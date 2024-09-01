@@ -6,6 +6,7 @@
 @import './components/marker.css';
 @import './components/modal.css';
 @import './components/card.css';
+@import './components/tooltip.css';
 
 @layer base {
     html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
@@ -39,7 +40,9 @@
         -webkit-overflow-scrolling: touch;
         -webkit-font-smoothing: antialiased;
         -moz-font-smoothing: antialiased;
-        font-family: 'HelveticaNeue-Medium', sans-serif;
+        font-family: "Inter Tight", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
         font-weight: 500;
         min-height: 100%;
         letter-spacing: normal;
@@ -90,5 +93,55 @@
     }
     .text-white {
         color: rgb(255 255 255);
+    }
+
+    .blue-background {
+        background-color: #00a1de;
+    }
+    .pink-background {
+        background-color: #e27ea6;
+    }
+    .g-background {
+        background-color: #009b3a;
+    }
+    .brn-background {
+        background-color: #62361b;
+    }
+    .p-background {
+        background-color: #522398;
+    }
+    .y-background {
+        background-color: #f9e300;
+    }
+    .red-background {
+        background-color: #c60c30;
+    }
+    .org-background {
+        border-color: #f9461c ;
+    }
+
+    .bubble-border-blue {
+        border-color: #00a1de;
+    }
+    .bubble-border-pink {
+        border-color: #e27ea6;
+    }
+    .bubble-border-g {
+        border-color: #009b3a;
+    }
+    .bubble-border-brn {
+        border-color: #62361b;
+    }
+    .bubble-border-p {
+        border-color: #522398;
+    }
+    .bubble-border-y {
+        border-color: #f9e300;
+    }
+    .bubble-border-red {
+        border-color: #c60c30;
+    }
+    .bubble-border-org {
+        border-color: #f9461c;
     }
 }

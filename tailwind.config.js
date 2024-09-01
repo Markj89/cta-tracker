@@ -34,7 +34,9 @@ module.exports = {
       'grey': '#565a5c',
       'black-light': '#0D0D0D',
     },
-    fontFamily: {},
+    fontFamily: {
+      interTight: ['Inter Tight', 'sans-serif']
+    },
   },
   variants: {
     extend: {}

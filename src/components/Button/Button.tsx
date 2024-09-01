@@ -18,19 +18,21 @@ interface ButtonProps {
 }
 type OrNull<T> = T | null
 
-export const Button = forwardRef(
+const Button = forwardRef(
     (
         { 
             className, 
             children, 
             onClick, 
-            reversed, 
-            active, 
+            reversed,
+            active,
+            disabled,
             ...props 
         }: PropsWithChildren<
             { 
                 active: boolean, 
-                reversed: boolean 
+                reversed: boolean,
+                'aria-disabled': boolean
             } & ButtonProps
         >, 
         ref: Ref<OrNull<HTMLButtonElement>>
@@ -43,8 +45,10 @@ export const Button = forwardRef(
     }
 
     return (
-        <button {...props} ref={ref as React.RefObject<HTMLButtonElement>} onMouseDown={(e) => clickHandler(e)}>
+        <button {...props} ref={ref as React.RefObject<HTMLButtonElement>} disabled={disabled} onMouseDown={(e) => clickHandler(e)} data-testid="button-component">
             {children}
         </button>
     );
 });
+
+export default Button;

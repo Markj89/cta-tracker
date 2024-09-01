@@ -1,5 +1,5 @@
 /**
- * Marker (Icon)
+ * Icon Component
  * @type {Component}
  */
 import React, { SVGProps } from "react";

@@ -6,52 +6,56 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 
 const useArrivals = (initialState) => {
   const isFetching = useRef(true);
-  const [response, setResponse] = useState(initialState);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const getArrivals = useCallback(async (initialState) => {
 
-  const callForArrivals = async () => {
     try {
       const headers = {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
       };
-
-      fetch(`${process.env.DEV_URL}/arrivals/`, { headers })
-        .then((response) => response.json())
-        .then((res) => {
-          if (res.data.ctatt.errNm != null) {
-            setResponse({
-              data: null,
-              isLoading: false,
-              error: res.data.ctatt.errNm,
-            });
-          } else {
-            setResponse({
-              data: res.data.ctatt.eta,
-              isLoading: false,
-              error: null,
-            });
-          }
-        })
-        .catch((error) => {
-          console.log(`Error: ${error}`);
-          setResponse({ data: null, isLoading: false, error });
-        });
+      await fetch(`${process.env.SERVER_URL}/arrivals/${initialState?.map_id}`, { headers })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res?.ctatt.errNm != null) {
+          setData(res?.ctatt.errNm);
+          setLoading(false); 
+          setError(false);
+        } else {
+          setData(res?.ctatt.eta);
+          setLoading(false);
+          setError(true);
+        }
+      })
+      .catch((error) => {
+        console.log(`Error: ${error}`);
+        setData(error);
+        setLoading(false);
+        setError(true);
+      });
     } catch (error) {
       console.log(error);
+      setData(error);
+      setLoading(false);
+      setError(true);
     }
-  };
+  }, []);
 
   const refreshData = useCallback((payload) => {
-    setResponse((prevState) => ({ ...prevState, payload }));
+    setData(null);
+    setLoading(null);
+    setError(null);
     isFetching.current = true;
-  });
+  }, []);
 
   useEffect(() => {
     if (isFetching.current) {
       isFetching.current = false;
-      callForArrivals();
+      getArrivals(initialState);
     }
   }, [isFetching.current]);
-  return [response, refreshData];
+  return { data, loading, error, refetch: refreshData };
 };
 export default useArrivals;

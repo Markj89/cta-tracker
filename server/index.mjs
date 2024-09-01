@@ -5,6 +5,7 @@ import createHttpError from 'http-errors';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import stations from './routes/stations.mjs'
+import arrivals from './routes/arrivals.mjs';
 
 const PORT = 3000;
 const app = express();
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.use('/stations', stations);
+app.use(arrivals);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

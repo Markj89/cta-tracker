@@ -32,7 +32,7 @@ npm run eject
 - [Express](https://expressjs.com/)
 
 #### Authors
-Marcus Jackson - marcus@maropost.com
+Marcus Jackson
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
