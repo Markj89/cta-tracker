@@ -7,18 +7,10 @@
  */
 import React, { useState, useRef, useEffect } from "react";
 import useGetStationsLocally from "../../hooks/useGetStationsLocally";
-import { InitiCenerType } from "../../context";
 import OverlayContainer from "./../Overlay/Overlay";
 import Markers from "./../Marker/Markers";
 import { mapMarkers, mapStations } from "./../../utils/map";
-
-export interface MapProps {
-  [key: string]: any;
-  width: number;
-  height: number;
-  currentLocation?: Partial<InitiCenerType>;
-  zoom?: number;
-}
+import { MapProps } from "./Map.types";
 
 const Map = ({
   width,

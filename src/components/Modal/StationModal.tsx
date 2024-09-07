@@ -40,11 +40,11 @@ export default function StationModal({ station, position, style, isOpen, stops}:
         }
     }, [fontSize, title]);
     return (
-        <Card orientation="vertical" style={{ top: `${position?.left}px`, left: `${position?.top}px` }} className={"modal z-10 rounded-lg shadow-xl mx-auto p-6 bg-slate"}>
+        <Card orientation="vertical" style={{ top: `${position?.left}px`, left: `${position?.top}px` }} className={"modal z-10 rounded-lg shadow-xl mx-auto p-6 bg-slate"} aria-haspopup={isOpen}>
             <div className='text-base text-slate-900 font-semibold dark:text-slate-300 rounded-lg overflow-hidden mb-2'>
                 <h1 ref={titleRef} id="station-title" className={`font-interTight mb-1.5 ${fontSize}`}>{title}</h1>
             </div>
-            <CardContainer className="text-base overflow-y-auto" orientation={"vertical"}>
+            <CardContainer className="text-base overflow-y-auto xs:w-32 md:w-32 lg:w-96" orientation={"vertical"}>
                 { data !== null && loading === false ? (
                     <div className="space-y-4 station mb-1">
                         {data?.map((item) => (
