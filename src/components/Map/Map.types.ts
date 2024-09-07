@@ -1,3 +1,5 @@
+import { InitiCenerType } from "context";
+
 export interface Stations {
     stops: Station[];
 }
@@ -21,4 +23,17 @@ export interface Station {
     stop_id: number;
     stop_name: string;
     y: boolean;
+}
+
+export interface MapProps {
+    [key: string]: any;
+    width: number;
+    height: number;
+    currentLocation?: Partial<InitiCenerType>;
+    zoom?: number;
+}
+
+export type screenSizeProps = {
+    width: number;
+    height: number;
 }

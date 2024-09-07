@@ -3,4 +3,5 @@ export * from './useGetCurrentPosition';
 export * from './useGetStationsGoogle';
 export * from './useGetStationsLocally';
 export * from './useModal';
+export * from './useScreenSize';
 export * from './useWindowDimensions';

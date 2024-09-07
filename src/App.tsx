@@ -5,16 +5,20 @@ import useGetCurrentPosition from './hooks/useGetCurrentPosition';
 import useWindowDimensions from './hooks/useWindowDimensions';
 import { LoadingPage } from './components/Loader';
 import { Status, Wrapper } from '@googlemaps/react-wrapper';
+import useScreenSize from './hooks/useScreenSize';
 
 function App() {  
-  const {location, setLocation } = useContext(MapContext);
+  const {location, setLocation, setScreenSize } = useContext(MapContext);
   const { height, width } = useWindowDimensions();
   const { isLoading, currentLocation } = useGetCurrentPosition({initialCenter: {lat: 0, lng: 0}});
-  const render = (status: Status) => (<h1>{status}</h1>)
-
+  const render = (status: Status) => (<h1>{status}</h1>);
+  const whatsTheScreenSize = useScreenSize();
   useEffect(() => {
     if (currentLocation) {
       setLocation(currentLocation);
+    }
+    if (whatsTheScreenSize?.width > 0) {
+      setScreenSize(whatsTheScreenSize);
     }
   }, [currentLocation, location]);
 
