@@ -4,7 +4,7 @@ const fs = require('fs');
 let stationFile = __dirname + '/stations.json';
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/api', function(req, res, next) {
     const headers = {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Request-Method": "*",

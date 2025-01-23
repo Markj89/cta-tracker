@@ -2,9 +2,15 @@
 
 # dependencies
 /node_modules
+/client/node_modules/
+/client/package-lock.json
+/client/.env
+/client/yarn.lock
 /server/node_modules/
 /server/package-lock.json
+/server/yarn.lock
 /server/stations.txt
+.env
 /.pnp
 .pnp.js
 package-lock.json
@@ -20,7 +26,7 @@ keytmp.pem
 /inspiration
 
 # production
-/public
+/client/public
 public
 
 # misc

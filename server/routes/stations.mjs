@@ -1,7 +1,6 @@
 import express from 'express';
 import conn from '../db/conn.mjs';
 import { ObjectId } from "mongodb";
-import request from 'request';
 const router = express.Router();
 
 /**
@@ -30,7 +29,7 @@ router.get('/', async (req, res) => {
  * @param {*} res
  * @param {Object}
  */
-router.get(`/find/:color`, async (req, res) => {
+router.get(`/api/find/:color`, async (req, res) => {
     const query = `stops.${req.params.color}`;
     let collection = await conn.collection("Stations");
     let result = await collection.find(query);

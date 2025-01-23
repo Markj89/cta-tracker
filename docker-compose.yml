@@ -1,90 +1,83 @@
-version: "3.8"
+name: cta-tracker
 
 services:
-  _build:
-    image: cta-tracker-image
-    command: ["echo", "build completed"]
+  nginx:
+    restart: always
+    image: 
+      'nginx:latest'
     build:
-      context: .
       dockerfile: Dockerfile
-
-  shell:
-    image: cta-tracker-image
-    container_name: shell
+      context: ./nginx
+    ports:
+      - 3051:3051
     depends_on:
-      - _build
-    environment:
-      - REGION=us-east-1
-      - ATLAS_USER=$ATLAS_USER
-      - ATLAS_PWD=$ATLAS_PWD
-      - CTA_TRAIN_API_KEY=$CTA_TRAIN_API_KEY
-      - TRAIN_ARRIVALS=$TRAIN_ARRIVALS
-      - GOOGLE_KEY=$GOOGLE_KEY
-      - FRONTEND_URL=$FRONTEND_URL
-      - UI_PORT=$UI_PORT
-      - SERVER_PORT=$SERVER_PORT
-      - SERVER_URL=$SERVER_URL
-    volumes:
-      - .:home/app
-      - /home/app/node_modules
+      - server
+      - client
 
   mongodb:
-    image: monog:4.27.2
-    restart: unless-stopped
-    env_file: ./env.local
-    environment:
-      - ATLAS_USER=$ATLAS_USER
-      - ATLAS_PWD=$ATLAS_PWD
-    ports:
-      - $ATLAS_PWD:$27017
+    image: mongo:latest
+    container_name: mongodb_server
     volumes:
-      - db:/data/db
-      - .:home/app
-      - /home/app/node_modules
+      - mongo_data:/data/db
+    networks:
+      - cta-tracker
+    env_file: ./.env
+    ports:
+      - 27017:27017
 
-  backend:
-    image: cta-tracker-image
+  server:
+    build:
+      context: './server'
+      dockerfile: Dockerfile
+    restart: always
     container_name: backend
-    build:
-      context: ./server
-    ports:
-      - "3000:3000"
-    entrypoint: ["yarn", "workspace", "@cta-tracker/server", "dev"]
-    depends_on:
-      - _build
+    env_file:
+      - ./.env
+    volumes:
+      - './server:/app'
+      - '/app/node_modules'
+    networks:
+      - cta-tracker
     environment:
       - ATLAS_USER=$ATLAS_USER
       - ATLAS_PWD=$ATLAS_PWD
       - CTA_TRAIN_API_KEY=$CTA_TRAIN_API_KEY
-      - TRAIN_ARRIVALS=$TRAIN_ARRIVALS
-      - GOOGLE_KEY=$GOOGLE_KEY
       - FRONTEND_URL=$FRONTEND_URL
-      - UI_PORT=$UI_PORT
-      - SERVER_PORT=$SERVER_PORT
-      - SERVER_URL=$SERVER_URL
-    volumes:
-      - .:/home/app
-      - /home/app/server/node_modules
-      - /home/app/node_modules
-
-  frontend:
-    image: cta-tracker-image
-    container_name: frontend
-    build:
-      context: ./src
+      - TRAIN_ARRIVALS=$TRAIN_ARRIVALS
+      - MONGO_LINK=$MONGO_LINK
     ports:
-      - "8080:8080"
-    entrypoint: ["yarn", "workspace", "@cta-tracker/frontend", "dev"]
+      - 3000:3000
+    depends_on:
+      - mongodb
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: always
+    container_name: frontend
     env_file:
-      - ./env.local
+      - ./.env
     environment:
       - GOOGLE_KEY=$GOOGLE_KEY
-      - CTA_TRAIN_API_KEY=$CTA_TRAIN_API_KEY
-      - TRAIN_ARRIVALS=$TRAIN_ARRIVALS
-      - FRONTEND_URL=$FRONTEND_URL
-      - UI_PORT=$UI_PORT
-      - SERVER_PORT=$SERVER_PORT
       - SERVER_URL=$SERVER_URL
     volumes:
-      - .:/home/app
-      - /home/app/node_modules
+      - './client:/app'
+      - '/app/node_modules'
+    networks:
+      - cta-tracker
+    ports:
+      - 8080:8080
+    depends_on:
+      - server
+    expose:
+      - 8080
+    command: yarn run dev
+    stdin_open: true
+    tty: true
+
+volumes:
+  mongo_data:
+networks:
+  cta-tracker:
+    driver: bridge

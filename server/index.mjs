@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import stations from './routes/stations.mjs'
 import arrivals from './routes/arrivals.mjs';
+import path from 'path';
 
 const PORT = 3000;
 const app = express();
@@ -19,26 +20,29 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(bodyParser.json());
-
-app.use('/stations', stations);
-app.use(arrivals);
+app.get('/', (req, res) => {
+  res.redirect('/api');
+});
+app.use('/api', express.static('./static/index.html'));
+app.use('/api/stations', stations);
+app.use('/api/arrivals', arrivals);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  res.status(404).send('Unable to find request');
-  next(createHttpError(404));
+  res.status(404).sendFile('404.html', { root: './static' });
 });
 
 // error handler
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
+  console.log('Environment ', req.app.get('env'));
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   // Pass to next layer of middleware
   next();
 
   // render the error page
-  res.status(err.status || 500).render(err.status);
+  res.status(err.status || 500).render(err.status).sendFile('500.html', { root: './static' });
 });
 
 // start the Express server
