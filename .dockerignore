@@ -7,4 +7,10 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.env.local
 
+node_modules
+.git
+.env
+tmp/
+logs/

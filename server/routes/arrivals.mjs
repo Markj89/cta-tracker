@@ -1,5 +1,5 @@
+import axios from 'axios';
 import express from 'express';
-import request from 'request';
 const router = express.Router();
 
 /**
@@ -8,21 +8,15 @@ const router = express.Router();
  * @param {*} response
  * @param {Object}
  */
-router.use('/arrivals/:_id', async (req) => {
+router.use('/:_id', async (req) => {
     console.log(`Arrivals`, Date.now());
     return req.next();
 });
 
-router.get("/arrivals/:_id", async (requests, response) => {
+router.get("/:_id", async (requests, response) => {
     let options = {
         method: 'GET',
-        url: process.env.TRAIN_ARRIVALS, // API Endpoint
-        qs: {
-            key: process.env.CTA_TRAIN_API_KEY, // API KEY
-            mapid: requests?.params?._id, // Stop ID
-            //rt: stationColor(requests.params, true),
-            outputType: 'json'
-        },
+        url: `${process.env.TRAIN_ARRIVALS}?mapid=${requests?.params?._id}&key=${process.env.CTA_TRAIN_API_KEY}&outputType=JSON`, // API Endpoint
         headers: {
             'cache-control': 'no-cache',
             Connection: 'keep-alive',
@@ -32,11 +26,15 @@ router.get("/arrivals/:_id", async (requests, response) => {
             Accept: '*/*'
         }
     };
-    request(options, ((error, res, body) => {
-        if (error) throw new Error(error);
-        response.send(body);
-        response.end();
-    }));
+    axios.request(options)
+    .then((res) => {
+        response.status(200).send(res.data);
+    }).catch((error) => {
+        if (error) {
+            res.send("Not found").status(404);
+            console.log(error);
+        }
+    });
 });
 
 export default router;

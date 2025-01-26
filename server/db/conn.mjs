@@ -1,9 +1,9 @@
 import { MongoClient } from 'mongodb';
 import './../loadEnv.mjs';
 
-const user = process.env.ATLAS_USER;
-const password = process.env.ATLAS_PWD;
-const uri = `mongodb+srv://${user}:${password}@ctamapcluster.pobc97j.mongodb.net/?retryWrites=true&w=majority`;
+const { ATLAS_USER, ATLAS_PWD, MONGO_LINK } = process.env;
+const uri = `mongodb+srv://${ATLAS_USER}:${ATLAS_PWD}${MONGO_LINK}`;
+//const uri = `${MONGO_LINK}`;
 const client = new MongoClient(uri, { useUnifiedTopology: true });
 let conn;
 try {
