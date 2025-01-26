@@ -28,7 +28,8 @@
     "nodemon": "^3.0.1"
   },
   "devDependencies": {
-    "env-cmd": "^10.1.0"
+    "env-cmd": "^10.1.0",
+    "express-rate-limit": "^7.5.0"
   },
   "main": "index.mjs"
 }
