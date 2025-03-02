@@ -5,15 +5,18 @@
 import React, { SVGProps } from "react";
 import StationsIcon from './StationsIcon';
 import TrainIcon from "./TrainIcon";
+import ListIcon from "./ListIcon";
 
 export enum ICONS {
     Stations = 'Stations',
-    Train = 'Train'
+    Train = 'Train',
+    List = 'List'
 }
 
 const getIcons = (props: SVGProps<SVGSVGElement>) => ({
     Station: <StationsIcon {...props} />,
-    Train: <TrainIcon {...props} />
+    Train: <TrainIcon {...props} />,
+    List: <ListIcon {...props} />
 });
 
 interface IconProps extends SVGProps<SVGSVGElement> {

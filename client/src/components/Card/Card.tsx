@@ -23,7 +23,7 @@ const Card = React.forwardRef(({ children, style, className = '', station, onCli
     );
     return (
         <div ref={cardRef} className={clsx(orientation === 'vertical' ? 'card-vertical' : 'card-horizontal', className)}
-         style={style}>
+         style={style} role="presentation">
             {children}
         </div>
     );

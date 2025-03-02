@@ -3,13 +3,12 @@
  * 
  * @type {Component} Button
  */
-
-import React, { MouseEvent, ReactNode, Ref, forwardRef, PropsWithChildren, ButtonHTMLAttributes } from 'react';
+import React, { MouseEvent, Ref, forwardRef, PropsWithChildren, memo } from 'react';
 
 interface ButtonProps {
-    children: ReactNode;
+    children: JSX.Element;
     className: string;
-    onClick: (event: MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    onClick?: () => void;
     active?: boolean;
     isLoading?: boolean;
     isCompleted?: boolean;
@@ -18,37 +17,29 @@ interface ButtonProps {
 }
 type OrNull<T> = T | null
 
-const Button = forwardRef(
-    (
-        { 
-            className, 
-            children, 
-            onClick, 
-            reversed,
-            active,
-            disabled,
-            ...props 
-        }: PropsWithChildren<
-            { 
-                active: boolean, 
-                reversed: boolean,
-                'aria-disabled': boolean
-            } & ButtonProps
-        >, 
-        ref: Ref<OrNull<HTMLButtonElement>>
-    ) => {
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+    ({ 
+        className, 
+        children, 
+        onClick, 
+        active,
+        disabled,
+        reversed,
+        ...props 
+    }, 
+    ref) => {
     
-    function clickHandler(event: any) {
+    function clickHandler(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
-        onClick(event);
+        onClick();
         return false;
     }
 
     return (
-        <button {...props} ref={ref as React.RefObject<HTMLButtonElement>} disabled={disabled} onMouseDown={(e) => clickHandler(e)} data-testid="button-component">
+        <button {...props} className={className} ref={ref as React.RefObject<HTMLButtonElement>} disabled={disabled} onMouseDown={(e) => clickHandler(e)} data-testid="button-component" role='button'>
             {children}
         </button>
     );
 });
 
-export default Button;
+export default memo(Button);

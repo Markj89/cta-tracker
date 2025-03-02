@@ -13,6 +13,7 @@ export type Props = {
     map: any;
     position: { lat: number, lng: number };
     children?: React.ReactNode;
+    className: string;
 }
 
 const  OverlayContainer = (props: Props) => {
