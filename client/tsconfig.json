@@ -25,7 +25,7 @@
         "strict": true,
         "declaration": true,
         "noEmit": true,
-        "types": ["react", "node", "jest"]
+        "types": ["react", "node", "jest", "@testing-library/jest-dom"]
     },
     "include": ["src/**/*", "client/webpack.config.ts", "vite.config.js"],
     "exclude": ["node_modules", "src/**/*.test", "public"],

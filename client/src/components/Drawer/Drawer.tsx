@@ -2,21 +2,15 @@
  * Drawer
  *
  * @type {Component} StationDrawer
- * @param Prop
- * @returns JSX.Element
  */
 import Card from "../Card/Card";
 import { CardContainer } from "../CardContainer";
-import SearchInput from "../SearchInput";
-import React, { useState, PropsWithChildren, ReactNode, useRef, useEffect } from "react";
-import { OptionProps, GroupBase } from "react-select";
-import useArrivals from "hooks";
-import { Station } from "components/Map";
+import React, { useState, ReactNode, useRef, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
 import clsx from "clsx";
 import DrawerHeader from "./DrawerHeader";
 
-interface Props {
+interface DrawerProps {
   children: ReactNode;
   className?: string;
   onClick: () => void;
@@ -27,7 +21,7 @@ interface Props {
 
 const Drawer = React.forwardRef(
   (
-    { children, className, onClick, headline, side = "bottom", open = false }: Props,
+    { children, className, onClick, headline, side = "bottom", open = false }: DrawerProps,
     ref
   ) => {
     const [isOpen, setIsOpen] = useState<boolean>(open);
