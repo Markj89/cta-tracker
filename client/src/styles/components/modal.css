@@ -55,7 +55,8 @@
     }
     .arrival-list-item {
         align-items: center;
-        width: 373px;
+        /*width: 373px;*/
+        width: 100%;
     }
     .arrival-time {
         color: white;

@@ -4,58 +4,69 @@
  */
 import React, { useState, useEffect, useRef, useCallback } from "react";
 
-const useArrivals = (initialState) => {
+const useArrivals = (stopIds, refreshInterval = 1000) => {
   const isFetching = useRef(true);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const getArrivals = useCallback(async (initialState) => {
-
+  const getArrivals = useCallback(async (stopIds) => {
     try {
+      setLoading(true);
+      setError(false);
+
       const headers = {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
       };
-      await fetch(`${process.env.SERVER_URL}/arrivals/${initialState?.map_id}`, { headers })
-      .then((response) => response.json())
-      .then((res) => {
-        if (res?.ctatt.errNm != null) {
-          setData(res?.ctatt.errNm);
-          setLoading(false); 
-          setError(false);
-        } else {
-          setData(res?.ctatt.eta);
-          setLoading(false);
-          setError(true);
-        }
-      })
-      .catch((error) => {
-        console.log(`Error: ${error}`);
-        setData(error);
-        setLoading(false);
-        setError(true);
+
+      const stopIdsArray = Array.isArray(stopIds) ? stopIds : [stopIds];
+      const response = await fetch(`${process.env.SERVER_URL}/arrivals`, { 
+        method: "POST",
+        headers,
+        body: JSON.stringify({ stopIds: stopIdsArray })
       });
+
+      const res = await response.json();
+      if (res?.error) {
+        setData(null);
+        setLoading(false); 
+        setError(true);
+      } else {
+        setData(res?.arrivals);
+        setLoading(false);
+        setError(false);
+      }
     } catch (error) {
-      console.log(error);
+      console.error(`Error: ${error}`);
       setData(error);
       setLoading(false);
       setError(true);
     }
-  }, []);
+  }, [stopIds]);
 
   const refreshData = useCallback((payload) => {
-    setData(null);
-    setLoading(null);
-    setError(null);
+    setLoading(true);
+    setError(false);
     isFetching.current = true;
-  }, []);
+    getArrivals(payload);
+  }, [getArrivals, stopIds]);
 
   useEffect(() => {
-    if (isFetching.current) {
+    if (isFetching.current && stopIds?.length > 0) {
       isFetching.current = false;
-      getArrivals(initialState);
+      getArrivals(stopIds);
     }
-  }, [isFetching.current]);
+
+    intervalRef.current = setInterval(() => {
+      getArrivals(stopIds);
+    }, refreshInterval);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [getArrivals, refreshInterval, stopIds]);
+  
   return { data, loading, error, refetch: refreshData };
 };
 export default useArrivals;

@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ServerApiVersion } from 'mongodb';
 import './../loadEnv.mjs';
 
 const { ATLAS_USER, ATLAS_PWD, MONGO_LINK } = process.env;
