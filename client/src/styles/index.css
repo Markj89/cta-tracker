@@ -210,6 +210,32 @@
     .bubble-border-org {
         border-color: #f9461c;
     }
+
+    .text-blue {
+        border-color: #00a1de;
+    }
+    .text-pink {
+        border-color: #e27ea6;
+    }
+    .text-g {
+        border-color: #009b3a;
+    }
+    .text-brn {
+        border-color: #62361b;
+    }
+    .text-p {
+        border-color: #522398;
+    }
+    .text-1y {
+        border-color: #f9e300;
+    }
+    .text-red {
+        border-color: #c60c30;
+    }
+    .text-org {
+        border-color: #f9461c;
+    }
+    
     a {
         color: inherit;
         text-decoration: inherit;

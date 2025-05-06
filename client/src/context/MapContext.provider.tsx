@@ -8,15 +8,18 @@ import { screenSizeProps } from "components/Map";
 
 interface Props {
     children: React.ReactNode;
-    value?: InitiCenerType;
+    locationValue?: InitiCenerType;
     screenSizeValue?: screenSizeProps;
+    showMapValue: boolean;
 }
 
 const MapContextProvider: React.FunctionComponent<Props> = (props: Props): JSX.Element => {
-    const { children, value = { lat: 0, lng: 0 } as InitiCenerType, screenSizeValue = { width: 0, height: 0 } as screenSizeProps } = props;
-    const [location, setLocation] = useState<InitiCenerType>(value);
+    const { children, showMapValue, locationValue = { lat: 0, lng: 0 } as InitiCenerType, screenSizeValue = { width: 0, height: 0 } as screenSizeProps } = props;
+    const [location, setLocation] = useState<InitiCenerType>(locationValue);
     const [screenSize, setScreenSize] = useState<screenSizeProps>(screenSizeValue);
-    const mapState = useMemo(() => ({ location, setLocation, screenSize, setScreenSize }), [location, setLocation, screenSize, setScreenSize]);
+    const [showMap, setShowMap] = useState<boolean>(showMapValue);
+    
+    const mapState = useMemo(() => ({ location, setLocation, screenSize, setScreenSize, showMap, setShowMap}), [location, setLocation, screenSize, setScreenSize, showMap, setShowMap ]);
 
     return (
         <MapContext.Provider value={mapState}>

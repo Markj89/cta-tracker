@@ -5,7 +5,7 @@
 import { useState, useEffect } from 'react';
 import { Stations } from 'components/Map';
 
-export default function useGetStationsLocally(url) {
+export default function useGetStations(url) {
     const [stations, getStations] = useState<Stations[]>([]);
 
     const getData = (url: string) => {
