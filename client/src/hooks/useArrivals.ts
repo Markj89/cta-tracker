@@ -8,7 +8,7 @@ const useArrivals = (stopIds, refreshInterval = 1000) => {
   const isFetching = useRef(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(false);
   const getArrivals = useCallback(async (stopIds) => {
     try {

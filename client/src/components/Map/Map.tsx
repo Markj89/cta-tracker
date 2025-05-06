@@ -5,42 +5,30 @@
  * @param MapProps
  * @returns JSX.Element
  */
-import React, { useState, useRef, useEffect } from "react";
-import useGetStationsLocally from "../../hooks/useGetStationsLocally";
+import React, { useState, useRef, useEffect, useLayoutEffect, useContext } from "react";
 import OverlayContainer from "./../Overlay/Overlay";
 import Markers from "./../Marker/Markers";
-import { mapMarkers, mapStations } from "./../../utils/map";
 import { MapProps } from "./Map.types";
-import { findLocationsInRange } from "./Map.logic";
 import Drawer from "../Drawer/Drawer";
 import clsx from "clsx";
 import Button from "./../Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Icon, { ICONS } from "./../Icon/Icon";
-import useArrivals from "./../../hooks/useArrivals";
-import { formatArrivalTime, formatEstimatedTime } from "../Modal/StationModal.logic";
+import { mapMarkers } from "./../../utils/map";
+import StopCard from "./../StopCard/StopCard";
+import { getGroupedDuplicateStops } from "./Map.logic";
+import { MapContext } from "./../../context/MapContext";
 
-const Map = ({ width, height, currentLocation, zoom = 15 }: MapProps) => {
+const Map = ({ width, height, currentLocation, nearbyLocations, nearbyLocationsIds, stations, arrivalsLoading, arrivalErrors, arrivals, zoom = 15 }: MapProps) => {
   const navigate = useNavigate();
   const mapRef = useRef<HTMLDivElement>();
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>();
+  const { showMap, setShowMap } = useContext(MapContext);
   const [map, setMap] = useState<google.maps.Map>(null);
   const [filteredArrivals, setFilteredArrivals] = useState([]);
   const [drawerHeight, setDrawerHeight] = useState(0);
-
-  const { stations } = useGetStationsLocally(
-    `${process.env.SERVER_URL}/stations`
-  );
-  const markers = mapMarkers(stations);
-  const mappedStations = mapStations(markers);
   const [isDrawerShowing, setDrawerShowing] = useState<boolean>(false);
-  const nearbyLocations = findLocationsInRange(
-    mappedStations,
-    currentLocation,
-    1
-  );
-  const nearbyLocationsIds = nearbyLocations?.map((location) => location?.map_id);
-  const { data, loading, error } = useArrivals(nearbyLocationsIds, 30000);
+  const markers = mapMarkers(stations);
 
   useEffect(() => {
     if (mapRef.current && !map) {
@@ -55,26 +43,31 @@ const Map = ({ width, height, currentLocation, zoom = 15 }: MapProps) => {
     }
   }, [map, zoom]);
 
-  // function handleClick() {
-  //   mapRef.current.focus();
-  // }
+  function handleClick() {
+    mapRef.current.focus();
+    setShowMap((prevValue) => {
+      const newShowMap = !prevValue;
+      if (newShowMap) {
+        navigate(`/list`, { replace: true });
+      } else {
+        navigate(`/`, { replace: true });
+      }
+      return newShowMap;
+    });   
+  }
 
   useEffect(() => {
-    if (data) {
-      const now = new Date();
-
-      const nearestArrivals = data?.filter((arrival, index, self) => {
-        const arrivalTime = new Date(arrival?.arrT);
-        const minutesUntilArrival = (arrivalTime - now) / 60000;
-
-        return (
-          minutesUntilArrival <= 5 && self.findIndex((a) => a.staId === arrival.staId && a.arrT === arrival.arrT) === index
-        )
-      });
-      setFilteredArrivals(nearestArrivals);
-      setDrawerHeight(ref.current.clientHeight);
+    if (arrivals) {
+      const groupedDuplicates = getGroupedDuplicateStops(arrivals);
+      setFilteredArrivals(groupedDuplicates);
     }
-  }, [data, setDrawerHeight]);
+  }, [arrivals]);
+
+  useLayoutEffect(() => {
+    if (ref.current && ref.current.clientHeight) {
+      setDrawerHeight(ref.current?.clientHeight);
+    }
+  }, [filteredArrivals]);
 
   const handleToggleDrawer = () => setDrawerShowing((prev) => !prev);
   return (
@@ -88,7 +81,7 @@ const Map = ({ width, height, currentLocation, zoom = 15 }: MapProps) => {
         }}
         ref={mapRef as any}
       >
-        {nearbyLocations?.map((marker, index) => (
+        {nearbyLocations?.map((marker: any, index: number) => (
           <OverlayContainer
             map={map}
             position={{ lat: marker?.lat, lng: marker?.lng }}
@@ -100,37 +93,42 @@ const Map = ({ width, height, currentLocation, zoom = 15 }: MapProps) => {
         ))}
       </div>
       <div className={clsx('visible md:invisible')}>
-        <Drawer open={isDrawerShowing} onClick={() => handleToggleDrawer()} side={"bottom"} headline="Train Stations near me" className={clsx(
-          "bg-white right-0 left-0 shadow-xl rounded-lg white-background transition-transform duration-300 ease-in-out", 
+        <Drawer open={isDrawerShowing} onBackdropClick={handleToggleDrawer} side={"bottom"} headline="Train Stations near me" className={clsx(
+          "bg-white right-0 left-0 shadow-xl rounded-lg white-background transition-transform duration-300 ease-in-out max-h-[80vh]", 
           isDrawerShowing ? "translate-y-0 opacity-100 height-calc-top bottom-0" : "translate-y-full height-calc bottom-calc-low"
           )}
             >
-            {loading && <p>Loading...</p>}
-            {error && <p>Error fetching arrivals</p>}
-            {data && (
-              <div className={clsx(`px-4 sm:px-6 overflow-y-scroll overscroll-y-contain h-full` )}id="available_arrivals" ref={ref}>
-                <div className="relative mt-6 flex-1 md:px-2 sm:px-1">
-                  {filteredArrivals?.map((arrival, index) => (
-                    <ul
-                      className="sm:w-3xs list-inside station-list-item flex align-middle arrival-list-item px-3.5 gray-background mb-2"
-                      key={index}
-                    >
-                      <li className="text-left text-sm flex-none w-24 text-black text-base text-xs">
-                      {arrival?.stpDe?.replace('Service toward ', '')}
-                      </li>
-                      <ul className="flex-auto w-32 arrival-list-item-times">
-                        <li className="text-right arrival-time text-black my-0 text-sm">
-                          {formatArrivalTime(arrival?.arrT).toString() === '0' ? 'Due' : `${formatArrivalTime(arrival?.arrT).toString()} mins`}
-                        </li>
-                        <li className="text-right estimated-time text-black text-xs">
-                          {formatEstimatedTime(arrival?.arrT)}
-                        </li>
-                      </ul>
-                    </ul>
-                  ))}
-                </div>
+            <div className="flex flex-col max-h-[80vh] overflow-hidden overflow-y-scroll overscroll-y-contain px-2 sm:px-2"  onClick={(e) => e.stopPropagation()}>
+              <div 
+                className="overflow-y-visible flex-1" 
+                style={{
+                  maxHeight: drawerHeight ? `${drawerHeight}` : '100vh'
+                }}
+                ref={ref}
+              >
+                {arrivalsLoading && <p>Loading...</p>}
+                {arrivalErrors && <p>Error fetching arrivals</p>}
+                {filteredArrivals?.map((arrival, i) => (
+                  <div>
+                      <StopCard 
+                        routeNumber={arrival?.stopId} 
+                        stops={arrival?.arrivals} 
+                        destinationName={arrival?.arrivals?.[0]?.raw?.destNm} />
+                  </div>
+                ))}
               </div>
-            )}
+              {/* Sticky bottom area */}
+              <div className={'display-flex visible flex absolute left-0 right-0 bottom-1 justify-center py-2'}>
+                <Button className={'background-black-light text-white px-4 py-2 rounded-full outline-none display-flex w-64 '} onClick={handleClick}>
+                  <span className="flex-1 flex self-center justify-self-center">
+                    <span className="flex-1 flex self-center">
+                      Show List {' '}
+                      <div className="flex-1 flex self-center ml-1"><Icon icon={ICONS.List} size={15} /> </div>   
+                    </span>
+                  </span>
+                </Button>
+              </div>
+            </div>
           </Drawer>
         </div>
     </>

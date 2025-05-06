@@ -13,7 +13,7 @@ import DrawerHeader from "./DrawerHeader";
 interface DrawerProps {
   children: ReactNode;
   className?: string;
-  onClick: () => void;
+  onBackdropClick: () => void;
   side: string;
   open: boolean;
   headline: string;
@@ -21,18 +21,11 @@ interface DrawerProps {
 
 const Drawer = React.forwardRef(
   (
-    { children, className, onClick, headline, side = "bottom", open = false }: DrawerProps,
+    { children, className, onBackdropClick, headline, side = "bottom", open = false }: DrawerProps,
     ref
   ) => {
     const [isOpen, setIsOpen] = useState<boolean>(open);
     const mounted = useRef(false);
-    const props = useSpring({
-      height: open
-        ? window.innerWidth - 0
-        : window.innerWidth - window.innerHeight + 100,
-      position: "absolute",
-      //top: 0
-    });
 
     useEffect(() => {
         if (open) {
@@ -42,32 +35,29 @@ const Drawer = React.forwardRef(
 
     return (
         <animated.div
-            onClick={() => onClick()}
+            onClick={onBackdropClick}
             id={`dialog-${side}`}
             role="dialog"
             aria-labelledby="slide-over"
             aria-modal="true"
             className={clsx(
-                "fixed z-10"
-                ,
+                "fixed z-40",
                 className
             )}
         >
-            <div className="outline-none rounded-lg touch-none height-74 drawer-header" role="button" tabIndex={0}>
+            <div 
+                className="outline-none rounded-lg touch-none height-74 drawer-header" 
+                role="button" 
+                tabIndex={0} 
+                >
                 <Card ref={ref}>
                     { headline && (
                         <div className="py-8">
                             <DrawerHeader headline={headline} />
                         </div>
                     )}
-                    <CardContainer
-                        className=""
-                        //className={"pointer-events-none max-w-full overflow-hidden text-base xs:w-auto md:w-32 lg:w-96"}
-                        orientation={"vertical"}
-                    >
-                        <div 
-                        //className={"flex flex-col h-full overflow-y-scroll p-1"}
-                        >
+                    <CardContainer orientation={"vertical"}>
+                        <div className="flex flex-col h-full p-1 overflow-y-auto">
                             {children}
                         </div>
                     </CardContainer>

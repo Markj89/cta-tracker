@@ -30,7 +30,14 @@ export interface MapProps {
     width: number;
     height: number;
     currentLocation?: Partial<InitiCenerType>;
+    stations: Stations[];
     zoom?: number;
+    arrivals: string[];
+    nearbyLocations: string[];
+    nearbyLocationsIds: string[];
+    arrivalsLoading?: any;
+    arrivalErrors?: any;
+    showMap?: boolean;
 }
 
 export type screenSizeProps = {

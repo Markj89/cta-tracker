@@ -11,7 +11,7 @@ const container = document.getElementById('app');
 const root = createRoot(container!);
 root.render(
     <React.StrictMode>
-        <MapContextProvider>
+        <MapContextProvider showMapValue={false}>
             <App />
         </MapContextProvider>
     </React.StrictMode>, 

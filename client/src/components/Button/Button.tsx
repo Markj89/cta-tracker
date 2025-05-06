@@ -31,7 +31,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     
     function clickHandler(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
-        onClick();
+        onClick(event);
         return false;
     }
 
