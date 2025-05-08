@@ -1,17 +1,16 @@
 /**
- * Arrival
+ * Arrival By ID
  * @type {Hooks}
  */
 import React, { useState, useEffect, useRef, useCallback } from "react";
 
-const useArrivals = (stopIds, refreshInterval = 1000) => {
+const useArrivals = (stopId, refreshInterval = 1000) => {
   const isFetching = useRef(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(false);
-  console.log(stopIds)
-  const getArrivals = useCallback(async (stopIds) => {
+  const getArrivalById = useCallback(async (stopId) => {
     try {
       setLoading(true);
       setError(false);
@@ -21,11 +20,10 @@ const useArrivals = (stopIds, refreshInterval = 1000) => {
         "Content-Type": "application/json",
       };
 
-      const stopIdsArray = Array.isArray(stopIds) ? stopIds : [stopIds];
-      const response = await fetch(`${process.env.SERVER_URL}/arrivals`, { 
+      const response = await fetch(`${process.env.SERVER_URL}/arrivals/${stopId}`, { 
         method: "POST",
         headers,
-        body: JSON.stringify({ stopIds: stopIdsArray })
+        body: JSON.stringify({ stopId: stopId })
       });
 
       const res = await response.json();
@@ -44,29 +42,29 @@ const useArrivals = (stopIds, refreshInterval = 1000) => {
       setLoading(false);
       setError(true);
     }
-  }, [stopIds]);
+  }, [stopId]);
 
   const refreshData = useCallback((payload) => {
     setLoading(true);
     setError(false);
     isFetching.current = true;
-    getArrivals(payload);
-  }, [getArrivals, stopIds]);
+    getArrivalById(payload);
+  }, [getArrivalById, stopId]);
 
   useEffect(() => {
-    if (isFetching.current && stopIds?.length > 0) {
+    if (isFetching.current) {
       isFetching.current = false;
-      getArrivals(stopIds);
+      getArrivalById(stopId);
     }
 
     intervalRef.current = setInterval(() => {
-      getArrivals(stopIds);
+      getArrivalById(stopId);
     }, refreshInterval);
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [getArrivals, refreshInterval, stopIds]);
+  }, [getArrivalById, refreshInterval, stopId]);
   
   return { data, loading, error, refetch: refreshData };
 };

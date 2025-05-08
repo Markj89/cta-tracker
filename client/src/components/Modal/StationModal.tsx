@@ -5,7 +5,7 @@
  * @type {Component} StationModal
  */
 
-import useArrivals from "../../hooks/useArrivals";
+import useArrivalById from "../../hooks/useArrivalById";
 import Card from "./../Card/Card";
 import { CardContainer } from "./../CardContainer";
 import { Station } from "./../Map";
@@ -28,7 +28,7 @@ export type StationCardProps = {
 }
 
 export default function StationModal({ station, position, style, isOpen, stops}: StationCardProps ): JSX.Element {
-    const { data, loading, error } = useArrivals(station?.map_id, 60000);
+    const { data, loading, error } = useArrivalById(station?.map_id, 30000);
     const titleRef = useRef();
     const [title, setTitle] = useState<string>(station?.stop_name?.replace(/ *\([^)]*\) */g, ""));
     const [fontSize, setFontSize] = useState<string>('text-4xl');
@@ -58,6 +58,7 @@ export default function StationModal({ station, position, style, isOpen, stops}:
         }
       }, [data]);
     
+    console.log('filteredArrivals', data);
     return (
         <Card orientation="vertical" style={{ top: `${position?.left}px`, left: `${position?.top}px` }} className={"modal z-10 rounded-lg shadow-xl mx-auto p-6 bg-slate"} aria-haspopup={isOpen}>
             <div className='text-base text-slate-900 font-semibold dark:text-slate-300 rounded-lg overflow-hidden mb-2'>
