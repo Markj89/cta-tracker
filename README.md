@@ -1,5 +1,7 @@
 # CTA Tracker
-A React Based Transit Tracker for the Chicago Transit Authority (CTA) 
+A React Based Transit Tracker for the Chicago Transit Authority (CTA)
+
+# <img src="preview.png" alt="Preview of CTA Tracker" />
 
 ### Project setup
 ```
