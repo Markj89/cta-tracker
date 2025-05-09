@@ -10,10 +10,9 @@ const router = express.Router();
  */
 router.post("/", async( req, res) => {
     try {
-        console.log(`Arrivals`, Date.now());
-
         const { stopIds } = req.body;
-    
+        console.log(`Arrivals `, Date.now());
+
         if (!stopIds) {
           return res.status(400).json({ error: "Invalid stop IDs" });
         }
@@ -38,19 +37,29 @@ router.post("/", async( req, res) => {
     }
 });
 
-// router.get("/:_id", async (requests, response) => {
-//     let options = {
-//         method: 'GET',
-//         url: , // API Endpoint
-//         headers: {
-//             'cache-control': 'no-cache',
-//             Connection: 'keep-alive',
-//             'Accept-Encoding': 'gzip, deflate',
-//             Host: 'lapi.transitchicago.com',
-//             'Cache-Control': 'no-cache',
-//             Accept: '*/*'
-//         }
-//     };
-// });
+router.post("/:_id", async(req, res) => {
+    try {
+
+        console.log(req.body)
+        const { stopId } = req.body;
+        // if (!stopId) {
+        //     return res.status(400).json({ error: "Invalid stop IDs" });
+        // }
+
+        console.log('Arrivals by Id', Date.now());
+        const url = `${process.env.TRAIN_ARRIVALS}?key=${process.env.CTA_TRAIN_API_KEY}&mapid=${stopId}&outputType=json`;
+        
+        const response = await fetch(url)
+        .then(res => res.json())
+        .catch((error) => console.error(error));
+ 
+        const allArrivals = response.ctatt?.eta || [];
+
+        res.status(200).json({ arrivals: allArrivals });
+    } catch (e) {
+        console.error("Error fetching CTA arrival: ", e);
+        res.status(500).json({ error: "Internal Server Error "});
+    }
+});
 
 export default router;

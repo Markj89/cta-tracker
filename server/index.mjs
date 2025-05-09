@@ -35,6 +35,7 @@ app.get('/', (req, res) => {
 app.use('/api', express.static('./static/index.html'));
 app.use('/api/stations', limiter, stations);
 app.use('/api/arrivals', limiter, arrivals);
+app.use('/api/arrivals/:_id', limiter, arrivals);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
