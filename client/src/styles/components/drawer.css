@@ -1,0 +1,33 @@
+@layer drawer {
+    .drawer-header-title:before {
+        display: contents;
+        visibility: visible;
+    }
+    .drawer-header::before {
+        background-color: rgba(32, 32, 32, 0.2);
+        border-radius: 4px;
+        transform: translateX(-20px);
+        left: 50%;
+        position:absolute;
+        content: '';
+        width: 40px;
+        height: 4px;
+        top: 8px;
+    }
+    .height-calc {
+        height: calc(100 * var(--vh,1vh));
+    }
+    /* .bottom-calc {
+        bottom: calc(-100* var(--vh, 1vh) + var(--explore-drawer-header_height));
+    } */
+    .bottom-calc {
+        bottom: calc(100* var(--vh, 1vh) + var(--explore-drawer-header_height));
+    }
+    .bottom-calc-low {
+        bottom: 4.5rem;
+    }
+
+    .height-calc-top {
+        height: calc(100 * var(--vh, 100vh));
+    }
+}

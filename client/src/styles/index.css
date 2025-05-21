@@ -1,0 +1,281 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import './components/loading.css';
+@import './components/map.css';
+@import './components/marker.css';
+@import './components/modal.css';
+@import './components/card.css';
+@import './components/tooltip.css';
+@import './components/drawer.css';
+
+:root {
+    --vh: 5.39px;
+    --vw: 3.75px;
+    --vw-unitless: 375;
+    --explore-drawer-header_height: 74px;
+}
+
+@layer base {
+    html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline; 
+    }
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        border-width: 0;
+    }
+    ::before,
+    ::after {
+        --tw-content: '';
+        }
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    html {
+        line-height: 1.5;
+        overflow-y: scroll;
+        -webkit-text-size-adjust: 100%;
+        height: 100%;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+    small {
+        font-size: 75%;
+    }
+    sub,
+    sup {
+        font-size: 75%;
+        line-height: 0;
+        position: relative;
+        vertical-align: baseline;
+    }
+    sub {
+        bottom: -0.25em;
+    }  
+    sup {
+        top: -0.5em;
+    }
+    body {
+        font-size: small;
+        text-rendering: optimizeLegibility;
+        -webkit-overflow-scrolling: touch;
+        -webkit-font-smoothing: antialiased;
+        -moz-font-smoothing: antialiased;
+        font-family: "Inter Tight", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+        font-weight: 500;
+        min-height: 100%;
+        letter-spacing: normal;
+        padding: 0;
+        overflow: hidden;
+        margin: 0 auto;
+        line-height: inherit;
+    }
+    hr {
+        height: 0;
+        color: inherit;
+    }
+    body, html {
+        overflow-x: hidden;
+    }
+    html, body {
+        margin: 0 auto;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+    }
+    img,
+    picture,
+    video,
+    canvas,
+    svg {
+        display: block;
+        max-width: 100%;
+    }
+    img {
+        display: block;
+    }
+    ul,
+    ol,
+    li {
+        padding: 0;
+        margin: 0;
+    }
+    blockquote,
+    dl,
+    dd,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    hr,
+    figure,
+    p,
+    pre {
+        margin: 0;
+    }
+    input,
+    button,
+    textarea,
+    select {
+        font: inherit;
+    }
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        overflow-wrap: break-word;
+        font-size: inherit;
+        font-weight: inherit;
+    }
+    .text-white {
+        color: rgb(255 255 255);
+    }
+    .white-background {
+        background-color: #fff;
+    }
+    .gray-background {
+        background-color: #F5F5F5;
+    }
+    .blue-background {
+        background-color: #00a1de;
+    }
+    .pink-background {
+        background-color: #e27ea6;
+    }
+    .g-background {
+        background-color: #009b3a;
+    }
+    .brn-background {
+        background-color: #62361b;
+    }
+    .p-background {
+        background-color: #522398;
+    }
+    .y-background {
+        background-color: #f9e300;
+    }
+    .red-background {
+        background-color: #c60c30;
+    }
+    .org-background {
+        border-color: #f9461c ;
+    }
+    .background-black-light {
+        background-color: theme('colors.black-light');
+    }
+
+    .text-white {
+        color: theme('colors.white');
+    }
+
+    .text-black {
+        color: theme('colors.black');
+    }
+
+    .bubble-border-blue {
+        border-color: #00a1de;
+    }
+    .bubble-border-pink {
+        border-color: #e27ea6;
+    }
+    .bubble-border-g {
+        border-color: #009b3a;
+    }
+    .bubble-border-brn {
+        border-color: #62361b;
+    }
+    .bubble-border-p {
+        border-color: #522398;
+    }
+    .bubble-border-y {
+        border-color: #f9e300;
+    }
+    .bubble-border-red {
+        border-color: #c60c30;
+    }
+    .bubble-border-org {
+        border-color: #f9461c;
+    }
+
+    .text-blue {
+        border-color: #00a1de;
+    }
+    .text-pink {
+        border-color: #e27ea6;
+    }
+    .text-g {
+        border-color: #009b3a;
+    }
+    .text-brn {
+        border-color: #62361b;
+    }
+    .text-p {
+        border-color: #522398;
+    }
+    .text-1y {
+        border-color: #f9e300;
+    }
+    .text-red {
+        border-color: #c60c30;
+    }
+    .text-org {
+        border-color: #f9461c;
+    }
+    
+    a {
+        color: inherit;
+        text-decoration: inherit;
+    }
+    button,
+    [type='button'],
+    [type='reset'],
+    [type='submit'] {
+        -webkit-appearance: button;
+        /* 1 */
+        /* 2 */
+        background-image: none;
+        /* 2 */
+    }
+    :-moz-focusring {
+        outline: auto;
+    }
+    :-moz-ui-invalid {
+        box-shadow: none;
+    }
+    progress {
+        vertical-align: baseline;
+    }
+    ::-webkit-inner-spin-button,
+    ::-webkit-outer-spin-button {
+        height: auto;
+    }
+    [type='search'] {
+        -webkit-appearance: textfield;
+        /* 1 */
+        outline-offset: -2px;
+        /* 2 */
+    }
+    ::-webkit-search-decoration {
+        -webkit-appearance: none;
+    }
+    .custom-bottom {
+        bottom: calc(-100 * var(--vh, 7.69px) + var(--explore-drawer-header_height, 74px));
+    }
+    .custom-height {
+        height: calc(100 * var(--vh, 1vh));
+    }
+}

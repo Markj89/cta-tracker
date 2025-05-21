@@ -2,7 +2,7 @@ const router = require('express').Router();
 const cors = require('cors');
 const request = require("request");
 
-router.use('/', (req, res) => {
+router.use('/api', (req, res) => {
     const stationColor = (object, value) => {
         return Object.keys(object).find(key => object[key] === value && key !== 'ada');
     };
