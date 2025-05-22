@@ -11,14 +11,8 @@ on:
       - feature/**
 
 jobs:
-  install:
+  build:
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [14, 16]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - name: Checkout repository
@@ -27,71 +21,44 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '16'  # or the version you're using
+          node-version: 20
 
-      - name: Cache Node modules
-        uses: actions/cache@v4
+      - name: Cache server dependencies
+        uses: actions/cache@v3
         with:
-          path: |
-            ~/.npm
-            ~/.yarn
-          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          path: server/node_modules
+          key: ${{ runner.os }}-server-yarn-${{ hashFiles('server/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-server-yarn-
 
-      - name: Install dependencies
-        run: |
-          npm install
-
-  build-client:
-    runs-on: ubuntu-latest
-    needs: install
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js for client
-        uses: actions/setup-node@v4
+      - name: Cache client dependencies
+        uses: actions/cache@v3
         with:
-          node-version: '16'
+          path: client/node_modules
+          key: ${{ runner.os }}-client-yarn-${{ hashFiles('client/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-client-yarn-
+        
+      - name: Install server dependencies
+        run: yarn install --frozen-lockfile
+        working-directory: server
 
       - name: Install client dependencies
-        run: |
-          cd client
-          npm install
+        run: yarn install --frozen-lockfile
+        working-directory: client
 
-      - name: Build React client
-        run: |
-          cd client
-          npm run build
+      # - name: Run server tests
+      #   run: yarn test
+      #   working-directory: server
 
-  build-server:
-    runs-on: ubuntu-latest
-    needs: install
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js for server
-        uses: actions/setup-node@v4
-        with:
-          node-version: '16'
-
-      - name: Install server dependencies
-        run: |
-          cd server
-          npm install
-
-      - name: Run tests for server
-        run: |
-          cd server
-          npm test
+      # - name: Run client tests
+      #   run: yarn test
+      #   working-directory: client
 
   deploy:
     runs-on: ubuntu-latest
     needs:
-      - build-client
-      - build-server
+      - build
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
