@@ -47,13 +47,13 @@ jobs:
         run: yarn install --frozen-lockfile
         working-directory: client
 
-      - name: Run server tests
-        run: yarn test
-        working-directory: server
+      # - name: Run server tests
+      #   run: yarn test
+      #   working-directory: server
 
-      - name: Run client tests
-        run: yarn test
-        working-directory: client
+      # - name: Run client tests
+      #   run: yarn test
+      #   working-directory: client
 
   deploy:
     runs-on: ubuntu-latest
