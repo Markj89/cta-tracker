@@ -1,4 +1,20 @@
 /* eslint-disable */
+var escapeHTML = function(str) {
+    if (!str) return '';
+    return str.replace(/[&<>"'`=\/]/g, function(s) {
+        return ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+            '`': '&#96;',
+            '=': '&#61;',
+            '/': '&#47;'
+        })[s];
+    });
+};
+
 var addSorting = (function() {
     'use strict';
     var cols,
@@ -88,6 +104,8 @@ var addSorting = (function() {
             val = colNode.getAttribute('data-value');
             if (col.type === 'number') {
                 val = Number(val);
+            } else {
+                val = escapeHTML(val);
             }
             data[col.key] = val;
         }
