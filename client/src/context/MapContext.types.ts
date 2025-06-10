@@ -8,10 +8,14 @@ export interface MapContextType {
     setLocation: React.Dispatch<React.SetStateAction<InitiCenerType>>;
     stations: string[];
     setStations: React.Dispatch<React.SetStateAction<string[]>>;
+    station: string[];
+    setStation: React.Dispatch<React.SetStateAction<string[]>>;
     arrivals: string[];
     setArrivals: React.Dispatch<React.SetStateAction<string[]>>;
     showMap?: boolean;
     setShowMap?: React.Dispatch<React.SetStateAction<boolean>>;
+    drawerOpen: boolean;
+    setDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface InitiCenerType {

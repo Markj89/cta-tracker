@@ -60,7 +60,7 @@ function App() {
           <Routes>
             <Route path={"/"}  element={
               isLoading && location?.lat !== 0 && (
-                <Wrapper apiKey={`${process.env.GOOGLE_KEY}`} render={render}>
+                <Wrapper apiKey={`${process.env.GOOGLE_KEY}`} render={render} libraries={["maps", "marker"]}>
                   <Map height={height} width={width} currentLocation={location} nearbyLocations={nearbyLocations} stations={stations} arrivals={arrivalData} nearbyLocationsIds={nearbyLocationsIds} arrivalsLoading={dataLoading} arrivalErrors={error} zoom={11} />
                 </Wrapper>
               )

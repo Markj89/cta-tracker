@@ -12,22 +12,17 @@ import { Station } from "./../Map";
 import React, { useEffect, useRef, useState } from "react";
 import { formatArrivalTime, formatEstimatedTime } from "./StationModal.logic";
 
-interface Position {
-    top: number;
-    left: number;
-}
-
 export type StationCardProps = {
     station: Station;
-    stops: Station[];
-    position?: Position;
+    stops: Station;
+    position?: google.maps.LatLngLiteral;
     isOpen?: boolean;
     children?: React.ReactNode;
     handleClose?: () => void;
     style?: React.CSSProperties;
 }
 
-export default function StationModal({ station, position, style, isOpen, stops}: StationCardProps ): JSX.Element {
+export default function StationModal({ station, position, isOpen }: StationCardProps ): JSX.Element {
     const { data, loading, error } = useArrivalById(station?.map_id, 30000);
     const titleRef = useRef();
     const [title, setTitle] = useState<string>(station?.stop_name?.replace(/ *\([^)]*\) */g, ""));
@@ -42,7 +37,7 @@ export default function StationModal({ station, position, style, isOpen, stops}:
         }
     }, [fontSize, title]);
 
-     useEffect(() => {
+    useEffect(() => {
         if (data) {
           const now = new Date();
     
@@ -56,9 +51,8 @@ export default function StationModal({ station, position, style, isOpen, stops}:
           });
           setFilteredArrivals(nearestArrivals);
         }
-      }, [data]);
+    }, [data]);
     
-    console.log('filteredArrivals', data);
     return (
         <Card orientation="vertical" style={{ top: `${position?.left}px`, left: `${position?.top}px` }} className={"modal z-10 rounded-lg shadow-xl mx-auto p-6 bg-slate"} aria-haspopup={isOpen}>
             <div className='text-base text-slate-900 font-semibold dark:text-slate-300 rounded-lg overflow-hidden mb-2'>

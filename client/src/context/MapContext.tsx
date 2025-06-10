@@ -13,10 +13,14 @@ const MapContextState: MapContextType = {
     setLocation: () => {},
     stations: [],
     setStations: () => [],
+    station: [],
+    setStation: () => [],
     arrivals: [],
     setArrivals: () => [],
     showMap: false,
-    setShowMap: () => {}
+    setShowMap: () => {},
+    drawerOpen: false,
+    setDrawerOpen: () => {},
 };
 
 export const MapContext = createContext<MapContextType>(MapContextState);

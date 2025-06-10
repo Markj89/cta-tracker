@@ -12,7 +12,7 @@ import { MapProps } from "./Map.types";
 import Drawer from "../Drawer/Drawer";
 import clsx from "clsx";
 import Button from "./../Button";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Icon, { ICONS } from "./../Icon/Icon";
 import { mapMarkers } from "./../../utils/map";
 import StopCard from "./../StopCard/StopCard";
@@ -23,7 +23,7 @@ const Map = ({ width, height, currentLocation, nearbyLocations, nearbyLocationsI
   const navigate = useNavigate();
   const mapRef = useRef<HTMLDivElement>();
   const ref = useRef<HTMLDivElement>();
-  const { showMap, setShowMap } = useContext(MapContext);
+  const { showMap, setShowMap, setDrawerOpen } = useContext(MapContext);
   const [map, setMap] = useState<google.maps.Map>(null);
   const [filteredArrivals, setFilteredArrivals] = useState([]);
   const [drawerHeight, setDrawerHeight] = useState(0);
@@ -38,6 +38,7 @@ const Map = ({ width, height, currentLocation, nearbyLocations, nearbyLocationsI
           zoom: 13,
           disableDefaultUI: true,
           clickableIcons: false,
+          mapId: `${process.env.GOOGLE_MAP_ID}`
         })
       );
     }
@@ -69,7 +70,10 @@ const Map = ({ width, height, currentLocation, nearbyLocations, nearbyLocationsI
     }
   }, [filteredArrivals]);
 
-  const handleToggleDrawer = () => setDrawerShowing((prev) => !prev);
+  const handleToggleDrawer = () => {
+    setDrawerShowing((prev) => !prev);
+    setDrawerOpen(isDrawerShowing);
+  };
   return (
     <>
       <div
@@ -88,7 +92,7 @@ const Map = ({ width, height, currentLocation, nearbyLocations, nearbyLocationsI
             key={index}
             className="min-h-screen flex items-center justify-center flex-col"
           >
-            <Markers station={marker} stops={markers} />
+            <Markers station={marker} stops={markers} map={map} />
           </OverlayContainer>
         ))}
       </div>
