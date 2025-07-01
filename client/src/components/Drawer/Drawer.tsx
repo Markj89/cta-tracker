@@ -5,8 +5,8 @@
  */
 import Card from "../Card/Card";
 import { CardContainer } from "../CardContainer";
-import React, { useState, ReactNode, useRef, useEffect } from "react";
-import { useSpring, animated } from "react-spring";
+import React, { useState, ReactNode, useEffect } from "react";
+import { animated } from "react-spring";
 import clsx from "clsx";
 import DrawerHeader from "./DrawerHeader";
 
@@ -25,7 +25,6 @@ const Drawer = React.forwardRef(
     ref
   ) => {
     const [isOpen, setIsOpen] = useState<boolean>(open);
-    const mounted = useRef(false);
 
     useEffect(() => {
         if (open) {

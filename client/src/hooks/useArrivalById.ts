@@ -4,9 +4,7 @@
  */
 import React, { useState, useEffect, useRef, useCallback } from "react";
 
-const useArrivals = (stopId, refreshInterval = 1000) => {
-  const isFetching = useRef(true);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+const useArrivals = (stopId) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(false);
@@ -44,28 +42,10 @@ const useArrivals = (stopId, refreshInterval = 1000) => {
     }
   }, [stopId]);
 
-  const refreshData = useCallback((payload) => {
-    setLoading(true);
-    setError(false);
-    isFetching.current = true;
-    getArrivalById(payload);
-  }, [getArrivalById, stopId]);
-
   useEffect(() => {
-    if (isFetching.current) {
-      isFetching.current = false;
-      getArrivalById(stopId);
-    }
-
-    intervalRef.current = setInterval(() => {
-      getArrivalById(stopId);
-    }, refreshInterval);
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [getArrivalById, refreshInterval, stopId]);
+    getArrivalById(stopId);
+  }, [getArrivalById, stopId]);
   
-  return { data, loading, error, refetch: refreshData };
+  return { data, loading, error };
 };
 export default useArrivals;

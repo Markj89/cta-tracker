@@ -4,55 +4,45 @@
  * @param MarkersProps
  * @returns JSX.Element
  */
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, { useRef, useState, useContext } from "react";
 import Marker from "./Marker";
 import { Station } from "components/Map";
 import StationModal from "./../Modal/StationModal";
 import { MapContext } from "./../../context/MapContext";
+import { createPortal } from "react-dom";
 
 type MarkersProps = {
-    station: Station;
+    stationMarker: Station;
     stops: Station[];
-    map: any;
+    map: google.maps.Map;
 }
 
-const Markers = ({ station, stops, map }: MarkersProps) => {
-    const [opened, setIsOpened] = useState<boolean>(false);
-    const { setStation } = useContext(MapContext);
-    const handleOnOpen = () => {
-        setIsOpened(true);
-    };
+const Markers = ({ stationMarker, stops, map }: MarkersProps) => {
+    const { drawerOpen, setStation } = useContext(MapContext);
     const containerRef = useRef<HTMLDivElement>(null);
-    const [position, getPosition] = useState({top: 0, left: 0});
+    const [selectedStation, setSelectedStation] = useState<Station | null>(null);
+    const [position, setPosition] = useState({bottom: 10, left: 0});
 
-    useEffect(() => {
-        function handleClickOutside(this: Document, event: MouseEvent) {
-            getPosition({ top: event?.clientX, left: event?.clientY });
-            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-                setIsOpened(false);
-            }
-        }
-    
-        document.addEventListener("click", handleClickOutside);
-        return () => {
-            document.removeEventListener("click", handleClickOutside);
-        };
-    }, [containerRef]);
+    function handleOnClick(event: MouseEvent) {
+        const mobileEl = document.getElementById('app');
+        let rect = mobileEl.offsetParent.getBoundingClientRect();
 
-    const handleOnClick = (station) => {
-        setStation(station);
+        setPosition({ bottom: 1, left: rect.left });
+        setSelectedStation(stationMarker);
+        setStation(selectedStation);
     };
-
+    
     const sidebarContentEl = document.getElementById('app');
-    if (!sidebarContentEl) return null;
     const modalPlacement = {
-        top: `${position?.top}px`,
+        bottom: `10px`,
         left:  `${position?.left}px`,
     }
+    if (!sidebarContentEl) return null;
 
     return (
         <div ref={containerRef}>
-            <Marker map={map} position={{ lat: station.lat, lng: station.lng }} station={station} stops={stops} onHover={() => setIsOpened(true)} onClick={(station) => handleOnClick(station)} gmpClickable={true} />
+            <Marker map={map} position={{ lat: stationMarker.lat, lng: stationMarker.lng }} station={stationMarker} stops={stops} onClick={(event) => handleOnClick(event)} gmpClickable={true} />
+            {/* {drawerOpen ? createPortal( <StationModal station={stationMarker} stops={stops} style={modalPlacement} position={position} />, sidebarContentEl ) : <Marker map={map} position={{ lat: stationMarker.lat, lng: stationMarker.lng }} station={stationMarker} stops={stops} onClick={(event) => handleOnClick(event)} gmpClickable={true} /> } */}
         </div>
     );
 };

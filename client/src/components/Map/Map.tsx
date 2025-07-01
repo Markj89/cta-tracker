@@ -23,7 +23,7 @@ const Map = ({ width, height, currentLocation, nearbyLocations, nearbyLocationsI
   const navigate = useNavigate();
   const mapRef = useRef<HTMLDivElement>();
   const ref = useRef<HTMLDivElement>();
-  const { showMap, setShowMap, setDrawerOpen } = useContext(MapContext);
+  const { setShowMap, setDrawerOpen, drawerOpen, setStation } = useContext(MapContext);
   const [map, setMap] = useState<google.maps.Map>(null);
   const [filteredArrivals, setFilteredArrivals] = useState([]);
   const [drawerHeight, setDrawerHeight] = useState(0);
@@ -74,6 +74,11 @@ const Map = ({ width, height, currentLocation, nearbyLocations, nearbyLocationsI
     setDrawerShowing((prev) => !prev);
     setDrawerOpen(isDrawerShowing);
   };
+
+  useEffect(() => {
+    if (!isDrawerShowing) setStation(null);
+  }, [setStation, isDrawerShowing]);
+
   return (
     <>
       <div
@@ -92,14 +97,14 @@ const Map = ({ width, height, currentLocation, nearbyLocations, nearbyLocationsI
             key={index}
             className="min-h-screen flex items-center justify-center flex-col"
           >
-            <Markers station={marker} stops={markers} map={map} />
+            <Markers stationMarker={marker} stops={markers} map={map} />
           </OverlayContainer>
         ))}
       </div>
       <div className={clsx('visible md:invisible')}>
-        <Drawer open={isDrawerShowing} onBackdropClick={handleToggleDrawer} side={"bottom"} headline="Train Stations near me" className={clsx(
+        <Drawer open={drawerOpen} onBackdropClick={handleToggleDrawer} side={"bottom"} headline="Train Stations near me" className={clsx(
           "bg-white right-0 left-0 shadow-xl rounded-lg white-background transition-transform duration-300 ease-in-out max-h-[80vh]", 
-          isDrawerShowing ? "translate-y-0 opacity-100 height-calc-top bottom-0" : "translate-y-full height-calc bottom-calc-low"
+          drawerOpen ? "translate-y-0 opacity-100 height-calc-top bottom-0" : "translate-y-full height-calc bottom-calc-low"
           )}
             >
             <div className="flex flex-col max-h-[80vh] overflow-hidden overflow-y-scroll overscroll-y-contain px-2 sm:px-2"  onClick={(e) => e.stopPropagation()}>

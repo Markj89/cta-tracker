@@ -12,10 +12,15 @@ import { Station } from "./../Map";
 import React, { useEffect, useRef, useState } from "react";
 import { formatArrivalTime, formatEstimatedTime } from "./StationModal.logic";
 
+interface Position {
+    bottom: number;
+    left: number;
+}
+
 export type StationCardProps = {
     station: Station;
-    stops: Station;
-    position?: google.maps.LatLngLiteral;
+    stops: Station[];
+    position?: Position;
     isOpen?: boolean;
     children?: React.ReactNode;
     handleClose?: () => void;
@@ -54,11 +59,11 @@ export default function StationModal({ station, position, isOpen }: StationCardP
     }, [data]);
     
     return (
-        <Card orientation="vertical" style={{ top: `${position?.left}px`, left: `${position?.top}px` }} className={"modal z-10 rounded-lg shadow-xl mx-auto p-6 bg-slate"} aria-haspopup={isOpen}>
+        <Card orientation="vertical" style={{ bottom: `${position?.bottom}px`, left: `${position?.left}px` }} className={"modal z-10 rounded-lg shadow-xl mx-auto p-6 bg-slate"} aria-haspopup={isOpen}>
             <div className='text-base text-slate-900 font-semibold dark:text-slate-300 rounded-lg overflow-hidden mb-2'>
                 <h1 ref={titleRef} id="station-title" className={`font-interTight mb-1.5 ${fontSize}`}>{title}</h1>
             </div>
-            <CardContainer className="text-base overflow-y-auto xs:w-32 md:w-32 lg:w-96" orientation={"vertical"}>
+            <CardContainer className="text-base overflow-y-visible xs:w-32 md:w-32 lg:w-96" orientation={"vertical"}>
                 {loading && <p>Loading...</p>}
                 {error && <p>Error fetching arrivals</p>}
                 {data && (

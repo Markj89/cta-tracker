@@ -39,8 +39,6 @@ router.post("/", async( req, res) => {
 
 router.post("/:_id", async(req, res) => {
     try {
-
-        console.log(req.body)
         const { stopId } = req.body;
         // if (!stopId) {
         //     return res.status(400).json({ error: "Invalid stop IDs" });
