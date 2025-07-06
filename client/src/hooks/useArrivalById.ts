@@ -2,9 +2,9 @@
  * Arrival By ID
  * @type {Hooks}
  */
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
-const useArrivals = (stopId) => {
+const useArrivalById = (stopId) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(false);
@@ -42,10 +42,19 @@ const useArrivals = (stopId) => {
     }
   }, [stopId]);
 
+  const executeHook = useCallback((payload) => {
+    setLoading(true);
+    setError(false);
+
+    if (payload?.length !== 0) {
+      getArrivalById(payload);
+    }
+  }, [getArrivalById]);
+
   useEffect(() => {
     getArrivalById(stopId);
   }, [getArrivalById, stopId]);
   
-  return { data, loading, error };
+  return { data, loading, error, executeHook };
 };
-export default useArrivals;
+export default useArrivalById;

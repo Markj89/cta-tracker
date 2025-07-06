@@ -34,7 +34,7 @@ function App() {
   );
   const nearbyLocationsIds = nearbyLocations?.map((location) => location?.map_id);
   const { data: arrivalsData, loading: dataLoading, error } = useArrivals(nearbyLocationsIds, 30000);
-  const { data: arrivalData, loading: arrivalDataLoading } = useArrivalById(station?.map_id);
+  const { data: arrivalData, loading: arrivalDataLoading, executeHook  } = useArrivalById(station?.map_id);
 
   useEffect(() => {
     if (currentLocation) {
@@ -49,6 +49,12 @@ function App() {
   useEffect(() => {
     setTimeout(() => setLoading(false), 3300)
   }, []);
+
+  useEffect(() => {
+    if (station) {
+      executeHook(station?.map_id);
+    }
+  }, [station]);
 
   
   if (loading && dataLoading) {
