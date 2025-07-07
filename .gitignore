@@ -22,7 +22,7 @@ keytmp.pem
 .env.local
 
 # testing
-/coverage
+/client/coverage
 /inspiration
 
 # production
