@@ -21,6 +21,6 @@ export default function useGetStations(url) {
 
     useEffect(() => {
         return getData(url);
-    }, [url]);
+    }, []);
     return { stations };
 }

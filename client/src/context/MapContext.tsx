@@ -11,12 +11,16 @@ const MapContextState: MapContextType = {
     screenSize: { width: 0, height: 0 },
     setScreenSize: () => {},
     setLocation: () => {},
-    stations: [],
+    stations: null,
     setStations: () => [],
+    station: null,
+    setStation: () => [],
     arrivals: [],
     setArrivals: () => [],
     showMap: false,
-    setShowMap: () => {}
+    setShowMap: () => {},
+    drawerOpen: false,
+    setDrawerOpen: () => {},
 };
 
 export const MapContext = createContext<MapContextType>(MapContextState);

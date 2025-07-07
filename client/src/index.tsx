@@ -11,7 +11,7 @@ const container = document.getElementById('app');
 const root = createRoot(container!);
 root.render(
     <React.StrictMode>
-        <MapContextProvider showMapValue={false}>
+        <MapContextProvider showMapValue={false} drawerValue={false} stationValue={null} stationsValue={null} screenSizeValue={{ width: window.innerWidth, height: window.innerHeight }}>
             <App />
         </MapContextProvider>
     </React.StrictMode>, 
