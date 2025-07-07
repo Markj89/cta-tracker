@@ -40,11 +40,12 @@ router.post("/", async( req, res) => {
 router.post("/:_id", async(req, res) => {
     try {
         const { stopId } = req.body;
-        // if (!stopId) {
-        //     return res.status(400).json({ error: "Invalid stop IDs" });
-        // }
+        if (!stopId) {
+            return res.status(400).json({ error: "Invalid stop IDs" });
+        }
 
         console.log('Arrivals by Id', Date.now());
+        console.log(`StopId for arrivals ${stopId}`)
         const url = `${process.env.TRAIN_ARRIVALS}?key=${process.env.CTA_TRAIN_API_KEY}&mapid=${stopId}&outputType=json`;
         
         const response = await fetch(url)

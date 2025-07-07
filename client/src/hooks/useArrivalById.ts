@@ -46,7 +46,7 @@ const useArrivalById = (stopId) => {
     setLoading(true);
     setError(false);
 
-    if (payload?.length !== 0) {
+    if (payload) {
       getArrivalById(payload);
     }
   }, [getArrivalById]);

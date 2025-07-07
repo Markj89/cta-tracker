@@ -55,7 +55,6 @@ function App() {
       executeHook(station?.map_id);
     }
   }, [station]);
-
   
   if (loading && dataLoading) {
     return <LoadingPage />

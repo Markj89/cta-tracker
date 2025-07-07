@@ -3,14 +3,14 @@ import { formatArrivalTime } from "./../Modal/StationModal.logic";
 import React, { useState } from "react";
 import Button from "./../Button";
 
-const StopCard = ({ destinationName, stops, routeNumber = null }) => {
+const StopCard = ({ destinationName, stops, stopName, routeNumber = null }) => {
   const [showAll, setShowAll] = useState(false);
   const displayedStops = showAll ? stops : stops.slice(0, 3);
 
   return (
     <div className="bg-white rounded-3xl shadow-[0_-8px_30px_rgba(0,0,0,0.1)] p-4 max-w-md mt-4">
       <div className="flex items-center justify-between mb-4">
-        <div className="text-2xl font-bold">{destinationName}</div>
+        <div className="text-2xl font-bold">{stopName}</div>
       </div>
 
       <div className="relative pl-1">

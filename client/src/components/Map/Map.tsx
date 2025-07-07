@@ -121,7 +121,8 @@ const Map = ({ width, height, currentLocation, nearbyLocations, nearbyLocationsI
                   <div>
                       <StopCard 
                         routeNumber={arrival?.stopId} 
-                        stops={arrival?.arrivals} 
+                        stops={arrival?.arrivals}
+                        stopName={arrival?.arrivals?.[0]?.raw?.staNm}
                         destinationName={arrival?.arrivals?.[0]?.raw?.destNm} />
                   </div>
                 ))}
