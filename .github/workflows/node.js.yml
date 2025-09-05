@@ -24,7 +24,7 @@ jobs:
           node-version: 20
 
       - name: Cache server dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: server/node_modules
           key: ${{ runner.os }}-server-yarn-${{ hashFiles('server/yarn.lock') }}
@@ -32,7 +32,7 @@ jobs:
             ${{ runner.os }}-server-yarn-
 
       - name: Cache client dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: client/node_modules
           key: ${{ runner.os }}-client-yarn-${{ hashFiles('client/yarn.lock') }}
