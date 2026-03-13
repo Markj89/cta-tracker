@@ -2,9 +2,13 @@
  * List Icon
  * @type {Component}
  */
-import React, { SVGProps } from "react";
+import React from "react";
 
-const ListIcon = (props: SVGProps<SVGSVGElement>) => {
+interface IconProps extends React.SVGProps<SVGSVGElement> {
+  size?: number | string;
+}
+
+const ListIcon = (props: IconProps) => {
   const { color, size } = props;
   return (
     <svg
@@ -20,9 +24,9 @@ const ListIcon = (props: SVGProps<SVGSVGElement>) => {
           id="Icon"
           d="M13 9.75H34.125M13 19.5H34.125M13 29.25H34.125M4.875 9.75H4.89125M4.875 19.5H4.89125M4.875 29.25H4.89125"
           stroke="#F5F5F5"
-          stroke-width="4"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
     </svg>

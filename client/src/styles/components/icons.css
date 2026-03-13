@@ -1,0 +1,82 @@
+@layer icon {
+    .icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .train-icon {
+        width: 30px;
+    }
+
+    .blue-train > rect {
+        fill: #17A0DB;
+    }
+
+    .blue-train > path {
+        fill: white;
+    }
+
+    .red-train > rect {
+        fill: #c60c30;
+    }
+
+    .red-train > path {
+        fill: white;
+    }
+
+    .g-train > rect {
+        fill: #009b3a;
+    }
+
+    .g-train > path {
+        fill: white;
+    }
+
+    .y-train > rect {
+        fill: #f9e300;
+    }
+
+    .y-train > path {
+        fill: white;
+    }
+
+    .org-train > rect {
+        fill: #f9461c;
+    }
+
+    .org-train > path {
+        fill: white;
+    }
+
+    .p-train > rect {
+        fill: #522398;
+    }
+
+    .p-train > path {
+        fill: white;
+    }
+
+    .purple_express-train > rect {
+        fill: #522398;
+    }
+
+    .purple_express-train > path {
+        fill: white;
+    }
+
+    .pink-train > rect {
+        fill: #e27ea6;
+    }
+
+    .pink-train > path {
+        fill: white;
+    }
+
+    .brn-train > rect {
+        fill: #62361b;
+    }
+
+    .brn-train > path {
+        fill: white;
+    }
+}

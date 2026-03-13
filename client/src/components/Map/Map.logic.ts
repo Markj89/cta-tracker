@@ -1,3 +1,4 @@
+import { Stations } from "./Map.types";
 function haversine(lat1, lon1, lat2, lon2) {
     const R = 3958.8; // Radius of Earth in miles (use 6371 for kilometers)
     const dLat = toRad(lat2 - lat1);
@@ -71,4 +72,20 @@ export const getGroupedDuplicateStops = (data) => {
   
     return duplicateGroups;
 };
-  
+
+export const getStationsNames = (stations: Stations[]) => {
+  if (!stations) return [];
+
+  return stations.flatMap((station) => {
+    // find all colors that are true
+    const activeColors = Object.keys(station.stops)
+      .filter((key) => (station.stops as any)[key] === true);
+
+    // expand into multiple objects: one per color
+    return activeColors.map((color) => ({
+      label: station.station_name,
+      value: station._id + "-" + color, // ensure uniqueness
+      color,
+    }));
+  });
+};

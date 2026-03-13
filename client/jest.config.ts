@@ -2,19 +2,18 @@ import type { Config } from "jest";
 
 
 const config: Config = {
-  testEnvironment: "jsdom",
   preset: "ts-jest",  // ✅ Ensures Jest uses ts-jest to process TypeScript
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
+  testEnvironment: "jsdom",
   moduleFileExtensions: ["js", "json", "ts", "tsx", "jsx", "json", "node", "mjs"],
   clearMocks: true,
-  collectCoverage: true,
+  collectCoverage: false,
   transform: {
-    "^.+\\.(j|t)sx?$": "babel-jest",
-    '^.+\\.tsx?$': 'ts-jest',
+    "^.+\\.tsx?$": ["ts-jest", { tsconfig: "tsconfig.json" }],
+    // diagnostics: { ignoreCodes: [1343] },
   },
   testMatch: [
     "<rootDir>/src/**/*.test.{js,jsx,ts,tsx}",
-    "<rootDir>/src/test/**/*.test.{js,jsx,ts,tsx}",
+    "<rootDir>/src/__tests__/**/*.test.{js,jsx,ts,tsx}",
   ],
   collectCoverageFrom: [
     "<rootDir>/src/components/**/*.{ts,tsx,js,jsx}",
@@ -34,7 +33,10 @@ const config: Config = {
     "^@hooks/(.*)$": "<rootDir>/src/hooks/$1",
     "\\.(css|scss|sass)$": "identity-obj-proxy",
   },
-  setupFilesAfterEnv: ["<rootDir>/setupTest.ts"],
+  setupFilesAfterEnv: [
+    "jest-extended/all", 
+    "<rootDir>/setupTest.ts"
+  ]
 };
 
 module.exports = config;
