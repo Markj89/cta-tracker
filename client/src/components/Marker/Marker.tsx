@@ -33,7 +33,7 @@ const Marker: FC<MarkerProps> = ({
   const { setDrawerOpen, setStation } = useContext(MapContext);
 
   useEffect(() => {
-    if (!map || markerRef?.current) return;
+    if (!map || markerRef?.current) return undefined;
 
     const pin = new google.maps.marker.PinElement({ scale });
 
@@ -43,20 +43,30 @@ const Marker: FC<MarkerProps> = ({
     if (gmpClickable) {
       pin.element.setAttribute("gmpClickable", "true");
     }
+    const infoWindow = new google.maps.InfoWindow();
 
     const marker = new google.maps.marker.AdvancedMarkerElement({
       map,
       position,
       title: station?.stop_name,
       content: pin.element,
-      gmpClickable
+      gmpClickable: true
     });
 
     markerRef.current = marker;
     pinRef.current = pin;
     
     if (onClick) {
-      marker.addListener("click", () => {
+      marker.addListener("click", (event: google.maps.marker.AdvancedMarkerClickEvent, position) => {
+        const { target } = event;
+        infoWindow.close();
+
+        infoWindow.setContent("Test");
+        infoWindow.open(marker.map, marker);
+
+        if (marker.element) {
+          marker.element.focus();
+        }
         setStation(station);
         setDrawerOpen(true);
       });  

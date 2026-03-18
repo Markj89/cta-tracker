@@ -67,6 +67,6 @@ const useArrivals = (stopIds, refreshInterval = 1000) => {
     };
   }, [getArrivals, refreshInterval, stopIds]);
   
-  return { data, loading, error, refetch: refreshData };
+  return { data, loading, error, refetch: refreshData, getArrivals };
 };
 export default useArrivals;

@@ -6,8 +6,8 @@ export interface MapContextType {
     screenSize: Partial<screenSizeProps>;
     setScreenSize: React.Dispatch<React.SetStateAction<screenSizeProps>>;
     setLocation: React.Dispatch<React.SetStateAction<InitiCenerType>>;
-    stations?: Stations;
-    setStations?: React.Dispatch<React.SetStateAction<Stations>>;
+    stations?: Stations[];
+    setStations?: React.Dispatch<React.SetStateAction<Stations[]>>;
     station: Station;
     setStation: React.Dispatch<React.SetStateAction<Station>>;
     arrivals: string[];

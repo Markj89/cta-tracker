@@ -12,7 +12,7 @@ interface Props {
     screenSizeValue?: screenSizeProps;
     showMapValue: boolean;
     stationValue: Station;
-    stationsValue: Stations;
+    stationsValue: Stations[];
     drawerValue: boolean;
 }
 
@@ -22,7 +22,7 @@ const MapContextProvider: React.FunctionComponent<Props> = (props: Props): JSX.E
     const [screenSize, setScreenSize] = useState<screenSizeProps>(screenSizeValue);
     const [showMap, setShowMap] = useState<boolean>(showMapValue);
     const [station, setStation] = useState<Station>(stationValue);
-    const [stations, setStations] = useState<Stations>(stationsValue);
+    const [stations, setStations] = useState<Stations[]>(stationsValue);
     const [drawerOpen, setDrawerOpen] = useState<boolean>(drawerValue);
 
     const mapState: MapContextType = useMemo(() => ({ 
