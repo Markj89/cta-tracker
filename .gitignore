@@ -23,6 +23,8 @@ keytmp.pem
 
 # testing
 /coverage
+/client/coverage
+/inspiration
 
 # production
 /client/public
