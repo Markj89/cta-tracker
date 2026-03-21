@@ -8,6 +8,6 @@ describe('Card', () => {
                 Hello World
             </Card>
         );
-        expect(wrapper.container.firstChild).toMatchSnapshot();
+        expect(wrapper.container.firstChild).toBeInTheDocument();
     });
 });

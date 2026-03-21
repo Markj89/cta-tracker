@@ -1,6 +1,8 @@
 import { InitiCenerType } from "context";
 
 export interface Stations {
+    _id: number;
+    station_name: string;
     stops: Station[];
 }
 

@@ -2,14 +2,14 @@
 
 # dependencies
 /node_modules
-/client/node_modules/
-/client/package-lock.json
-/client/.env
-/client/yarn.lock
-/server/node_modules/
-/server/package-lock.json
-/server/yarn.lock
-/server/stations.txt
+client/node_modules/
+client/package-lock.json
+client/.env
+client/yarn.lock
+server/node_modules/
+server/package-lock.json
+server/yarn.lock
+server/stations.txt
 .env
 /.pnp
 .pnp.js
@@ -22,6 +22,7 @@ keytmp.pem
 .env.local
 
 # testing
+/coverage
 /client/coverage
 /inspiration
 
@@ -42,3 +43,10 @@ public
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Testing
+/coverage
+.coverage
+.coverage.*
+/client/coverage
+/inspiration

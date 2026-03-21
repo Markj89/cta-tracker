@@ -4,18 +4,20 @@ import { MapContext } from './context/MapContext';
 import useGetCurrentPosition from './hooks/useGetCurrentPosition';
 import useGetStations from './hooks/useGetStations';
 import useWindowDimensions from './hooks/useWindowDimensions';
-import { LoadingPage } from './components/Loader';
+import { Loader, LoadingPage } from './components/Loader';
 import { Status, Wrapper } from '@googlemaps/react-wrapper';
 import useScreenSize from './hooks/useScreenSize';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NotFound from './Pages/404';
 import ListPage from './Pages/ListPage';
 import { mapMarkers, mapStations } from './utils/map';
 import { findLocationsInRange } from './components/Map/Map.logic';
 import useArrivals from './hooks/useArrivals';
+import useArrivalById from './hooks/useArrivalById';
+import Header from './components/Header/Header';
 
 function App() {  
-  const {location, setLocation, setScreenSize } = useContext(MapContext);
+  const {location, setLocation, setScreenSize, station, setStations } = useContext(MapContext);
   const { height, width } = useWindowDimensions();
   const { isLoading, currentLocation } = useGetCurrentPosition({initialCenter: {lat: 0, lng: 0}});
   const render = (status: Status) => (<h1>{status}</h1>);
@@ -32,7 +34,8 @@ function App() {
       1
   );
   const nearbyLocationsIds = nearbyLocations?.map((location) => location?.map_id);
-  const { data: arrivalData, loading: dataLoading, error } = useArrivals(nearbyLocationsIds, 30000);
+  const { data: arrivalsData, loading: dataLoading, error } = useArrivals(nearbyLocationsIds, 30000);
+  const { data: arrivalData, loading: arrivalDataLoading, executeHook  } = useArrivalById(station?.map_id);
 
   useEffect(() => {
     if (currentLocation) {
@@ -46,8 +49,14 @@ function App() {
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     setTimeout(() => setLoading(false), 3300)
-  }, []);
+    setStations(stations);
+  }, [stations]);
 
+  useEffect(() => {
+    if (station) {
+      executeHook(station?.map_id);
+    }
+  }, [station]);
   
   if (loading && dataLoading) {
     return <LoadingPage />
@@ -56,20 +65,26 @@ function App() {
   return (
     <article>
       <div className="App">
-        <BrowserRouter>
+        <Router>
+          <Header />
           <Routes>
             <Route path={"/"}  element={
               isLoading && location?.lat !== 0 && (
-                <Wrapper apiKey={`${process.env.GOOGLE_KEY}`} render={render}>
-                  <Map height={height} width={width} currentLocation={location} nearbyLocations={nearbyLocations} stations={stations} arrivals={arrivalData} nearbyLocationsIds={nearbyLocationsIds} arrivalsLoading={dataLoading} arrivalErrors={error} zoom={11} />
+                <Wrapper apiKey={`${process.env.GOOGLE_KEY}`} render={render} libraries={["maps", "marker"]}>
+                  <Map height={height} width={width} currentLocation={location} nearbyLocations={nearbyLocations} stations={stations} arrivals={arrivalData ?? arrivalsData} nearbyLocationsIds={nearbyLocationsIds} arrivalsLoading={dataLoading} arrivalErrors={error} zoom={11} />
                 </Wrapper>
               )
             } />
 
             <Route path="404" element={<NotFound />} />
-            <Route path="/list" element={<ListPage stations={stations} currentLocation={location} arrivals={arrivalData} />} />
+            <Route path="/list" element={
+              arrivalDataLoading ? (
+                <Loader />
+              ) : (
+                <ListPage stations={stations} currentLocation={location} arrivals={arrivalData ?? arrivalsData} />
+              )} />
           </Routes>
-        </BrowserRouter>
+        </Router>
       </div>
     </article>
   );

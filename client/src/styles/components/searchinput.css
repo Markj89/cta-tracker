@@ -1,0 +1,19 @@
+.SearchInput {
+    border: 1px solid #D9D9D9;
+    border-radius: 14px;
+    padding: 5px;
+}
+
+.SearchInputOption {
+    display: flex;
+    align-items: flex-start;
+    justify-content:  space-between;
+    padding: 8px 12px;
+}
+
+.SearchInputOption_content {
+    display: grid;
+    align-items: start;
+    width: 100%;
+    cursor: none;
+}

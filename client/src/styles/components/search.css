@@ -1,0 +1,7 @@
+
+@layer search {
+    
+    .suggestion-active {
+        display: flex;
+    }
+}

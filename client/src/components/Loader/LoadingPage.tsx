@@ -6,7 +6,7 @@ import React from 'react';
 import Icon, { ICONS } from './../Icon/Icon';
  
 export const LoadingPage = () => (
-    <div id="loading-page-container">
+    <div id="loading-page-container" data-testid="loading-page-container">
         <div className='relative'>
             <div className="relative mx-auto w-full max-w-container px-4 pt-12 sm:px-6 sm:pt-16 lg:flex lg:justify-between lg:px-8 lg:pt-20">
                 <div className='max-w-1xl mx-auto pt-10 xl:max-w-none place-content-center'>

@@ -9,6 +9,14 @@
         "allowJs": true,
         "jsx": "react-jsx",
         "baseUrl": "./src",
+        "paths": {
+            "@/*": ["./src/*"],
+            "@hooks/*": ["./src/hooks/*"],
+            "@components/*": ["./src/components/*"],
+            "@utils/*": ["./src/utils/*"],
+            "@Pages/*": ["./src/Pages/*"],
+            "@context/*": ["./src/context/*"]
+        },
         "moduleResolution": "node",
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
@@ -21,12 +29,16 @@
         "pretty": true,
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
-        "isolatedModules": false,
+        "isolatedModules": true,
         "strict": true,
         "declaration": true,
         "noEmit": true,
-        "types": ["react", "node", "jest", "@testing-library/jest-dom"]
+        "types": ["react", "node", "jest", "@testing-library/jest-dom", "jest-extended", "google.maps"]
     },
-    "include": ["src/**/*", "client/webpack.config.ts", "vite.config.js"],
+    "include": ["src/**/*", "client/webpack.config.ts", "vite.config.js", "setupTest.ts"],
     "exclude": ["node_modules", "src/**/*.test", "public"],
+    "ts-node": {
+        // Do not forget to `npm i -D tsconfig-paths`
+        "require": ["tsconfig-paths/register"]
+    }
 }

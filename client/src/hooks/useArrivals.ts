@@ -10,7 +10,6 @@ const useArrivals = (stopIds, refreshInterval = 1000) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(false);
-  console.log(stopIds)
   const getArrivals = useCallback(async (stopIds) => {
     try {
       setLoading(true);
@@ -68,6 +67,6 @@ const useArrivals = (stopIds, refreshInterval = 1000) => {
     };
   }, [getArrivals, refreshInterval, stopIds]);
   
-  return { data, loading, error, refetch: refreshData };
+  return { data, loading, error, refetch: refreshData, getArrivals };
 };
 export default useArrivals;
