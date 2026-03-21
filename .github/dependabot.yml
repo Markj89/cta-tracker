@@ -1,12 +1,32 @@
 version: 2
 updates:
-  - package-ecosystem: "github-actions" # See documentation for possible values
-    directory: "." # Location of package manifests
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "."
     schedule:
       interval: "weekly"
+    target-branch: "development"
 
+  # Root package.json
   - package-ecosystem: "npm"
     directory: "."
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    target-branch: "development"
+
+  # Client package.json
+  - package-ecosystem: "npm"
+    directory: "/client"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    target-branch: "development"
+
+  # Server package.json
+  - package-ecosystem: "npm"
+    directory: "/server"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    target-branch: "development"
