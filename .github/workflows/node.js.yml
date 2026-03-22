@@ -51,9 +51,9 @@ jobs:
       #   run: yarn test
       #   working-directory: server
 
-      # - name: Run client tests
-      #   run: yarn test
-      #   working-directory: client
+      - name: Run client tests
+        run: yarn test
+        working-directory: client
 
   deploy:
     runs-on: ubuntu-latest
