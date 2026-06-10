@@ -150,7 +150,7 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.94.0",
     "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^5.2.3"
   },
   "main": "index.js",
   "repository": "git+ssh://git@github.com/Markj89/cta-tracker.git",
