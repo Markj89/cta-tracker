@@ -2,31 +2,46 @@ version: 2
 updates:
   # GitHub Actions
   - package-ecosystem: "github-actions"
-    directory: "."
+    directory: "/"
     schedule:
-      interval: "weekly"
-    target-branch: "development"
-
-  # Root package.json
-  - package-ecosystem: "npm"
-    directory: "."
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    target-branch: "development"
-
+      interval: "daily"
+    open-pull-requests-limit: 10
+    target-branch: "master"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+   
   # Client package.json
   - package-ecosystem: "npm"
     directory: "/client"
     schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    target-branch: "development"
+      interval: "daily"
+    open-pull-requests-limit: 10
+    target-branch: "master"
+    labels:
+      - "dependencies"
+      - "javascript"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    allow:
+      - dependency-type: "direct"
 
   # Server package.json
   - package-ecosystem: "npm"
     directory: "/server"
     schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    target-branch: "development"
+      interval: "daily"
+    open-pull-requests-limit: 10
+    target-branch: "master"
+    labels:
+      - "dependencies"
+      - "javascript"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    allow:
+      - dependency-type: "direct"

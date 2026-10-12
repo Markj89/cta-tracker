@@ -2,20 +2,30 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+This project currently supports the following versions with security fixes:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| Version                 | Supported |
+| ----------------------- | --------- |
+| master                  | Yes       |
+| active release branches | Yes       |
+| older branches          | No        |
+| unsupported releases    | No        |
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+Report any security issues discretely and do not open apublic issue.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Please use one of the following:
+- Private contact via the repository owner if provided in the project README or GitHub profile
+
+Please include:
+- a description of the vulnerability
+- affected components and versions
+- reproduction steps or proof of concept
+- impact and severity assessment
+- any suggested mitigation
+
+## Response Expectations
+I aim to:
+- Acknowledge the report as soon as possible
+- Implement a change or new feature
