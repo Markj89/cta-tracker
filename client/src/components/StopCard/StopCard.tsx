@@ -6,7 +6,7 @@ import Button from "./../Button";
 const StopCard = ({ destinationName, stops, stopName, routeNumber = null }) => {
   const [showAll, setShowAll] = useState(false);
   const displayedStops = showAll ? stops : stops.slice(0, 3);
-
+  console.log(stopName)
   return (
     <div className="bg-white rounded-3xl shadow-[0_-8px_30px_rgba(0,0,0,0.1)] p-4 max-w-md mt-4">
       <div className="flex items-center justify-between mb-4">

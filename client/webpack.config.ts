@@ -2,10 +2,12 @@ import path from "path";
 import {
   Configuration as WebpackConfiguration,
   HotModuleReplacementPlugin,
-  DefinePlugin
+  DefinePlugin,
+  WebpackPluginInstance
 } from "webpack";
 import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
-import Dotenv from "dotenv-webpack";
+const Dotenv: new (options: { path: string; silent: boolean; systemvars: boolean }) => WebpackPluginInstance =
+  require("dotenv-webpack");
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
@@ -57,7 +59,6 @@ const common: Configuration = {
     compress: false,
     hot: true,
     port: 8080,
-    host: '0.0.0.0',
     disableHostCheck: true,
     https: true,
     historyApiFallback: true,
@@ -116,13 +117,10 @@ const common: Configuration = {
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
     new HotModuleReplacementPlugin(),
-    new DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify(
-        process.env.NODE_ENV === "production" ? "production" : "development"
-      ),
-    }),
     new Dotenv({
       path: path.resolve(__dirname, "./.env"),
+      silent: false,
+      systemvars: true
     }),
     new HtmlWebpackPlugin({
       title: "CTA Tracker",

@@ -1,2 +1,2 @@
-db = db.getSiblingDB('ctaTrackerDB');
-db.createCollection('stations');
+db = connect.getSiblingDB('stations');
+db.createCollection('Stations');

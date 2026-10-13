@@ -43,7 +43,7 @@ services:
       - ATLAS_PWD=$ATLAS_PWD
       - CTA_TRAIN_API_KEY=$CTA_TRAIN_API_KEY
       - FRONTEND_URL=$FRONTEND_URL
-      - TRAIN_ARRIVALS=$TRAIN_ARRIVALS
+      - TRAIN_ARRIVALS_URL=$TRAIN_ARRIVALS_URL
       - MONGO_LINK=$MONGO_LINK
     ports:
       - 3000:3000
@@ -59,7 +59,7 @@ services:
     env_file:
       - ./.env
     environment:
-      - GOOGLE_KEY=$GOOGLE_KEY
+      - GOOGLE_MAP_ID=$GOOGLE_MAP_ID
       - SERVER_URL=$SERVER_URL
     volumes:
       - './client:/app'

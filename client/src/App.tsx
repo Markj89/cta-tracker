@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useMemo, ReactElement } from 'react';
 import Map from './components/Map/Map';
 import { MapContext } from './context/MapContext';
 import useGetCurrentPosition from './hooks/useGetCurrentPosition';
@@ -16,26 +16,27 @@ import useArrivals from './hooks/useArrivals';
 import useArrivalById from './hooks/useArrivalById';
 import Header from './components/Header/Header';
 
-function App() {  
+function App() {
   const {location, setLocation, setScreenSize, station, setStations } = useContext(MapContext);
   const { height, width } = useWindowDimensions();
   const { isLoading, currentLocation } = useGetCurrentPosition({initialCenter: {lat: 0, lng: 0}});
-  const render = (status: Status) => (<h1>{status}</h1>);
   const whatsTheScreenSize = useScreenSize();
-  const { stations } = useGetStations(
+  const { stations, isStationsLaoding } = useGetStations(
     `${process.env.SERVER_URL}/stations`
   );
 
-  const markers = mapMarkers(stations);
-  const mappedStations = mapStations(markers);
+  const markers = useMemo(() => mapMarkers(stations), [stations]);
+  const mappedStations = useMemo(() => mapStations(markers), [markers]);
   const nearbyLocations = findLocationsInRange(
-      mappedStations,
-      currentLocation,
-      1
+    mappedStations,
+    currentLocation,
+    5
   );
+  console.log(nearbyLocations)
   const nearbyLocationsIds = nearbyLocations?.map((location) => location?.map_id);
   const { data: arrivalsData, loading: dataLoading, error } = useArrivals(nearbyLocationsIds, 30000);
-  const { data: arrivalData, loading: arrivalDataLoading, executeHook  } = useArrivalById(station?.map_id);
+  //console.log(station)
+  //const { data: arrivalData, loading: arrivalDataLoading, executeHook  } = useArrivalById(station?.map_id);
 
   useEffect(() => {
     if (currentLocation) {
@@ -54,13 +55,18 @@ function App() {
 
   useEffect(() => {
     if (station) {
-      executeHook(station?.map_id);
+      useArrivalById(station?.map_id);
     }
   }, [station]);
   
   if (loading && dataLoading) {
     return <LoadingPage />
   }
+
+  const render = (status: Status): ReactElement => {
+      if (status === Status.FAILURE) return <ListPage stations={stations} currentLocation={location} arrivals={arrivalsData} />;
+      return <ListPage stations={stations} currentLocation={location} arrivals={arrivalsData} />;
+  };
 
   return (
     <article>
@@ -71,17 +77,17 @@ function App() {
             <Route path={"/"}  element={
               isLoading && location?.lat !== 0 && (
                 <Wrapper apiKey={`${process.env.GOOGLE_KEY}`} render={render} libraries={["maps", "marker"]}>
-                  <Map height={height} width={width} currentLocation={location} nearbyLocations={nearbyLocations} stations={stations} arrivals={arrivalData ?? arrivalsData} nearbyLocationsIds={nearbyLocationsIds} arrivalsLoading={dataLoading} arrivalErrors={error} zoom={11} />
+                  <Map height={height} width={width} currentLocation={location} nearbyLocations={nearbyLocations} stations={stations} arrivals={arrivalsData} nearbyLocationsIds={nearbyLocationsIds} arrivalsLoading={dataLoading} arrivalErrors={error} zoom={11} />
                 </Wrapper>
               )
             } />
 
             <Route path="404" element={<NotFound />} />
             <Route path="/list" element={
-              arrivalDataLoading ? (
+              isStationsLaoding ? (
                 <Loader />
               ) : (
-                <ListPage stations={stations} currentLocation={location} arrivals={arrivalData ?? arrivalsData} />
+                <ListPage stations={stations} currentLocation={location} arrivals={arrivalsData} />
               )} />
           </Routes>
         </Router>

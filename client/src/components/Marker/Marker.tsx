@@ -10,7 +10,7 @@ import { Station } from "components/Map";
 import MapContext from "./../../context";
 
 type MarkerProps = {
-  onClick?: (event: MouseEvent) => void;
+  onClick?: (event: google.maps.marker.AdvancedMarkerClickEvent) => void;
   station: Station;
   gmpClickable?: boolean;
   position: google.maps.LatLngLiteral;
@@ -29,54 +29,47 @@ const Marker: FC<MarkerProps> = ({
   scale = 1
 }) => {
   const markerRef = useRef<google.maps.marker.AdvancedMarkerElement | null>(null);
-  const pinRef = useRef<google.maps.marker.PinElement | null>(null);
   const { setDrawerOpen, setStation } = useContext(MapContext);
 
   useEffect(() => {
-    if (!map || markerRef?.current) return undefined;
+    if (!map) return;
 
-    const pin = new google.maps.marker.PinElement({ scale });
+    const pin = new google.maps.marker.PinElement({
+      scale: scale,
+      borderColor: "#FFFFFF",
+      background: "#17A0DB",
+      glyphColor: '#FFFFFF',
+    });
 
-    pin.element.tabIndex = 0;
-    pin.element.setAttribute("role", "button");
-    pin.element.setAttribute("title", station?.stop_name);
-    if (gmpClickable) {
-      pin.element.setAttribute("gmpClickable", "true");
-    }
-    const infoWindow = new google.maps.InfoWindow();
+    pin.title = station?.stop_name || "";
 
     const marker = new google.maps.marker.AdvancedMarkerElement({
       map,
       position,
       title: station?.stop_name,
-      content: pin.element,
-      gmpClickable: true
+      content: pin,
+      gmpClickable: gmpClickable
     });
 
     markerRef.current = marker;
-    pinRef.current = pin;
-    
-    if (onClick) {
-      marker.addListener("click", (event: google.maps.marker.AdvancedMarkerClickEvent, position) => {
-        const { target } = event;
-        infoWindow.close();
 
-        infoWindow.setContent("Test");
-        infoWindow.open(marker.map, marker);
-
-        if (marker.element) {
-          marker.element.focus();
-        }
+    const clickHandler = marker.addEventListener("click", (event: google.maps.marker.AdvancedMarkerClickEvent) => {
+      if (onClick) {
+        onClick(event);
+      } else {
         setStation(station);
         setDrawerOpen(true);
-      });  
-    }
+      }
+    });
 
     return () => {
-      marker.map = null;
-      markerRef.current = null;
-      setStation(null);
+      if (markerRef.current) {
+        clickHandler.remove();
+        markerRef.current.map = null;
+        markerRef.current = null;
+      }
     };
+    
   }, [map, position, station, scale, onClick, gmpClickable]);
 
   return null;

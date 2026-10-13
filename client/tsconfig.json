@@ -38,7 +38,6 @@
     "include": ["src/**/*", "client/webpack.config.ts", "vite.config.js", "setupTest.ts"],
     "exclude": ["node_modules", "src/**/*.test", "public"],
     "ts-node": {
-        // Do not forget to `npm i -D tsconfig-paths`
         "require": ["tsconfig-paths/register"]
     }
 }
