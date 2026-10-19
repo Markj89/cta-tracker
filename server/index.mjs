@@ -8,10 +8,12 @@ import stations from './routes/stations.mjs'
 import arrivals from './routes/arrivals.mjs';
 import rateLimtit from 'express-rate-limit';
 import { mongo } from './db/conn.mjs';
+import cacheMiddleware from './middlewares/cache.mjs';
 
 const PORT = 3000;
 const app = express();
 
+app.set('trust proxy', 1);
 app.use(cors({
   origin: '*',
   credentials: true,
@@ -23,22 +25,19 @@ const limiter = rateLimtit({
   message: 'Too many requests from this IP, please try again later.',
   headers: true, // Optional: include rate limit info in response headers
 });
-app.use(limiter);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 
 // Route to redirect to API response
-app.get('/', (req, res) => {
-  res.redirect('/api');
-});
+app.get('/', (req, res) => res.redirect('/api'));
 
 mongo().then(() => {
   app.use('/api', express.static('./static/index.html'));
-  app.use('/api/stations', limiter, stations);
-  app.use('/api/arrivals', limiter, arrivals);
-  app.use('/api/arrivals/:_id', limiter, arrivals);
+  app.use('/api/stations', limiter, cacheMiddleware, stations);
+  app.use('/api/arrivals', arrivals);
 
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
@@ -50,8 +49,6 @@ mongo().then(() => {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
-    // Pass to next layer of middleware
-    next();
 
     // render the error page
     res.status(err.status || 500).render(err.status).sendFile('500.html', { root: './static' });

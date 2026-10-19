@@ -10,7 +10,7 @@ const router = express.Router();
  */
 router.post("/", async( req, res) => {
     try {
-        const { stopIds } = req.body;
+        let { stopIds } = req.body;
 
         if (!stopIds) return res.status(400).json({ error: "Invalid stop IDs" });
         if (!Array.isArray(stopIds))  stopIds = [stopIds];
@@ -37,6 +37,7 @@ router.post("/:_id", async(req, res) => {
     try {
         const { stopId } = req.body;
         if (!stopId) return res.status(400).json({ error: "Invalid stop IDs" });
+        
         const url = `${process.env.TRAIN_ARRIVALS_URL}?key=${process.env.CTA_TRAIN_API_KEY}&mapid=${stopId}&outputType=json`;
         
         const response = await fetch(url)
