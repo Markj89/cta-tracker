@@ -11,18 +11,12 @@ const router = express.Router();
 router.post("/", async( req, res) => {
     try {
         const { stopIds } = req.body;
-        console.log(`Arrivals `, Date.now());
 
-        if (!stopIds) {
-          return res.status(400).json({ error: "Invalid stop IDs" });
-        }
-
-        if (!Array.isArray(stopIds)) {
-            stopIds = [stopIds];
-        }
+        if (!stopIds) return res.status(400).json({ error: "Invalid stop IDs" });
+        if (!Array.isArray(stopIds))  stopIds = [stopIds];
     
         const arrivalPromises = stopIds.map(async (stopId) => {
-            const url = `${process.env.TRAIN_ARRIVALS}?key=${process.env.CTA_TRAIN_API_KEY}&mapid=${stopId}&outputType=json`;
+            const url = `${process.env.TRAIN_ARRIVALS_URL}?key=${process.env.CTA_TRAIN_API_KEY}&mapid=${stopId}&outputType=json`;
             const response = await fetch(url);
             return response.json();
         });
@@ -34,19 +28,16 @@ router.post("/", async( req, res) => {
     } catch (error) {
         console.error("Error fetching CTA arrivals: ", error);
         res.status(500).json({ error: "Internal Server Error "});
+    } finally {
+        res.end();
     }
 });
 
 router.post("/:_id", async(req, res) => {
     try {
         const { stopId } = req.body;
-        if (!stopId) {
-            return res.status(400).json({ error: "Invalid stop IDs" });
-        }
-
-        console.log('Arrivals by Id', Date.now());
-        console.log(`StopId for arrivals ${stopId}`)
-        const url = `${process.env.TRAIN_ARRIVALS}?key=${process.env.CTA_TRAIN_API_KEY}&mapid=${stopId}&outputType=json`;
+        if (!stopId) return res.status(400).json({ error: "Invalid stop IDs" });
+        const url = `${process.env.TRAIN_ARRIVALS_URL}?key=${process.env.CTA_TRAIN_API_KEY}&mapid=${stopId}&outputType=json`;
         
         const response = await fetch(url)
         .then(res => res.json())
@@ -58,6 +49,8 @@ router.post("/:_id", async(req, res) => {
     } catch (e) {
         console.error("Error fetching CTA arrival: ", e);
         res.status(500).json({ error: "Internal Server Error "});
+    } finally {
+        res.end();
     }
 });
 

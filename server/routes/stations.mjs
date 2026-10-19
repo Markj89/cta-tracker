@@ -1,6 +1,5 @@
 import express from 'express';
-import conn from '../db/conn.mjs';
-import { ObjectId } from "mongodb";
+import { getMongoCollection } from '../db/conn.mjs';
 import rateLimtit from 'express-rate-limit';
 
 const router = express.Router();
@@ -22,16 +21,17 @@ router.use(limiter);
  * @param {Object}
  */
 router.get('/', async (req, res) => {
-    console.log(`Route Main Page: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
+    try {
+        const collection = getMongoCollection("Stations");
+        const results = await collection.find({}).toArray();
 
-    let collection = await conn.collection("Stations");
-    const results = await collection.find({}).toArray();
-    if (results?.error) {
-        res.send({
-            message: error.message || 'Some error occurred while retrieving tutorials.'
-        }).status(500);
-    } else {
-        res.status(200).send(results);
+        res.status(200).json(results);
+    } catch (error) {
+        console.error("Route Error: ", error.message);
+        res.status(500).send({
+            message: error.message || 'Some error occurred while retrieving station data.'
+        });
+    } finally {
         res.end();
     }
 });

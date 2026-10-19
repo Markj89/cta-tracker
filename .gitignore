@@ -11,6 +11,7 @@ server/package-lock.json
 server/yarn.lock
 server/stations.txt
 .env
+.env.local
 /.pnp
 .pnp.js
 package-lock.json
@@ -19,7 +20,7 @@ keytmp.pem
 
 #Development
 /server/.env
-.env.local
+/client/.env
 
 # testing
 /coverage
@@ -31,9 +32,9 @@ public
 # misc
 .DS_Store
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.development
+.env.test
+.env.production
 .babelrc
 .npmrc
 .yarn

@@ -22,6 +22,7 @@ const Markers = ({ stationMarker, stops, map }: MarkersProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [selectedStation, setSelectedStation] = useState<Station | null>(null);
     const [position, setPosition] = useState({bottom: 10, left: 0});
+    const [opened, setIsOpened] = useState<boolean>(false);
 
     function handleOnClick(event: MouseEvent) {
         const mobileEl = document.getElementById('app');
@@ -32,6 +33,10 @@ const Markers = ({ stationMarker, stops, map }: MarkersProps) => {
         setStation(selectedStation);
     };
     
+    const handleOnOpen = () => {
+        setIsOpened(true);
+    };
+
     const sidebarContentEl = document.getElementById('app');
     const modalPlacement = {
         bottom: `10px`,
@@ -41,7 +46,9 @@ const Markers = ({ stationMarker, stops, map }: MarkersProps) => {
 
     return (
         <div ref={containerRef}>
-            <Marker map={map} position={{ lat: stationMarker.lat, lng: stationMarker.lng }} station={stationMarker} stops={stops} onClick={(event) => handleOnClick(event)} gmpClickable={true} />
+            {opened && createPortal( <StationModal station={selectedStation} style={modalPlacement} stops={stops} position={position} />, sidebarContentEl )}
+            <Marker station={selectedStation}  />
+            {/* <Marker map={map} position={{ lat: stationMarker.lat, lng: stationMarker.lng }} station={stationMarker} stops={stops} onClick={(event) => handleOnClick(event)} gmpClickable={true} /> */}
             {/* {drawerOpen ? createPortal( <StationModal station={stationMarker} stops={stops} style={modalPlacement} position={position} />, sidebarContentEl ) : <Marker map={map} position={{ lat: stationMarker.lat, lng: stationMarker.lng }} station={stationMarker} stops={stops} onClick={(event) => handleOnClick(event)} gmpClickable={true} /> } */}
         </div>
     );

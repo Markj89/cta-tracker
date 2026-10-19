@@ -5,7 +5,7 @@
  * @param MapProps
  * @returns JSX.Element
  */
-import React, { useState, useRef, useEffect, useLayoutEffect, useContext } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect, useContext, useMemo } from "react";
 import OverlayContainer from "./../Overlay/Overlay";
 import Markers from "./../Marker/Markers";
 import { MapProps } from "./Map.types";
@@ -24,11 +24,21 @@ const Map = ({ width, height, currentLocation, nearbyLocations, nearbyLocationsI
   const mapRef = useRef<HTMLDivElement>();
   const ref = useRef<HTMLDivElement>();
   const { setShowMap, setDrawerOpen, drawerOpen, setStation } = useContext(MapContext);
-  const [map, setMap] = useState<google.maps.Map>(null);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
   const [filteredArrivals, setFilteredArrivals] = useState([]);
   const [drawerHeight, setDrawerHeight] = useState(0);
   const [isDrawerShowing, setDrawerShowing] = useState<boolean>(false);
-  const markers = mapMarkers(stations);
+  const markers = useMemo(() => mapMarkers(stations), [stations]);
+
+  useEffect(() => {
+    const map = new google.maps.Map(ref.current);
+    setMap(map);
+
+    return () => {
+      google.maps.event.clearInstanceListeners(map);
+      setMap(null);
+    };
+  }, []);
 
   useEffect(() => {
     if (mapRef.current && !map) {
@@ -42,7 +52,7 @@ const Map = ({ width, height, currentLocation, nearbyLocations, nearbyLocationsI
         })
       );
     }
-  }, [map, zoom]);
+  }, [map]);
 
   function handleClick() {
     mapRef.current.focus();
@@ -79,6 +89,7 @@ const Map = ({ width, height, currentLocation, nearbyLocations, nearbyLocationsI
     if (!isDrawerShowing) setStation(null);
   }, [setStation, isDrawerShowing]);
 
+  console.log(nearbyLocations)
   return (
     <>
       <div
@@ -94,7 +105,7 @@ const Map = ({ width, height, currentLocation, nearbyLocations, nearbyLocationsI
           <OverlayContainer
             map={map}
             position={{ lat: marker?.lat, lng: marker?.lng }}
-            key={index}
+            key={marker.map_id}
             className="min-h-screen flex items-center justify-center flex-col"
           >
             <Markers stationMarker={marker} stops={markers} map={map} />
